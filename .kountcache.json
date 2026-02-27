@@ -1,0 +1,1323 @@
+{
+  "version": 1,
+  "entries": {
+    "/Users/michaelnji/Projects/kount/skills-lock.json": {
+      "mtimeMs": 1772200910800,
+      "size": 977,
+      "metrics": {
+        "TotalLines": 30,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 977,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/kount.md": {
+      "mtimeMs": 1772193860989,
+      "size": 7502,
+      "metrics": {
+        "TotalLines": 166,
+        "BlankLines": 47,
+        "CommentLines": 0,
+        "FileSize": 7502,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/tests/cache.test.ts": {
+      "mtimeMs": 1772204279006,
+      "size": 3425,
+      "metrics": {
+        "TotalLines": 116,
+        "BlankLines": 29,
+        "CommentLines": 5,
+        "FileSize": 3425,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/tests/plugins.test.ts": {
+      "mtimeMs": 1772203919679,
+      "size": 5740,
+      "metrics": {
+        "TotalLines": 184,
+        "BlankLines": 32,
+        "CommentLines": 8,
+        "FileSize": 5740,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/tests/fixtures/.gitkeep": {
+      "mtimeMs": 1772195256200,
+      "size": 0,
+      "metrics": {
+        "TotalLines": 0,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 0,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/tests/reporters.test.ts": {
+      "mtimeMs": 1772206351109,
+      "size": 5920,
+      "metrics": {
+        "TotalLines": 165,
+        "BlankLines": 30,
+        "CommentLines": 5,
+        "FileSize": 5920,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/tests/scanner.test.ts": {
+      "mtimeMs": 1772203461903,
+      "size": 2389,
+      "metrics": {
+        "TotalLines": 60,
+        "BlankLines": 11,
+        "CommentLines": 5,
+        "FileSize": 2389,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/typescript-advanced-types/SKILL.md": {
+      "mtimeMs": 1772200440291,
+      "size": 17085,
+      "metrics": {
+        "TotalLines": 724,
+        "BlankLines": 158,
+        "CommentLines": 0,
+        "FileSize": 17085,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 17085
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-escape-sequence-batching.md": {
+      "mtimeMs": 1772194831332,
+      "size": 1859,
+      "metrics": {
+        "TotalLines": 61,
+        "BlankLines": 13,
+        "CommentLines": 0,
+        "FileSize": 1859,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-group-flow.md": {
+      "mtimeMs": 1772194831332,
+      "size": 2565,
+      "metrics": {
+        "TotalLines": 93,
+        "BlankLines": 17,
+        "CommentLines": 0,
+        "FileSize": 2565,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-graceful-degradation.md": {
+      "mtimeMs": 1772194831332,
+      "size": 2815,
+      "metrics": {
+        "TotalLines": 117,
+        "BlankLines": 25,
+        "CommentLines": 0,
+        "FileSize": 2815,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-spinner-tasks.md": {
+      "mtimeMs": 1772194831332,
+      "size": 1989,
+      "metrics": {
+        "TotalLines": 91,
+        "BlankLines": 21,
+        "CommentLines": 0,
+        "FileSize": 1989,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-text-styling.md": {
+      "mtimeMs": 1772194831334,
+      "size": 1583,
+      "metrics": {
+        "TotalLines": 66,
+        "BlankLines": 15,
+        "CommentLines": 0,
+        "FileSize": 1583,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-usememo-expensive.md": {
+      "mtimeMs": 1772194831334,
+      "size": 2469,
+      "metrics": {
+        "TotalLines": 91,
+        "BlankLines": 16,
+        "CommentLines": 0,
+        "FileSize": 2469,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-custom-render.md": {
+      "mtimeMs": 1772194831332,
+      "size": 2086,
+      "metrics": {
+        "TotalLines": 80,
+        "BlankLines": 18,
+        "CommentLines": 0,
+        "FileSize": 2086,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-immediate-feedback.md": {
+      "mtimeMs": 1772194831331,
+      "size": 2192,
+      "metrics": {
+        "TotalLines": 80,
+        "BlankLines": 17,
+        "CommentLines": 0,
+        "FileSize": 2192,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-border-styles.md": {
+      "mtimeMs": 1772194831333,
+      "size": 2057,
+      "metrics": {
+        "TotalLines": 73,
+        "BlankLines": 12,
+        "CommentLines": 0,
+        "FileSize": 2057,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-tty-detection.md": {
+      "mtimeMs": 1772194831333,
+      "size": 2241,
+      "metrics": {
+        "TotalLines": 101,
+        "BlankLines": 22,
+        "CommentLines": 0,
+        "FileSize": 2241,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-cleanup-effects.md": {
+      "mtimeMs": 1772194831334,
+      "size": 1880,
+      "metrics": {
+        "TotalLines": 80,
+        "BlankLines": 18,
+        "CommentLines": 0,
+        "FileSize": 1880,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-exit-codes.md": {
+      "mtimeMs": 1772194831332,
+      "size": 2466,
+      "metrics": {
+        "TotalLines": 112,
+        "BlankLines": 21,
+        "CommentLines": 0,
+        "FileSize": 2466,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-color-semantics.md": {
+      "mtimeMs": 1772194831334,
+      "size": 2068,
+      "metrics": {
+        "TotalLines": 64,
+        "BlankLines": 14,
+        "CommentLines": 0,
+        "FileSize": 2068,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-useinput-hook.md": {
+      "mtimeMs": 1772194831331,
+      "size": 1658,
+      "metrics": {
+        "TotalLines": 65,
+        "BlankLines": 15,
+        "CommentLines": 0,
+        "FileSize": 1658,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-error-messages.md": {
+      "mtimeMs": 1772194831335,
+      "size": 2216,
+      "metrics": {
+        "TotalLines": 89,
+        "BlankLines": 16,
+        "CommentLines": 0,
+        "FileSize": 2216,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-json-output.md": {
+      "mtimeMs": 1772194831334,
+      "size": 2464,
+      "metrics": {
+        "TotalLines": 117,
+        "BlankLines": 20,
+        "CommentLines": 0,
+        "FileSize": 2464,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-useapp-exit.md": {
+      "mtimeMs": 1772194831334,
+      "size": 1847,
+      "metrics": {
+        "TotalLines": 88,
+        "BlankLines": 19,
+        "CommentLines": 0,
+        "FileSize": 1847,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-single-write.md": {
+      "mtimeMs": 1772194831332,
+      "size": 1294,
+      "metrics": {
+        "TotalLines": 39,
+        "BlankLines": 9,
+        "CommentLines": 0,
+        "FileSize": 1294,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-modifier-keys.md": {
+      "mtimeMs": 1772194831331,
+      "size": 1701,
+      "metrics": {
+        "TotalLines": 68,
+        "BlankLines": 13,
+        "CommentLines": 0,
+        "FileSize": 1701,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-60fps-baseline.md": {
+      "mtimeMs": 1772194831332,
+      "size": 1688,
+      "metrics": {
+        "TotalLines": 63,
+        "BlankLines": 15,
+        "CommentLines": 0,
+        "FileSize": 1688,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-partial-updates.md": {
+      "mtimeMs": 1772194831332,
+      "size": 1926,
+      "metrics": {
+        "TotalLines": 65,
+        "BlankLines": 12,
+        "CommentLines": 0,
+        "FileSize": 1926,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-sensible-defaults.md": {
+      "mtimeMs": 1772194831333,
+      "size": 2140,
+      "metrics": {
+        "TotalLines": 84,
+        "BlankLines": 13,
+        "CommentLines": 0,
+        "FileSize": 2140,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-intro-outro.md": {
+      "mtimeMs": 1772194831334,
+      "size": 2013,
+      "metrics": {
+        "TotalLines": 89,
+        "BlankLines": 21,
+        "CommentLines": 0,
+        "FileSize": 2013,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-cancellation.md": {
+      "mtimeMs": 1772194831331,
+      "size": 1932,
+      "metrics": {
+        "TotalLines": 79,
+        "BlankLines": 17,
+        "CommentLines": 0,
+        "FileSize": 1932,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-next-steps.md": {
+      "mtimeMs": 1772194831335,
+      "size": 2040,
+      "metrics": {
+        "TotalLines": 90,
+        "BlankLines": 23,
+        "CommentLines": 0,
+        "FileSize": 2040,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-overwrite-dont-clear.md": {
+      "mtimeMs": 1772194831332,
+      "size": 1402,
+      "metrics": {
+        "TotalLines": 47,
+        "BlankLines": 9,
+        "CommentLines": 0,
+        "FileSize": 1402,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-help-system.md": {
+      "mtimeMs": 1772194831333,
+      "size": 2635,
+      "metrics": {
+        "TotalLines": 106,
+        "BlankLines": 23,
+        "CommentLines": 0,
+        "FileSize": 2635,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-env-vars.md": {
+      "mtimeMs": 1772194831333,
+      "size": 2128,
+      "metrics": {
+        "TotalLines": 83,
+        "BlankLines": 17,
+        "CommentLines": 0,
+        "FileSize": 2128,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-validation.md": {
+      "mtimeMs": 1772194831331,
+      "size": 2158,
+      "metrics": {
+        "TotalLines": 86,
+        "BlankLines": 13,
+        "CommentLines": 0,
+        "FileSize": 2158,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-isactive-focus.md": {
+      "mtimeMs": 1772194831331,
+      "size": 2122,
+      "metrics": {
+        "TotalLines": 85,
+        "BlankLines": 15,
+        "CommentLines": 0,
+        "FileSize": 2122,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-flags-over-args.md": {
+      "mtimeMs": 1772194831333,
+      "size": 2229,
+      "metrics": {
+        "TotalLines": 81,
+        "BlankLines": 17,
+        "CommentLines": 0,
+        "FileSize": 2229,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-percentage-widths.md": {
+      "mtimeMs": 1772194831334,
+      "size": 1977,
+      "metrics": {
+        "TotalLines": 94,
+        "BlankLines": 13,
+        "CommentLines": 0,
+        "FileSize": 1977,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-signal-handling.md": {
+      "mtimeMs": 1772194831332,
+      "size": 2506,
+      "metrics": {
+        "TotalLines": 112,
+        "BlankLines": 27,
+        "CommentLines": 0,
+        "FileSize": 2506,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-progress-indicators.md": {
+      "mtimeMs": 1772194831335,
+      "size": 2218,
+      "metrics": {
+        "TotalLines": 82,
+        "BlankLines": 16,
+        "CommentLines": 0,
+        "FileSize": 2218,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-escape-routes.md": {
+      "mtimeMs": 1772194831331,
+      "size": 1873,
+      "metrics": {
+        "TotalLines": 87,
+        "BlankLines": 18,
+        "CommentLines": 0,
+        "FileSize": 1873,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-functional-updates.md": {
+      "mtimeMs": 1772194831334,
+      "size": 2080,
+      "metrics": {
+        "TotalLines": 93,
+        "BlankLines": 17,
+        "CommentLines": 0,
+        "FileSize": 2080,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-terminal-restore.md": {
+      "mtimeMs": 1772194831332,
+      "size": 2340,
+      "metrics": {
+        "TotalLines": 110,
+        "BlankLines": 25,
+        "CommentLines": 0,
+        "FileSize": 2340,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-static-for-logs.md": {
+      "mtimeMs": 1772194831334,
+      "size": 1898,
+      "metrics": {
+        "TotalLines": 80,
+        "BlankLines": 11,
+        "CommentLines": 0,
+        "FileSize": 1898,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-usecallback-stable.md": {
+      "mtimeMs": 1772194831335,
+      "size": 1967,
+      "metrics": {
+        "TotalLines": 74,
+        "BlankLines": 16,
+        "CommentLines": 0,
+        "FileSize": 1967,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-box-flexbox.md": {
+      "mtimeMs": 1772194831333,
+      "size": 1613,
+      "metrics": {
+        "TotalLines": 67,
+        "BlankLines": 12,
+        "CommentLines": 0,
+        "FileSize": 1613,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-measure-element.md": {
+      "mtimeMs": 1772194831334,
+      "size": 2017,
+      "metrics": {
+        "TotalLines": 70,
+        "BlankLines": 13,
+        "CommentLines": 0,
+        "FileSize": 2017,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-synchronized-output.md": {
+      "mtimeMs": 1772194831333,
+      "size": 1476,
+      "metrics": {
+        "TotalLines": 43,
+        "BlankLines": 10,
+        "CommentLines": 0,
+        "FileSize": 1476,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/README.md": {
+      "mtimeMs": 1772194831330,
+      "size": 4386,
+      "metrics": {
+        "TotalLines": 145,
+        "BlankLines": 39,
+        "CommentLines": 0,
+        "FileSize": 4386,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/SKILL.md": {
+      "mtimeMs": 1772194831330,
+      "size": 5184,
+      "metrics": {
+        "TotalLines": 111,
+        "BlankLines": 28,
+        "CommentLines": 0,
+        "FileSize": 5184,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/AGENTS.md": {
+      "mtimeMs": 1772194831329,
+      "size": 8539,
+      "metrics": {
+        "TotalLines": 94,
+        "BlankLines": 15,
+        "CommentLines": 0,
+        "FileSize": 8539,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/executing-plans/SKILL.md": {
+      "mtimeMs": 1772200910032,
+      "size": 2550,
+      "metrics": {
+        "TotalLines": 84,
+        "BlankLines": 22,
+        "CommentLines": 0,
+        "FileSize": 2550,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/eval-viewer/generate_review.py": {
+      "mtimeMs": 1772200759923,
+      "size": 16365,
+      "metrics": {
+        "TotalLines": 471,
+        "BlankLines": 64,
+        "CommentLines": 21,
+        "FileSize": 16365,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 16365
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/eval-viewer/viewer.html": {
+      "mtimeMs": 1772200759924,
+      "size": 44998,
+      "metrics": {
+        "TotalLines": 1325,
+        "BlankLines": 116,
+        "CommentLines": 11,
+        "FileSize": 44998,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 44998
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/references/schemas.md": {
+      "mtimeMs": 1772200759923,
+      "size": 12061,
+      "metrics": {
+        "TotalLines": 430,
+        "BlankLines": 43,
+        "CommentLines": 0,
+        "FileSize": 12061,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 12061
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/agents/grader.md": {
+      "mtimeMs": 1772200759923,
+      "size": 9049,
+      "metrics": {
+        "TotalLines": 223,
+        "BlankLines": 43,
+        "CommentLines": 0,
+        "FileSize": 9049,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/agents/comparator.md": {
+      "mtimeMs": 1772200759923,
+      "size": 7287,
+      "metrics": {
+        "TotalLines": 202,
+        "BlankLines": 37,
+        "CommentLines": 0,
+        "FileSize": 7287,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/agents/analyzer.md": {
+      "mtimeMs": 1772200759923,
+      "size": 10376,
+      "metrics": {
+        "TotalLines": 274,
+        "BlankLines": 62,
+        "CommentLines": 0,
+        "FileSize": 10376,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/run_eval.py": {
+      "mtimeMs": 1772200759925,
+      "size": 11464,
+      "metrics": {
+        "TotalLines": 310,
+        "BlankLines": 44,
+        "CommentLines": 9,
+        "FileSize": 11464,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/package_skill.py": {
+      "mtimeMs": 1772200759924,
+      "size": 4234,
+      "metrics": {
+        "TotalLines": 136,
+        "BlankLines": 27,
+        "CommentLines": 11,
+        "FileSize": 4234,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/quick_validate.py": {
+      "mtimeMs": 1772200759924,
+      "size": 3972,
+      "metrics": {
+        "TotalLines": 103,
+        "BlankLines": 16,
+        "CommentLines": 15,
+        "FileSize": 3972,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/improve_description.py": {
+      "mtimeMs": 1772200759924,
+      "size": 10723,
+      "metrics": {
+        "TotalLines": 248,
+        "BlankLines": 43,
+        "CommentLines": 7,
+        "FileSize": 10723,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/aggregate_benchmark.py": {
+      "mtimeMs": 1772200759924,
+      "size": 14386,
+      "metrics": {
+        "TotalLines": 401,
+        "BlankLines": 67,
+        "CommentLines": 22,
+        "FileSize": 14386,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 14386
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/run_loop.py": {
+      "mtimeMs": 1772200759924,
+      "size": 13685,
+      "metrics": {
+        "TotalLines": 332,
+        "BlankLines": 48,
+        "CommentLines": 18,
+        "FileSize": 13685,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 13685
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/generate_report.py": {
+      "mtimeMs": 1772200759924,
+      "size": 12847,
+      "metrics": {
+        "TotalLines": 326,
+        "BlankLines": 39,
+        "CommentLines": 14,
+        "FileSize": 12847,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 12847
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/utils.py": {
+      "mtimeMs": 1772200759924,
+      "size": 1661,
+      "metrics": {
+        "TotalLines": 47,
+        "BlankLines": 9,
+        "CommentLines": 1,
+        "FileSize": 1661,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/SKILL.md": {
+      "mtimeMs": 1772200759922,
+      "size": 32370,
+      "metrics": {
+        "TotalLines": 479,
+        "BlankLines": 157,
+        "CommentLines": 0,
+        "FileSize": 32370,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 32370
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/LICENSE.txt": {
+      "mtimeMs": 1772200759923,
+      "size": 11357,
+      "metrics": {
+        "TotalLines": 202,
+        "BlankLines": 33,
+        "CommentLines": 0,
+        "FileSize": 11357,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/assets/eval_review.html": {
+      "mtimeMs": 1772200759924,
+      "size": 7058,
+      "metrics": {
+        "TotalLines": 146,
+        "BlankLines": 15,
+        "CommentLines": 0,
+        "FileSize": 7058,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.agents/skills/brainstorming/SKILL.md": {
+      "mtimeMs": 1772200838043,
+      "size": 4690,
+      "metrics": {
+        "TotalLines": 96,
+        "BlankLines": 23,
+        "CommentLines": 0,
+        "FileSize": 4690,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/bun.lock": {
+      "mtimeMs": 1772201672707,
+      "size": 32164,
+      "metrics": {
+        "TotalLines": 306,
+        "BlankLines": 139,
+        "CommentLines": 0,
+        "FileSize": 32164,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 32164
+      }
+    },
+    "/Users/michaelnji/Projects/kount/README.md": {
+      "mtimeMs": 1772194150043,
+      "size": 1,
+      "metrics": {
+        "TotalLines": 1,
+        "BlankLines": 1,
+        "CommentLines": 0,
+        "FileSize": 1,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.gitignore": {
+      "mtimeMs": 1772194927989,
+      "size": 388,
+      "metrics": {
+        "TotalLines": 34,
+        "BlankLines": 7,
+        "CommentLines": 0,
+        "FileSize": 388,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/package.json": {
+      "mtimeMs": 1772206687867,
+      "size": 642,
+      "metrics": {
+        "TotalLines": 29,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 642,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/tsconfig.json": {
+      "mtimeMs": 1772195235338,
+      "size": 299,
+      "metrics": {
+        "TotalLines": 13,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 299,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/AGENTS.md": {
+      "mtimeMs": 1772193722225,
+      "size": 0,
+      "metrics": {
+        "TotalLines": 0,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 0,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.kountrc.json": {
+      "mtimeMs": 1772195293245,
+      "size": 165,
+      "metrics": {
+        "TotalLines": 10,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 165,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/index.tsx": {
+      "mtimeMs": 1772206638338,
+      "size": 5879,
+      "metrics": {
+        "TotalLines": 167,
+        "BlankLines": 21,
+        "CommentLines": 15,
+        "FileSize": 5879,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/core/.gitkeep": {
+      "mtimeMs": 1772195256199,
+      "size": 0,
+      "metrics": {
+        "TotalLines": 0,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 0,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/core/cache.ts": {
+      "mtimeMs": 1772204188644,
+      "size": 3391,
+      "metrics": {
+        "TotalLines": 130,
+        "BlankLines": 21,
+        "CommentLines": 38,
+        "FileSize": 3391,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/core/aggregator.ts": {
+      "mtimeMs": 1772204239864,
+      "size": 6655,
+      "metrics": {
+        "TotalLines": 204,
+        "BlankLines": 25,
+        "CommentLines": 41,
+        "FileSize": 6655,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/.gitkeep": {
+      "mtimeMs": 1772195256199,
+      "size": 0,
+      "metrics": {
+        "TotalLines": 0,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 0,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/largest-files.ts": {
+      "mtimeMs": 1772203823154,
+      "size": 1213,
+      "metrics": {
+        "TotalLines": 41,
+        "BlankLines": 8,
+        "CommentLines": 8,
+        "FileSize": 1213,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/total-lines.ts": {
+      "mtimeMs": 1772203786809,
+      "size": 585,
+      "metrics": {
+        "TotalLines": 21,
+        "BlankLines": 4,
+        "CommentLines": 3,
+        "FileSize": 585,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/language-distribution.ts": {
+      "mtimeMs": 1772203821141,
+      "size": 2498,
+      "metrics": {
+        "TotalLines": 95,
+        "BlankLines": 6,
+        "CommentLines": 13,
+        "FileSize": 2498,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/comment-lines.ts": {
+      "mtimeMs": 1772203800816,
+      "size": 2665,
+      "metrics": {
+        "TotalLines": 90,
+        "BlankLines": 14,
+        "CommentLines": 10,
+        "FileSize": 2665,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/total-files.ts": {
+      "mtimeMs": 1772203815157,
+      "size": 482,
+      "metrics": {
+        "TotalLines": 18,
+        "BlankLines": 4,
+        "CommentLines": 3,
+        "FileSize": 482,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/file-size.ts": {
+      "mtimeMs": 1772203803360,
+      "size": 552,
+      "metrics": {
+        "TotalLines": 20,
+        "BlankLines": 4,
+        "CommentLines": 3,
+        "FileSize": 552,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/blank-lines.ts": {
+      "mtimeMs": 1772203797831,
+      "size": 712,
+      "metrics": {
+        "TotalLines": 26,
+        "BlankLines": 4,
+        "CommentLines": 3,
+        "FileSize": 712,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/types.ts": {
+      "mtimeMs": 1772203757650,
+      "size": 1880,
+      "metrics": {
+        "TotalLines": 58,
+        "BlankLines": 4,
+        "CommentLines": 31,
+        "FileSize": 1880,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/index.ts": {
+      "mtimeMs": 1772203870202,
+      "size": 556,
+      "metrics": {
+        "TotalLines": 10,
+        "BlankLines": 2,
+        "CommentLines": 0,
+        "FileSize": 556,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/utils/.gitkeep": {
+      "mtimeMs": 1772195256200,
+      "size": 0,
+      "metrics": {
+        "TotalLines": 0,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 0,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/utils/language-map.ts": {
+      "mtimeMs": 1772201655397,
+      "size": 2416,
+      "metrics": {
+        "TotalLines": 79,
+        "BlankLines": 7,
+        "CommentLines": 41,
+        "FileSize": 2416,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/cli/.gitkeep": {
+      "mtimeMs": 1772195256199,
+      "size": 0,
+      "metrics": {
+        "TotalLines": 0,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 0,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/cli/parser.ts": {
+      "mtimeMs": 1772206606688,
+      "size": 1776,
+      "metrics": {
+        "TotalLines": 52,
+        "BlankLines": 4,
+        "CommentLines": 7,
+        "FileSize": 1776,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/cli/config-resolver.ts": {
+      "mtimeMs": 1772206604764,
+      "size": 4817,
+      "metrics": {
+        "TotalLines": 175,
+        "BlankLines": 19,
+        "CommentLines": 32,
+        "FileSize": 4817,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/.gitkeep": {
+      "mtimeMs": 1772195256199,
+      "size": 0,
+      "metrics": {
+        "TotalLines": 0,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 0,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/markdown.ts": {
+      "mtimeMs": 1772206089970,
+      "size": 4534,
+      "metrics": {
+        "TotalLines": 129,
+        "BlankLines": 18,
+        "CommentLines": 19,
+        "FileSize": 4534,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/terminal/Progress.tsx": {
+      "mtimeMs": 1772206004174,
+      "size": 1258,
+      "metrics": {
+        "TotalLines": 39,
+        "BlankLines": 5,
+        "CommentLines": 6,
+        "FileSize": 1258,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/terminal/Wizard.tsx": {
+      "mtimeMs": 1772206024994,
+      "size": 4524,
+      "metrics": {
+        "TotalLines": 125,
+        "BlankLines": 13,
+        "CommentLines": 8,
+        "FileSize": 4524,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/terminal/Splash.tsx": {
+      "mtimeMs": 1772205985791,
+      "size": 1330,
+      "metrics": {
+        "TotalLines": 32,
+        "BlankLines": 2,
+        "CommentLines": 5,
+        "FileSize": 1330,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/terminal/index.ts": {
+      "mtimeMs": 1772206056428,
+      "size": 208,
+      "metrics": {
+        "TotalLines": 6,
+        "BlankLines": 1,
+        "CommentLines": 0,
+        "FileSize": 208,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/terminal/Summary.tsx": {
+      "mtimeMs": 1772206022944,
+      "size": 4864,
+      "metrics": {
+        "TotalLines": 135,
+        "BlankLines": 8,
+        "CommentLines": 11,
+        "FileSize": 4864,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/html.ts": {
+      "mtimeMs": 1772207510468,
+      "size": 18992,
+      "metrics": {
+        "TotalLines": 385,
+        "BlankLines": 29,
+        "CommentLines": 15,
+        "FileSize": 18992,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 18992
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/scanner/.gitkeep": {
+      "mtimeMs": 1772195256199,
+      "size": 0,
+      "metrics": {
+        "TotalLines": 0,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 0,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/scanner/ignore-parser.ts": {
+      "mtimeMs": 1772201712864,
+      "size": 6115,
+      "metrics": {
+        "TotalLines": 168,
+        "BlankLines": 25,
+        "CommentLines": 43,
+        "FileSize": 6115,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/scanner/stream-reader.ts": {
+      "mtimeMs": 1772201746768,
+      "size": 3291,
+      "metrics": {
+        "TotalLines": 99,
+        "BlankLines": 16,
+        "CommentLines": 23,
+        "FileSize": 3291,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1
+      }
+    }
+  }
+}
