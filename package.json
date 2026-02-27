@@ -1,19 +1,51 @@
 {
-  "name": "kount",
-  "module": "index.ts",
+  "name": "kount-cli",
+  "version": "1.0.0",
+  "description": "Project Intelligence for Codebases — analyze your code with precision.",
+  "module": "src/index.tsx",
   "type": "module",
-  "private": true,
+  "bin": {
+    "kount": "./src/index.tsx"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
   "scripts": {
-    "dev": "bun run src/index.ts",
-    "start": "bun run src/index.ts",
+    "dev": "bun run src/index.tsx",
+    "start": "bun run src/index.tsx",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "bun build ./src/index.ts --compile --outfile kount"
+    "build": "bun build ./src/index.tsx --compile --outfile dist/kount",
+    "prepublishOnly": "bun run build",
+    "release": "np"
+  },
+  "np": {
+    "yarn": false,
+    "testScript": "test",
+    "branch": "main",
+    "publish": false
+  },
+  "keywords": [
+    "cli",
+    "codebase",
+    "analysis",
+    "loc",
+    "lines-of-code",
+    "project-stats",
+    "developer-tools"
+  ],
+  "author": "Michael Nji",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michaelnji/kount"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "^25.3.2",
     "@types/react": "^19.2.14",
+    "np": "^11.0.2",
     "vitest": "^4.0.18"
   },
   "peerDependencies": {
