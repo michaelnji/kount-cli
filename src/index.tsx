@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { render, Box, Text, useApp } from 'ink';
-import { createCli } from './cli/parser.js';
-import { resolveConfig } from './cli/config-resolver.js';
+import { Box, render, Text, useApp } from 'ink';
+import React, { useCallback, useEffect, useState } from 'react';
 import type { KountConfig } from './cli/config-resolver.js';
+import { resolveConfig } from './cli/config-resolver.js';
+import { createCli } from './cli/parser.js';
 import { Aggregator } from './core/aggregator.js';
 import type { ProjectStats } from './plugins/types.js';
-import { Splash } from './reporters/terminal/Splash.js';
-import { Progress } from './reporters/terminal/Progress.js';
-import { Summary } from './reporters/terminal/Summary.js';
-import { Wizard } from './reporters/terminal/Wizard.js';
-import type { WizardResult } from './reporters/terminal/Wizard.js';
-import { writeMarkdownReport } from './reporters/markdown.js';
 import { serveHtmlDashboard } from './reporters/html.js';
+import { writeMarkdownReport } from './reporters/markdown.js';
+import { Progress } from './reporters/terminal/Progress.js';
+import { Splash } from './reporters/terminal/Splash.js';
+import { Summary } from './reporters/terminal/Summary.js';
+import type { WizardResult } from './reporters/terminal/Wizard.js';
+import { Wizard } from './reporters/terminal/Wizard.js';
 
 // ---------------------------------------------------------------------------
 // Non-interactive execution (markdown / html modes, or terminal with flags)
@@ -90,14 +90,28 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
     }, [phase, config]);
 
     const handleWizardComplete = useCallback((result: WizardResult) => {
-        setConfig((prev) => ({
-            ...prev,
+        const updatedConfig: KountConfig = {
+            ...config,
             rootDir: result.rootDir,
             outputMode: result.outputMode,
             includeTests: result.includeTests,
-        }));
+        };
+
+        if (result.outputMode !== 'terminal') {
+            // Non-terminal mode selected in wizard — exit Ink and run headless
+            exit();
+            setTimeout(() => {
+                runHeadless(updatedConfig).catch((err: unknown) => {
+                    process.stderr.write(`Error: ${err instanceof Error ? err.message : String(err)}\n`);
+                    process.exit(1);
+                });
+            }, 100);
+            return;
+        }
+
+        setConfig(updatedConfig);
         setPhase('scanning');
-    }, []);
+    }, [config, exit]);
 
     // Auto-exit after done phase is displayed
     useEffect(() => {
