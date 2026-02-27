@@ -57,13 +57,13 @@ Install globally from npm using your preferred package manager:
 
 ```bash
 # npm
-npm install -g kount-cli
+npm install -g @cod3vil/kount-cli
 
 # pnpm
-pnpm add -g kount-cli
+pnpm add -g @cod3vil/kount-cli
 
 # bun
-bun add -g kount-cli
+bun add -g @cod3vil/kount-cli
 ```
 
 Once installed, the `kount` command is available globally.
