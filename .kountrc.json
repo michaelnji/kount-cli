@@ -1,0 +1,10 @@
+{
+  "rootDir": ".",
+  "outputMode": "terminal",
+  "includeTests": false,
+  "respectGitignore": true,
+  "cache": {
+    "enabled": true,
+    "clearFirst": false
+  }
+}
