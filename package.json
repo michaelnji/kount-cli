@@ -6,11 +6,10 @@
   "module": "src/index.tsx",
   "type": "module",
   "bin": {
-    "kount": "./bin/kount.js"
+    "kount": "./dist/kount.js"
   },
   "files": [
-    "src",
-    "bin",
+    "dist",
     "README.md"
   ],
   "publishConfig": {
@@ -21,7 +20,7 @@
     "start": "bun run src/index.tsx",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "bun build ./src/index.tsx --compile --external react-devtools-core --outfile dist/kount",
+    "build": "bun build ./src/index.tsx --outfile dist/kount.js --target node",
     "prepublishOnly": "bun run build",
     "release": "np"
   },
@@ -50,6 +49,7 @@
     "@types/node": "^25.3.2",
     "@types/react": "^19.2.14",
     "np": "^11.0.2",
+    "react-devtools-core": "^7.0.1",
     "vitest": "^4.0.18"
   },
   "peerDependencies": {
