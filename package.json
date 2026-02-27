@@ -1,6 +1,6 @@
 {
   "name": "kount-cli",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Project Intelligence for Codebases — analyze your code with precision.",
   "module": "src/index.tsx",
   "type": "module",
