@@ -1,7 +1,7 @@
 {
   "name": "kount-cli",
   "packageManager": "bun@1.3.5",
-  "version": "1.0.1",
+  "version": "0.0.0",
   "description": "Project Intelligence for Codebases — analyze your code with precision.",
   "module": "src/index.tsx",
   "type": "module",
@@ -17,7 +17,7 @@
     "start": "bun run src/index.tsx",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "bun build ./src/index.tsx --compile --outfile dist/kount",
+    "build": "bun build ./src/index.tsx --compile --external react-devtools-core --outfile dist/kount",
     "prepublishOnly": "bun run build",
     "release": "np"
   },
