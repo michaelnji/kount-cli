@@ -17,49 +17,51 @@ export function buildHtmlTemplate(jsonData: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KOUNT Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --neon: #00ff88;
-      --neon-dim: #00cc6a;
-      --neon-glow: rgba(0, 255, 136, 0.15);
-      --neon-glow-strong: rgba(0, 255, 136, 0.3);
+      --neon: #55C5C7;
+      --neon-dim: #4EBCC1;
+      --neon-glow: rgba(85, 197, 199, 0.15);
+      --neon-glow-strong: rgba(85, 197, 199, 0.3);
       --white: #ffffff;
       --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --logo-dark: #153961;
     }
 
     html.dark {
-      --bg-body: #0a0a0f;
-      --bg-sidebar: #0e0e16;
-      --bg-card: #12121a;
-      --bg-card-hover: #1a1a2e;
-      --bg-input: #1a1a2e;
+      --bg-body: #0b141e;
+      --bg-sidebar: #0f1a26;
+      --bg-card: #13202f;
+      --bg-card-hover: #1c2d42;
+      --bg-input: #1c2d42;
       --bg-table-stripe: rgba(255, 255, 255, 0.02);
-      --bg-table-hover: rgba(0, 255, 136, 0.05);
-      --border: #1e1e30;
-      --border-active: #2a2a44;
+      --bg-table-hover: rgba(85, 197, 199, 0.05); /* neon tint */
+      --border: #1e2c3a;
+      --border-active: #2a3d52;
       --text-primary: #f0f0f5;
       --text-secondary: #8888a0;
       --text-muted: #55556a;
       --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
       --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.6);
       --chart-grid: rgba(255, 255, 255, 0.06);
+      --logo-dark: #ffffff;
     }
 
     html:not(.dark) {
-      --bg-body: #f4f5f7;
+      --bg-body: #f2f5f8;
       --bg-sidebar: #ffffff;
       --bg-card: #ffffff;
-      --bg-card-hover: #f8f9fb;
-      --bg-input: #f0f1f3;
+      --bg-card-hover: #f5f8fa;
+      --bg-input: #e6ebf1;
       --bg-table-stripe: rgba(0, 0, 0, 0.02);
-      --bg-table-hover: rgba(0, 255, 136, 0.06);
-      --border: #e2e4e8;
-      --border-active: #d0d2d6;
+      --bg-table-hover: rgba(85, 197, 199, 0.06);
+      --border: #dce1e6;
+      --border-active: #c2cbd4;
       --text-primary: #111218;
       --text-secondary: #5a5d6a;
       --text-muted: #9a9daa;
@@ -69,11 +71,20 @@ export function buildHtmlTemplate(jsonData: string): string {
     }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'DM Sans', -apple-system, sans-serif;
       background: var(--bg-body);
       color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6, .page-header, .section-title, .card-title {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+    }
+
+    .card-value, .card-trend, .lang-pct, table td, table th, .header-badge, .pagination, pre, code, .font-mono, .path {
+      font-family: 'Space Grotesk', monospace;
+      font-variant-numeric: tabular-nums;
     }
 
     /* ===== LAYOUT ===== */
@@ -99,7 +110,6 @@ export function buildHtmlTemplate(jsonData: string): string {
       border-bottom: 1px solid var(--border);
     }
 
-    .sidebar-brand svg { color: var(--neon); }
     .sidebar-brand span { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; }
 
     .sidebar-nav { flex: 1; padding: 12px 8px; display: flex; flex-direction: column; gap: 2px; }
@@ -262,7 +272,7 @@ export function buildHtmlTemplate(jsonData: string): string {
       padding: 10px 12px; font-variant-numeric: tabular-nums;
     }
     table.data-table td.path {
-      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      font-family: 'Space Grotesk', monospace; font-size: 12px;
       max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
 
@@ -370,7 +380,18 @@ export function buildHtmlTemplate(jsonData: string): string {
   <!-- Sidebar -->
   <aside class="sidebar" :class="{ open: sidebarOpen }">
     <div class="sidebar-brand">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 256 256" fill="none">
+        <path d="M 127.15,49.43 L 110.85,59.4 C 97.91,67.11 92.19,79.71 92.67,94.01 V 100.69 L 137.71,73.68 C 145.06,69.33 151.79,68.61 158.45,68.15 L 127.85,49.43 H 127.15 Z" fill="var(--neon)"/>
+        <path d="M 177.78,78.99 C 164.83,71.67 148.76,73.13 133.92,83.96 L 170.07,105.07 V 159.43 C 170.07,169.08 167.78,177.51 165.21,184.11 L 194.31,167.38 V 89.66 L 177.78,78.99 Z" fill="var(--neon)"/>
+        <path d="M 163.66,155.21 L 116.91,183.81 C 110.99,187.32 104.81,188.44 98.22,188.19 L 127.85,205.62 L 144.52,195.71 C 157.91,187.76 164.61,174.91 163.66,158.81 V 155.21 Z" fill="var(--neon)"/>
+        <path d="M 86.04,151.37 V 94.01 C 86.04,85.81 88.22,78.18 90.81,71.7 L 61.29,89.66 V 167.38 L 76.21,177.01 C 88.91,184.94 106.27,183.39 120.95,172.86 L 86.04,151.37 Z" fill="var(--neon)"/>
+        <path d="M 132.72,5.63 V 39.44 L 200.82,79.28 L 230.76,62.42 L 133.32,5.63 H 132.72 Z" fill="var(--logo-dark)"/>
+        <path d="M 236.39,71.53 L 206.71,88.66 V 167.91 L 236.39,184.46 V 71.53 Z" fill="var(--logo-dark)"/>
+        <path d="M 132.72,215.82 V 250.37 L 230.16,193.58 V 192.98 L 200.52,176.43 L 132.72,215.82 Z" fill="var(--logo-dark)"/>
+        <path d="M 24.95,193.58 L 122.54,250.37 V 215.82 L 54.59,176.43 L 24.95,192.98 V 193.58 Z" fill="var(--logo-dark)"/>
+        <path d="M 19.08,71.53 V 184.46 L 48.72,167.91 V 88.66 L 19.08,71.53 Z" fill="var(--logo-dark)"/>
+        <path d="M 24.95,62.42 L 54.89,79.28 L 122.39,39.44 V 5.63 H 122.1 L 24.95,61.82 V 62.42 Z" fill="var(--logo-dark)"/>
+      </svg>
       <span>KOUNT</span>
     </div>
     <nav class="sidebar-nav">
@@ -765,9 +786,9 @@ export function buildHtmlTemplate(jsonData: string): string {
       <div class="card anim-fade-up delay-2" x-show="window.KOUNT_HISTORY && window.KOUNT_HISTORY.length >= 2" style="margin-top: 24px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
           <div class="section-title" style="margin-bottom: 0;">Historical Trends</div>
-          <select id="chartMetricSelector" style="background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer; outline: none;">
-            <option value="totalLines">Total Lines of Code</option>
+          <select id="chartMetricSelector" x-model="trendsMetric" @change="updateTrendsChart" style="background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer; outline: none;">
             <option value="totalFiles">Total Files</option>
+            <option value="totalLines">Total Lines of Code</option>
             <option value="techDebtScore">Tech Debt Score</option>
             <option value="commentRatio">Comment Ratio (%)</option>
           </select>
@@ -793,21 +814,21 @@ export function buildHtmlTemplate(jsonData: string): string {
         <table class="data-table" style="margin-top:8px">
           <thead><tr><th>Command</th><th>Short</th><th>Description</th></tr></thead>
           <tbody>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--interactive</td><td>-i</td><td>Launch the interactive terminal explorer</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">-d, --dir</td><td>-d</td><td>Target directory to scan (default: current dir)</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--output-mode</td><td></td><td>terminal | markdown | html | json | csv</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--output &lt;path&gt;</td><td>-o</td><td>Output file path</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--all</td><td>-a</td><td>Analyze ALL tracked files, ignoring git diff status</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--no-gitignore</td><td></td><td>Don't respect .gitignore rules</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--diff &lt;branch&gt;</td><td></td><td>Only analyze files changed vs branch</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--deep-git</td><td></td><td>Enable advanced Git ownership & risk analytics</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--stale-threshold &lt;years&gt;</td><td></td><td>Age threshold to classify code as stale (default: 2)</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--fail-on-size &lt;mb&gt;</td><td></td><td>Max codebase size in MB (CI quality gate)</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--min-comment-ratio &lt;%&gt;</td><td></td><td>Min required comment ratio (CI quality gate)</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--config &lt;path&gt;</td><td>-c</td><td>Path to a custom .kountrc.json config file</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--force</td><td>-f</td><td>Overwrite existing files</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--version</td><td>-V</td><td>Display version number</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--help</td><td>-h</td><td>Display help text</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">-d, --root-dir &lt;path&gt;</td><td>-d</td><td>Specify the root directory to scan (default: current dir)</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--output-mode &lt;mode&gt;</td><td>-o</td><td>terminal | markdown | html | json | csv</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--output &lt;path&gt;</td><td></td><td>Output file path</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--include-tests</td><td>-t</td><td>Include test files and directories in the analysis</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--no-gitignore</td><td></td><td>Disable parsing of .gitignore and .kountignore rules</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--no-cache</td><td></td><td>Disable the incremental high-performance caching engine</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--clear-cache</td><td></td><td>Purge the existing cache before running the scan</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--force</td><td>-f</td><td>Overwrite existing files</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--fail-on-size &lt;mb&gt;</td><td></td><td>Max codebase size in MB (CI quality gate)</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--min-comment-ratio &lt;%&gt;</td><td></td><td>Min required comment ratio (CI quality gate)</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--diff &lt;branch&gt;</td><td></td><td>Only analyze files changed vs branch</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--deep-git</td><td></td><td>Enable advanced Git ownership & risk analytics</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--stale-threshold &lt;years&gt;</td><td></td><td>Age threshold to classify code as stale (default: 2)</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--version</td><td>-V</td><td>Display version number</td></tr>
+            <tr><td style="font-family:'Space Grotesk', monospace;color:var(--neon)">--help</td><td>-h</td><td>Display help text</td></tr>
           </tbody>
         </table>
       </div>
@@ -818,7 +839,7 @@ export function buildHtmlTemplate(jsonData: string): string {
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">
             You can define default settings by creating a <code>.kountrc.json</code> file in your project root.
           </p>
-          <pre style="background:var(--bg-input);padding:12px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;">
+          <pre style="background:var(--bg-input);padding:12px;border-radius:6px;font-family:'Space Grotesk', monospace;font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;">
 {
   "outputMode": "html",
   "deepGit": true,
@@ -836,7 +857,7 @@ export function buildHtmlTemplate(jsonData: string): string {
           <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
             For KOUNT-specific ignores (files you want in Git but NOT scanned by KOUNT), create a <code>.kountignore</code> file in your project root using standard glob syntax.
           </p>
-          <pre style="background:var(--bg-input);padding:12px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;margin-top:12px;">
+          <pre style="background:var(--bg-input);padding:12px;border-radius:6px;font-family:'Space Grotesk', monospace;font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;margin-top:12px;">
 # .kountignore example
 generated/**/*.ts
 docs/drafts/*.md</pre>
@@ -873,6 +894,7 @@ docs/drafts/*.md</pre>
         filesPerPage: 25,
         animatedValues: { files: 0, codeLines: 0, debt: 0 },
         chartsInitialized: {},
+        trendsMetric: 'totalFiles',
 
         init() {
           const savedTheme = localStorage.getItem('kount-theme');
@@ -992,6 +1014,18 @@ docs/drafts/*.md</pre>
         },
 
         /* Charts */
+        updateTrendsChart() {
+          if (!window._kountTrendsChart) return;
+          const chart = window._kountTrendsChart;
+          const selector = document.getElementById('chartMetricSelector');
+          if (!selector) return;
+          const metric = this.trendsMetric;
+          const historyData = window.KOUNT_HISTORY || [];
+          chart.data.datasets[0].data = historyData.map(entry => entry[metric]);
+          chart.data.datasets[0].label = selector.options[selector.selectedIndex].text;
+          chart.update();
+        },
+
         renderCharts(section) {
           const gridClr = getComputedStyle(document.documentElement).getPropertyValue('--chart-grid').trim();
           const txtClr = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim();
@@ -1098,16 +1132,16 @@ docs/drafts/*.md</pre>
                 return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
               });
               
-              const getMetricData = (metric) => historyData.map(entry => entry[metric]);
-              const metricSelector = document.getElementById('chartMetricSelector');
+              const selector = document.getElementById('chartMetricSelector');
               
-              this.chartsInitialized.trendsLine = new Chart(ctx, {
+              // Store outside Alpine's proxy layer to prevent Chart.js update bugs
+              window._kountTrendsChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                   labels: labels,
                   datasets: [{
-                    label: metricSelector.options[metricSelector.selectedIndex].text,
-                    data: getMetricData(metricSelector.value),
+                    label: selector ? selector.options[selector.selectedIndex].text : 'Total Files',
+                    data: historyData.map(entry => entry[this.trendsMetric]),
                     borderColor: '#00ff88',
                     backgroundColor: 'rgba(0, 255, 136, 0.1)',
                     borderWidth: 2,
@@ -1134,14 +1168,7 @@ docs/drafts/*.md</pre>
                   animation: false
                 }
               });
-              
-              metricSelector.addEventListener('change', (e) => {
-                const chart = this.chartsInitialized.trendsLine;
-                const metric = e.target.value;
-                chart.data.datasets[0].data = getMetricData(metric);
-                chart.data.datasets[0].label = e.target.options[e.target.selectedIndex].text;
-                chart.update();
-              });
+              this.chartsInitialized.trendsLine = true; // Mark as initialized without proxying the massive Chart object
             }
           }
         },

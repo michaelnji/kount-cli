@@ -6,7 +6,7 @@
   "module": "src/index.tsx",
   "type": "module",
   "bin": {
-    "kount": "dist/kount.js"
+    "kount": "./dist/kount.js"
   },
   "files": [
     "dist",
@@ -20,7 +20,7 @@
     "start": "bun run src/index.tsx",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build": "rm -rf dist && bun build ./src/index.tsx --outfile dist/kount.js --target node",
+    "build": "rm -rf dist && bun build ./src/index.tsx --outfile dist/kount.js --target node --minify --sourcemap=none",
     "prepublishOnly": "bun run build",
     "release": "np"
   },

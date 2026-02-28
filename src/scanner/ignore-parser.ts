@@ -11,7 +11,11 @@ const DEFAULT_IGNORES = [
   '.nuxt',
   'coverage',
   '.kountcache.json', // Our own cache file
+  '.kountcache',
   '.kount', // Our history directory
+  '.kountignore',
+  '.kountrc.json',
+  'kount-report.*',
 ];
 
 interface IgnoreContext {

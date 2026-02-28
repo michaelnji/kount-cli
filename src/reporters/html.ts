@@ -124,7 +124,11 @@ async function generateHtmlDashboard(stats: ProjectStats): Promise<string> {
     debtHotspots: debtData,
     gitInsights: gitData,
     highDebtFiles: highDebtData,
-    topDependencies: stats.topDependencies ?? [],
+    topDependencies: (stats.topDependencies ?? []).map((dep, i) => ({
+      rank: i + 1,
+      name: dep.name,
+      count: dep.count,
+    })),
     trends: stats.trends ?? null,
     history,
     scannedAt: stats.scannedAt.toISOString(),
