@@ -40,7 +40,7 @@
 |---------|-------------|
 | **Interactive Explorer** | Jump straight into an interactive wizard UI (`--interactive`/no flags) to pick your codebase scan parameters. |
 | **CI/CD Quality Gates** | Enforce maintainability out-of-the-box. Fail your builds if limits are exceeded using `--fail-on-size <mb>` and `--min-comment-ratio <percent>`. |
-| **Git Intelligence (`--diff`)** | Focus your analysis only on files changed relative to a specific branch (e.g., `--diff main`), and track Top Contributors for the scanned codebase. |
+| **Git Intelligence (`--diff`, `--deep-git`)** | Rapidly analyze files changed in a PR (`--diff main`), or run deep analytics for Code Volatility, Knowledge Silos (Bus Factor), and Code Age via `git blame` (`--deep-git`). |
 | **Tech Debt Tracking** | Correlates code churn and comment ratios to identify your project's highest "Tech Debt" hotspots. |
 | **Structured Exports** | Get pure data endpoints. Output results instantly to JSON or CSV via `--output-mode json` or `--output-mode csv`. |
 | **Stream-Based Caching** | Capable of scaling to monolithic codebases. Incremental `mtime` cache ensures repeat scans take fractions of a second. |
@@ -119,6 +119,8 @@ Options:
   --fail-on-size <mb>            CI/CD Gate: Fail with exit code 1 if codebase exceeds <mb> MB
   --min-comment-ratio <percent>  CI/CD Gate: Fail with exit code 1 if comment ratio is below <percent>%
   --diff <branch>                Git Intelligence: Only analyze files changed relative to the specified <branch>
+  --deep-git                     Git Intelligence: Enable deep analytics (blame, numstat) which can be slow on large repos
+  --stale-threshold <years>      Git Intelligence: Define stale file threshold in years (default: 2)
   -h, --help                     display help for command
 ```
 
@@ -136,6 +138,8 @@ Tired of passing the same flags? Standardize your project's `kount` metrics by a
   "respectGitignore": true,
   "failOnSize": 50,
   "minCommentRatio": 10,
+  "deepGit": true,
+  "staleThreshold": 2,
   "cache": {
     "enabled": true,
     "clearFirst": false

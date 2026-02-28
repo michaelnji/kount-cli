@@ -775,6 +775,8 @@ export function buildHtmlTemplate(jsonData: string): string {
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--all</td><td>-a</td><td>Analyze ALL tracked files, ignoring git diff status</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--no-gitignore</td><td></td><td>Don't respect .gitignore rules</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--diff &lt;branch&gt;</td><td></td><td>Only analyze files changed vs branch</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--deep-git</td><td></td><td>Enable advanced Git ownership & risk analytics</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--stale-threshold &lt;years&gt;</td><td></td><td>Age threshold to classify code as stale (default: 2)</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--fail-on-size &lt;mb&gt;</td><td></td><td>Max codebase size in MB (CI quality gate)</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--min-comment-ratio &lt;%&gt;</td><td></td><td>Min required comment ratio (CI quality gate)</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--config &lt;path&gt;</td><td>-c</td><td>Path to a custom .kountrc.json config file</td></tr>
@@ -794,9 +796,10 @@ export function buildHtmlTemplate(jsonData: string): string {
           <pre style="background:var(--bg-input);padding:12px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;">
 {
   "outputMode": "html",
-  "qualityGates": {
-    "maxSizeMb": 50,
-    "minCommentRatio": 10
+  "deepGit": true,
+  "staleThreshold": 2,
+  "cache": {
+    "enabled": true
   }
 }</pre>
         </div>
