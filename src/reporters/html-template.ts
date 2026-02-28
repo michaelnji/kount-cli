@@ -18,6 +18,7 @@ export function buildHtmlTemplate(jsonData: string): string {
   <title>KOUNT Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
@@ -172,10 +173,17 @@ export function buildHtmlTemplate(jsonData: string): string {
 
     .page-header {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 28px;
-    }
+      margin-bottom: 8px; }
 
     .page-header h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+
+    .section-tip {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 28px;
+      max-width: 800px;
+    }
 
     .header-actions { display: flex; gap: 10px; align-items: center; }
 
@@ -394,7 +402,7 @@ export function buildHtmlTemplate(jsonData: string): string {
       </svg>
       <span>KOUNT</span>
     </div>
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav mb-4">
       <a :class="{ active: currentSection === 'overview' }" @click="go('overview')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         Overview
@@ -447,7 +455,7 @@ export function buildHtmlTemplate(jsonData: string): string {
 
     <!-- ===== OVERVIEW ===== -->
     <div class="section-view" :class="{ active: currentSection === 'overview' }">
-      <div class="page-header">
+      <div style="margin-bottom: 24px;" class="page-header">
         <h1>Overview</h1>
         <div class="header-actions">
           <span class="header-badge" x-text="'Scanned ' + new Date(data.scannedAt).toLocaleString()"></span>
@@ -538,7 +546,7 @@ export function buildHtmlTemplate(jsonData: string): string {
           <thead><tr><th>#</th><th>File</th><th>Size</th></tr></thead>
           <tbody>
             <template x-for="f in data.largestFiles" :key="f.rank">
-              <tr><td x-text="f.rank"></td><td class="path" x-text="f.path"></td><td x-text="f.size"></td></tr>
+              <tr><td x-text="f.rank"></td><td class="path" x-html="renderPathWithIcon(f.path)"></td><td x-text="f.size"></td></tr>
             </template>
           </tbody>
         </table>
@@ -547,7 +555,10 @@ export function buildHtmlTemplate(jsonData: string): string {
 
     <!-- ===== FILES ===== -->
     <div class="section-view" :class="{ active: currentSection === 'files' }">
-      <div class="page-header"><h1>Files</h1></div>
+      <div class="page-header">
+        <h1>Files</h1>
+      </div>
+      <p class="section-tip">Detailed metrics for every scanned file. Sort by <strong>Score</strong> to prioritize refactoring efforts. High scores often indicate risky, complex, or undocumented code.</p>
       <div class="card">
         <div class="table-controls">
           <div class="search-wrap">
@@ -581,7 +592,7 @@ export function buildHtmlTemplate(jsonData: string): string {
             <tbody>
               <template x-for="f in paginatedFiles" :key="f.path">
                 <tr>
-                  <td class="path" x-text="f.path"></td>
+                  <td class="path" x-html="renderPathWithIcon(f.path)"></td>
                   <td x-text="f.lines.toLocaleString()"></td>
                   <td x-text="f.comments.toLocaleString()"></td>
                   <td x-text="f.blanks.toLocaleString()"></td>
@@ -614,7 +625,10 @@ export function buildHtmlTemplate(jsonData: string): string {
 
     <!-- ===== LANGUAGES ===== -->
     <div class="section-view" :class="{ active: currentSection === 'languages' }">
-      <div class="page-header"><h1>Languages</h1></div>
+      <div class="page-header">
+        <h1>Languages</h1>
+      </div>
+      <p class="section-tip">Distribution of programming languages across your codebase, calculated by the number of files and lines of code.</p>
       <div class="chart-row">
         <div class="card anim-scale-in">
           <div class="section-title">Distribution</div>
@@ -641,7 +655,10 @@ export function buildHtmlTemplate(jsonData: string): string {
 
     <!-- ===== TECH DEBT ===== -->
     <div class="section-view" :class="{ active: currentSection === 'debt' }">
-      <div class="page-header"><h1>Tech Debt</h1></div>
+      <div class="page-header">
+        <h1>Tech Debt</h1>
+      </div>
+      <p class="section-tip">A deeper dive into technical debt. Identifies files with high complexity, low comment ratios, and pinpoints explicit debt markers like TODOs and FIXMEs.</p>
       <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr)">
         <div class="card anim-fade-up delay-1">
           <div class="card-title">Debt Score</div>
@@ -679,7 +696,10 @@ export function buildHtmlTemplate(jsonData: string): string {
 
     <!-- ===== GIT ===== -->
     <div class="section-view" :class="{ active: currentSection === 'git' }">
-      <div class="page-header"><h1>Git Intelligence</h1></div>
+      <div class="page-header">
+        <h1>Git Intelligence</h1>
+      </div>
+      <p class="section-tip">Insights derived from your version control history. Identifies code ownership, knowledge silos (Bus Factor = 1), stale files, and components with high churn rates.</p>
       <template x-if="data.gitInsights">
         <div>
           <template x-if="data.gitInsights.diffBranch">
@@ -720,7 +740,7 @@ export function buildHtmlTemplate(jsonData: string): string {
                 <thead><tr><th>#</th><th>File</th><th>Commits</th></tr></thead>
                 <tbody>
                   <template x-for="f in data.gitInsights?.highChurnFiles ?? []" :key="f.rank">
-                    <tr><td x-text="f.rank"></td><td class="path" x-text="f.path"></td><td style="color:var(--neon);font-weight:600" x-text="f.commits"></td></tr>
+                    <tr><td x-text="f.rank"></td><td class="path" x-html="renderPathWithIcon(f.path)"></td><td style="color:var(--neon);font-weight:600" x-text="f.commits"></td></tr>
                   </template>
                 </tbody>
               </table>
@@ -746,7 +766,10 @@ export function buildHtmlTemplate(jsonData: string): string {
 
     <!-- ===== DEPENDENCIES ===== -->
     <div class="section-view" :class="{ active: currentSection === 'dependencies' }">
-      <div class="page-header"><h1>Dependencies</h1></div>
+      <div class="page-header">
+        <h1>Dependencies</h1>
+      </div>
+      <p class="section-tip">Aggregated list of the most imported external packages across your codebase, helping you track third-party reliance.</p>
       <template x-if="data.topDependencies && data.topDependencies.length > 0">
         <div class="card anim-fade-up">
           <div class="section-title">Top External Packages</div>
@@ -768,7 +791,10 @@ export function buildHtmlTemplate(jsonData: string): string {
 
     <!-- ===== TRENDS ===== -->
     <div class="section-view" :class="{ active: currentSection === 'trends' }">
-      <div class="page-header"><h1>Trends</h1></div>
+      <div class="page-header">
+        <h1>Trends</h1>
+      </div>
+      <p class="section-tip">Track your project's evolution over time. Visualizes how key metrics like total size and tech debt score are changing across different scans.</p>
       <template x-if="data.trends">
         <div>
           <div class="stats-grid" style="grid-template-columns: repeat(5, 1fr); margin-bottom: 24px;">
@@ -879,6 +905,127 @@ docs/drafts/*.md</pre>
 
   <script>
     window.KOUNT_HISTORY = ${historyJson};
+
+    const iconMap = {
+      // Web & UI
+      'html': 'devicon-html5-plain colored',
+      'htm': 'devicon-html5-plain colored',
+      'css': 'devicon-css3-plain colored',
+      'scss': 'devicon-sass-original colored',
+      'sass': 'devicon-sass-original colored',
+      'less': 'devicon-less-plain-wordmark colored',
+      'js': 'devicon-javascript-plain colored',
+      'mjs': 'devicon-javascript-plain colored',
+      'cjs': 'devicon-javascript-plain colored',
+      'jsx': 'devicon-react-original colored',
+      'ts': 'devicon-typescript-plain colored',
+      'tsx': 'devicon-react-original colored',
+      'vue': 'devicon-vuejs-plain colored',
+      'svelte': 'devicon-svelte-plain colored',
+      'astro': 'devicon-astro-plain colored',
+      'elm': 'devicon-elm-plain colored',
+      
+      // Backend & Systems
+      'py': 'devicon-python-plain colored',
+      'pyc': 'devicon-python-plain',
+      'rb': 'devicon-ruby-plain colored',
+      'php': 'devicon-php-plain colored',
+      'java': 'devicon-java-plain colored',
+      'jar': 'devicon-java-plain colored',
+      'cs': 'devicon-csharp-plain colored',
+      'fs': 'devicon-fsharp-plain colored',
+      'go': 'devicon-go-original-wordmark colored',
+      'rs': 'devicon-rust-plain', // Rust doesn't use 'colored'
+      'c': 'devicon-c-plain colored',
+      'cpp': 'devicon-cplusplus-plain colored',
+      'h': 'devicon-c-plain colored',
+      'hpp': 'devicon-cplusplus-plain colored',
+      'zig': 'devicon-zig-plain colored',
+      'nim': 'devicon-nim-plain colored',
+      
+      // Mobile & Apple
+      'swift': 'devicon-swift-plain colored',
+      'kt': 'devicon-kotlin-plain colored',
+      'kts': 'devicon-kotlin-plain colored',
+      'dart': 'devicon-dart-plain colored',
+      'm': 'devicon-objectivec-plain colored',
+      
+      // Scripts & Shell
+      'sh': 'devicon-bash-plain colored',
+      'bash': 'devicon-bash-plain colored',
+      'zsh': 'devicon-bash-plain colored',
+      'ps1': 'devicon-powershell-plain colored',
+      'bat': 'devicon-windows8-original colored',
+      
+      // Data & Config
+      'json': 'devicon-json-plain colored',
+      'yaml': 'devicon-yaml-plain colored',
+      'yml': 'devicon-yaml-plain colored',
+      'xml': 'devicon-xml-plain colored',
+      'toml': 'devicon-yaml-plain colored',
+      'csv': '📊',
+      'sql': 'devicon-azuresqldatabase-plain colored',
+      'graphql': 'devicon-graphql-plain colored',
+      'gql': 'devicon-graphql-plain colored',
+      'prisma': 'devicon-prisma-original colored',
+      
+      // DevOps & Infrastructure
+      'dockerfile': 'devicon-docker-plain colored',
+      'tf': 'devicon-terraform-plain colored',
+      'tfvars': 'devicon-terraform-plain colored',
+      'nix': 'devicon-nixos-plain colored',
+      
+      // Functional & Academic
+      'scala': 'devicon-scala-plain colored',
+      'ex': 'devicon-elixir-plain colored',
+      'exs': 'devicon-elixir-plain colored',
+      'erl': 'devicon-erlang-plain colored',
+      'clj': 'devicon-clojure-line colored',
+      'r': 'devicon-r-original colored',
+      'jl': 'devicon-julia-plain colored',
+      'pl': 'devicon-perl-plain colored',
+      'lua': 'devicon-lua-plain colored',
+      
+      // Web3
+      'sol': 'devicon-solidity-plain colored',
+      
+      // Docs & System
+      'md': 'devicon-markdown-original colored',
+      'mdx': 'devicon-markdown-original colored',
+      'txt': '📄',
+      'log': '📋',
+      'env': '⚙️',
+      'gitignore': '🚫',
+      'npmignore': '🚫',
+      'lock': '🔒'
+    };
+
+    function getFileIcon(filePath) {
+      if (!filePath) return '📄';
+      const parts = filePath.split('/');
+      const fileName = parts[parts.length - 1].toLowerCase();
+      
+      if (fileName === 'dockerfile') return iconMap['dockerfile'];
+      if (fileName === '.gitignore') return iconMap['gitignore'];
+      if (fileName === '.npmignore') return iconMap['npmignore'];
+      if (fileName === '.env' || fileName.startsWith('.env.')) return iconMap['env'];
+      if (fileName.includes('lock')) return iconMap['lock'];
+      
+      const extMatch = fileName.match(/\\.([^.]+)$/);
+      if (extMatch && iconMap[extMatch[1]]) {
+        return iconMap[extMatch[1]];
+      }
+      return '📄';
+    }
+
+    function renderPathWithIcon(filePath) {
+      const iconClass = getFileIcon(filePath);
+      const iconHtml = iconClass.startsWith('devicon-') 
+        ? \`<i class="\${iconClass}" style="margin-right: 8px; font-size: 1.2em; vertical-align: middle;"></i>\` 
+        : \`<span style="margin-right: 8px; font-size: 1.2em; vertical-align: middle;">\${iconClass}</span>\`;
+      return iconHtml + filePath;
+    }
+
 
     function dashboard() {
       const raw = ${jsonData};

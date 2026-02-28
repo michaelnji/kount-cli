@@ -82,6 +82,7 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
     const [activeFile, setActiveFile] = useState<string | undefined>();
     const [stats, setStats] = useState<ProjectStats | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [reportMsg, setReportMsg] = useState<string>('');
 
     // Show splash briefly, then move to wizard
     useEffect(() => {
@@ -110,7 +111,7 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
                 setCurrentStage(stage);
                 setActiveFile(file);
             })
-            .then((result) => {
+            .then(async (result) => {
                 // Quality gate check in terminal mode
                 const failures = checkQualityGates(config, result);
                 if (failures.length > 0) {
@@ -124,13 +125,29 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
                 // Persist run for trend tracking
                 saveRun(config.rootDir, result).catch(() => {});
                 setStats(result);
+
+                // Generate report
+                if (config.outputMode === 'markdown') {
+                    const outputPath = await writeMarkdownReport(result, config.outputPath, config.force);
+                    setReportMsg(`Markdown report written to ${outputPath}`);
+                } else if (config.outputMode === 'html') {
+                    const { url } = await serveHtmlDashboard(result);
+                    setReportMsg(`Dashboard running at ${url}\nPress Ctrl+C to stop.`);
+                } else if (config.outputMode === 'json') {
+                    const outputPath = await writeJsonReport(result, config.outputPath);
+                    setReportMsg(`JSON report written to ${outputPath}`);
+                } else if (config.outputMode === 'csv') {
+                    const outputPath = await writeCsvReport(result, config.outputPath);
+                    setReportMsg(`CSV report written to ${outputPath}`);
+                }
+
                 setPhase('done');
             })
             .catch((err: unknown) => {
                 setError(err instanceof Error ? err.message : String(err));
                 setPhase('done');
             });
-    }, [phase, config]);
+    }, [phase, config, exit]);
 
     const handleWizardComplete = useCallback((result: WizardResult) => {
         const updatedConfig: KountConfig = {
@@ -140,31 +157,22 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
             includeTests: result.includeTests,
         };
 
-        if (result.outputMode !== 'terminal') {
-            // Non-terminal mode selected in wizard — exit Ink and run headless
-            exit();
-            setTimeout(() => {
-                runHeadless(updatedConfig).catch((err: unknown) => {
-                    process.stderr.write(`Error: ${err instanceof Error ? err.message : String(err)}\n`);
-                    process.exit(1);
-                });
-            }, 100);
-            return;
-        }
-
         setConfig(updatedConfig);
         setPhase('scanning');
-    }, [config, exit]);
+    }, [config]);
 
     // Auto-exit after done phase is displayed
     useEffect(() => {
         if (phase === 'done' && stats) {
+            if (config.outputMode === 'html') {
+                return; // Keep running for HTML serve
+            }
             // Give the user a moment to see the results
             const timer = setTimeout(() => exit(), 500);
             return () => clearTimeout(timer);
         }
         return undefined;
-    }, [phase, stats, exit]);
+    }, [phase, stats, exit, config.outputMode]);
 
     return (
         <Box flexDirection="column">
@@ -181,7 +189,12 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
                     <Text color="red" bold>Error: {error}</Text>
                 </Box>
             )}
-            {phase === 'done' && stats && <Summary stats={stats} />}
+            {phase === 'done' && stats && config.outputMode === 'terminal' && <Summary stats={stats} />}
+            {phase === 'done' && stats && config.outputMode !== 'terminal' && (
+                <Box marginY={1}>
+                    <Text color="green" bold>{reportMsg}</Text>
+                </Box>
+            )}
         </Box>
     );
 }
@@ -194,13 +207,9 @@ async function main(): Promise<void> {
     const cliFlags = createCli(process.argv);
     const config = await resolveConfig(cliFlags);
 
-    // Non-TTY / Data Pipe Bypass:
-    // If stdout is not a TTY (piping) OR output is json/csv,
-    // bypass Ink entirely and run silently to avoid corrupting stdout.
-    const isSilentMode =
-        !process.stdout.isTTY ||
-        config.outputMode === 'json' ||
-        config.outputMode === 'csv';
+    // Non-TTY Bypass Only:
+    // If stdout is not a TTY (piping), bypass Ink entirely.
+    const isSilentMode = !process.stdout.isTTY;
 
     if (isSilentMode) {
         // Run engine silently with no-op callback, output raw data
@@ -239,20 +248,15 @@ async function main(): Promise<void> {
         process.exit(0);
     }
 
-    if (config.outputMode === 'terminal') {
-        // Determine if we need the wizard (no explicit flags were passed)
-        const hasExplicitFlags = cliFlags.rootDir !== undefined || cliFlags.outputMode !== undefined;
+    // Determine if we need the wizard (no explicit flags were passed)
+    const hasExplicitFlags = cliFlags.rootDir !== undefined || cliFlags.outputMode !== undefined;
 
-        render(
-            React.createElement(App, {
-                config,
-                needsWizard: !hasExplicitFlags,
-            })
-        );
-    } else {
-        // Markdown, HTML — run headless (no Ink UI)
-        await runHeadless(config);
-    }
+    render(
+        React.createElement(App, {
+            config,
+            needsWizard: !hasExplicitFlags,
+        })
+    );
 }
 
 main().catch((err: unknown) => {
