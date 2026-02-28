@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
+import type { ProgressCallback } from '../plugins/types.js';
 import { IgnoreParser } from './ignore-parser.js';
 
 export interface ScannedFile {
@@ -16,6 +17,7 @@ export type FileChunkCallback = (chunk: Buffer, isLast: boolean) => void;
  */
 export class Scanner {
   private parser: IgnoreParser;
+  private discoveredCount = 0;
 
   constructor(rootDir: string, respectGitignore: boolean = true) {
     this.parser = new IgnoreParser(rootDir, respectGitignore);
@@ -24,12 +26,13 @@ export class Scanner {
   /**
    * Discovers all files in the directory tree matching rules.
    */
-  async discover(dirPath: string): Promise<ScannedFile[]> {
+  async discover(dirPath: string, onProgress?: ProgressCallback): Promise<ScannedFile[]> {
+    this.discoveredCount = 0;
     await this.parser.init();
-    return this.walk(path.resolve(dirPath));
+    return this.walk(path.resolve(dirPath), onProgress);
   }
 
-  private async walk(currentDir: string): Promise<ScannedFile[]> {
+  private async walk(currentDir: string, onProgress?: ProgressCallback): Promise<ScannedFile[]> {
     const filesList: ScannedFile[] = [];
 
     // Provide ignore rules for this specific directory level
@@ -47,7 +50,7 @@ export class Scanner {
         }
 
         if (entry.isDirectory()) {
-          const subFiles = await this.walk(fullPath);
+          const subFiles = await this.walk(fullPath, onProgress);
           filesList.push(...subFiles);
         } else if (entry.isFile()) {
            try {
@@ -55,6 +58,10 @@ export class Scanner {
              // We'll calculate it so plugins can use it.
              const stats = await fsp.stat(fullPath);
              filesList.push({ filePath: fullPath, size: stats.size });
+             this.discoveredCount++;
+             if (onProgress && this.discoveredCount % 50 === 0) {
+               onProgress('Scanning...', `Found ${this.discoveredCount.toLocaleString()} files`);
+             }
            } catch (e) {
              // Handle gracefully: e.g. broken symlink or permission denied
              // Could hook a logger here later.

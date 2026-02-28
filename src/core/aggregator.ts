@@ -14,7 +14,7 @@ import {
   TotalFilesPlugin,
   TotalLinesPlugin,
 } from '../plugins/index.js';
-import type { AnalyzedFileData, AnalyzerPlugin, PluginResult, ProjectStats } from '../plugins/types.js';
+import type { AnalyzedFileData, AnalyzerPlugin, PluginResult, ProgressCallback, ProjectStats } from '../plugins/types.js';
 import type { ScannedFile } from '../scanner/stream-reader.js';
 import { Scanner } from '../scanner/stream-reader.js';
 import { getPreviousRun } from '../state/history.js';
@@ -74,17 +74,19 @@ export class Aggregator {
    * Runs the full pipeline: discover → diff filter → stream → churn → analyze → aggregate.
    * Returns a ProjectStats payload ready for reporters.
    *
-   * @param onProgress Optional callback fired per file for progress tracking.
+   * @param onProgress Optional callback fired per step for UI progress tracking.
    */
-  async run(onProgress?: (current: number, total: number, filePath: string) => void): Promise<ProjectStats> {
+  async run(onProgress?: ProgressCallback): Promise<ProjectStats> {
     // 0. Cache setup
+    if (onProgress) onProgress('Loading cache...');
     if (this.clearCacheFirst) {
       await this.cache.clear();
     }
     await this.cache.load();
 
     // 1. Discover files
-    let scannedFiles = await this.scanner.discover(this.rootDir);
+    if (onProgress) onProgress('Scanning...', 'Initializing ignore rules');
+    let scannedFiles = await this.scanner.discover(this.rootDir, onProgress);
 
     // 2. Check Git availability
     const gitAvailable = await isGitRepo(this.rootDir);
@@ -102,18 +104,21 @@ export class Aggregator {
     const analyzedFiles: AnalyzedFileData[] = [];
     let current = 0;
 
+    if (onProgress) onProgress('Analyzing files...', `0 / ${scannedFiles.length}`);
+
     for (const scannedFile of scannedFiles) {
       const fileData = await this.processFile(scannedFile);
       analyzedFiles.push(fileData);
       current++;
 
-      if (onProgress) {
-        onProgress(current, scannedFiles.length, scannedFile.filePath);
+      if (onProgress && current % 10 === 0) {
+        onProgress('Analyzing files...', `${current.toLocaleString()} / ${scannedFiles.length.toLocaleString()}`);
       }
     }
 
     // 5. Fetch Git churn data (if Git is available)
     if (gitAvailable) {
+      if (onProgress) onProgress('Fetching Git metrics...', 'Analyzing file churn');
       const churnMap = await batchGetFileChurn(
         this.rootDir,
         analyzedFiles.map((f) => path.relative(this.rootDir, f.filePath)),
@@ -222,6 +227,7 @@ export class Aggregator {
     }
 
     // 14. Compute tech debt score and high-debt files
+    if (onProgress) onProgress('Calculating Tech Debt...');
     const techDebtPlugin = this.plugins.find(
       (p): p is TechDebtPlugin => p.name === 'TechDebt'
     ) as TechDebtPlugin | undefined;

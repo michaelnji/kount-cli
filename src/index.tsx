@@ -12,7 +12,7 @@ import { writeCsvReport } from './reporters/csv.js';
 import { serveHtmlDashboard } from './reporters/html.js';
 import { writeJsonReport } from './reporters/json.js';
 import { writeMarkdownReport } from './reporters/markdown.js';
-import { Progress } from './reporters/terminal/Progress.js';
+import { ProgressIndicator } from './reporters/terminal/ProgressIndicator.js';
 import { Splash } from './reporters/terminal/Splash.js';
 import { Summary } from './reporters/terminal/Summary.js';
 import type { WizardResult } from './reporters/terminal/Wizard.js';
@@ -75,7 +75,7 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
     const { exit } = useApp();
     const [phase, setPhase] = useState<AppPhase>(needsWizard ? 'splash' : 'scanning');
     const [config, setConfig] = useState<KountConfig>(initialConfig);
-    const [progress, setProgress] = useState({ current: 0, total: 0, file: '' });
+    const [progress, setProgress] = useState({ status: 'Initializing...', details: '' });
     const [stats, setStats] = useState<ProjectStats | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -100,8 +100,8 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
         });
 
         aggregator
-            .run((current, total, filePath) => {
-                setProgress({ current, total, file: filePath });
+            .run((status, details) => {
+                setProgress({ status, details: details ?? '' });
             })
             .then((result) => {
                 // Quality gate check in terminal mode
@@ -166,14 +166,11 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
 { phase === 'wizard' && <Wizard onComplete={ handleWizardComplete } /> }
 {
     phase === 'scanning' && (
-        <Box flexDirection="column" >
-            <Progress
-            current={ progress.current }
-    total = { progress.total }
-    currentFile = { progress.file }
+        <ProgressIndicator
+            status={ progress.status }
+            details={ progress.details }
         />
-        </Box>
-      )
+    )
 }
 {
     phase === 'done' && error && (

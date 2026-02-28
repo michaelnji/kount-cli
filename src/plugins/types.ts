@@ -1,3 +1,7 @@
+/**
+ * Callback function to report running progress to the UI.
+ */
+export type ProgressCallback = (status: string, details?: string) => void;
 
 /**
  * Represents the result of a single plugin's analysis on the entire project.
