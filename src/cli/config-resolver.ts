@@ -6,7 +6,7 @@ import path from 'node:path';
  */
 export interface KountConfig {
   rootDir: string;
-  outputMode: 'terminal' | 'markdown' | 'html';
+  outputMode: 'terminal' | 'markdown' | 'html' | 'json' | 'csv';
   includeTests: boolean;
   respectGitignore: boolean;
   cache: {
@@ -15,6 +15,10 @@ export interface KountConfig {
   };
   force: boolean;
   outputPath?: string;
+  qualityGates?: {
+    failOnSize?: number;
+    minCommentRatio?: number;
+  };
 }
 
 /**
@@ -29,6 +33,8 @@ interface ConfigFile {
     enabled?: boolean;
     clearFirst?: boolean;
   };
+  failOnSize?: number;
+  minCommentRatio?: number;
 }
 
 /**
@@ -43,6 +49,8 @@ export interface CliFlags {
   clearCache?: boolean;
   force?: boolean;
   output?: string;
+  failOnSize?: number;
+  minCommentRatio?: number;
 }
 
 const DEFAULTS: KountConfig = {
@@ -165,11 +173,26 @@ export async function resolveConfig(cliFlags: CliFlags, cwd: string = process.cw
     },
     force: cliFlags.force ?? DEFAULTS.force,
     outputPath: cliFlags.output,
+    qualityGates: buildQualityGates(cliFlags, fileConfig),
   };
 }
 
-function validateOutputMode(mode: string): 'terminal' | 'markdown' | 'html' {
-  const valid = ['terminal', 'markdown', 'html'];
-  if (valid.includes(mode)) return mode as 'terminal' | 'markdown' | 'html';
+function buildQualityGates(
+  cliFlags: CliFlags,
+  fileConfig: ConfigFile
+): KountConfig['qualityGates'] {
+  const failOnSize = cliFlags.failOnSize ?? fileConfig.failOnSize;
+  const minCommentRatio = cliFlags.minCommentRatio ?? fileConfig.minCommentRatio;
+
+  if (failOnSize === undefined && minCommentRatio === undefined) {
+    return undefined;
+  }
+
+  return { failOnSize, minCommentRatio };
+}
+
+function validateOutputMode(mode: string): 'terminal' | 'markdown' | 'html' | 'json' | 'csv' {
+  const valid = ['terminal', 'markdown', 'html', 'json', 'csv'];
+  if (valid.includes(mode)) return mode as 'terminal' | 'markdown' | 'html' | 'json' | 'csv';
   return 'terminal';
 }

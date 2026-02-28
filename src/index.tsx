@@ -6,8 +6,11 @@ import type { KountConfig } from './cli/config-resolver.js';
 import { resolveConfig } from './cli/config-resolver.js';
 import { createCli } from './cli/parser.js';
 import { Aggregator } from './core/aggregator.js';
+import { checkQualityGates } from './core/quality-gates.js';
 import type { ProjectStats } from './plugins/types.js';
+import { writeCsvReport } from './reporters/csv.js';
 import { serveHtmlDashboard } from './reporters/html.js';
+import { writeJsonReport } from './reporters/json.js';
 import { writeMarkdownReport } from './reporters/markdown.js';
 import { Progress } from './reporters/terminal/Progress.js';
 import { Splash } from './reporters/terminal/Splash.js';
@@ -28,12 +31,27 @@ async function runHeadless(config: KountConfig): Promise<void> {
 
     const stats = await aggregator.run();
 
+    // Quality gate check
+    const failures = checkQualityGates(config, stats);
+    if (failures.length > 0) {
+        for (const msg of failures) {
+            process.stderr.write(`❌ Quality Gate Failed: ${msg}\n`);
+        }
+        process.exit(1);
+    }
+
     if (config.outputMode === 'markdown') {
         const outputPath = await writeMarkdownReport(stats, config.outputPath, config.force);
         process.stdout.write(`Markdown report written to ${outputPath}\n`);
     } else if (config.outputMode === 'html') {
         const { url } = await serveHtmlDashboard(stats);
         process.stdout.write(`Dashboard running at ${url}\nPress Ctrl+C to stop.\n`);
+    } else if (config.outputMode === 'json') {
+        const outputPath = await writeJsonReport(stats, config.outputPath);
+        process.stdout.write(`JSON report written to ${outputPath}\n`);
+    } else if (config.outputMode === 'csv') {
+        const outputPath = await writeCsvReport(stats, config.outputPath);
+        process.stdout.write(`CSV report written to ${outputPath}\n`);
     }
 }
 
@@ -80,6 +98,16 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
                 setProgress({ current, total, file: filePath });
             })
             .then((result) => {
+                // Quality gate check in terminal mode
+                const failures = checkQualityGates(config, result);
+                if (failures.length > 0) {
+                    for (const msg of failures) {
+                        process.stderr.write(`❌ Quality Gate Failed: ${msg}\n`);
+                    }
+                    exit();
+                    setTimeout(() => process.exit(1), 100);
+                    return;
+                }
                 setStats(result);
                 setPhase('done');
             })
@@ -170,7 +198,7 @@ async function main(): Promise<void> {
             })
         );
     } else {
-        // Markdown or HTML — run headless
+        // Markdown, HTML, JSON, CSV — run headless (no Ink UI)
         await runHeadless(config);
     }
 }

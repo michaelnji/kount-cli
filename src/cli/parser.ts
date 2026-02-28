@@ -26,6 +26,8 @@ export function createCli(argv: string[]): CliFlags {
     .option('--clear-cache', 'Clear the cache before scanning')
     .option('-f, --force', 'Force overwrite output files (for markdown mode)')
     .option('--output <path>', 'Output file path (for markdown mode)')
+    .option('--fail-on-size <mb>', 'Maximum allowed codebase size in MB (CI mode)', parseFloat)
+    .option('--min-comment-ratio <percent>', 'Minimum required comment ratio as % (CI mode)', parseFloat)
     .parse(argv);
 
   const opts = program.opts<{
@@ -37,6 +39,8 @@ export function createCli(argv: string[]): CliFlags {
     clearCache?: boolean;
     force?: boolean;
     output?: string;
+    failOnSize?: number;
+    minCommentRatio?: number;
   }>();
 
   return {
@@ -48,5 +52,7 @@ export function createCli(argv: string[]): CliFlags {
     clearCache: opts.clearCache,
     force: opts.force,
     output: opts.output,
+    failOnSize: opts.failOnSize,
+    minCommentRatio: opts.minCommentRatio,
   };
 }

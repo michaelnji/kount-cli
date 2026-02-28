@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { BlankLinesPlugin } from '../src/plugins/built-in/blank-lines';
 import { CommentLinesPlugin } from '../src/plugins/built-in/comment-lines';
+import { DebtTrackerPlugin } from '../src/plugins/built-in/debt-tracker';
 import { FileSizePlugin } from '../src/plugins/built-in/file-size';
 import { LanguageDistributionPlugin } from '../src/plugins/built-in/language-distribution';
 import { LargestFilesPlugin } from '../src/plugins/built-in/largest-files';
@@ -180,5 +181,77 @@ describe('LargestFilesPlugin', () => {
 
     expect(result.summaryValue).toBe(0);
     expect(result.perFile.size).toBe(0);
+  });
+});
+
+describe('DebtTrackerPlugin', () => {
+  const debtFile1 = makeFile('/project/src/main.ts', '.ts', [
+    '// TODO: refactor this function',
+    'const x = 1;',
+    '// FIXME: broken edge case',
+    'export default x;',
+    '// HACK: temporary workaround',
+    '',
+  ]);
+
+  const debtFile2 = makeFile('/project/src/utils.ts', '.ts', [
+    '// todo: lowercase marker',
+    'function foo() {}',
+    '// Todo: mixed case',
+  ]);
+
+  const cleanFile = makeFile('/project/src/clean.ts', '.ts', [
+    'const y = 2;',
+    'export default y;',
+  ]);
+
+  it('should detect TODO:, FIXME:, and HACK: markers (case-insensitive)', () => {
+    const plugin = new DebtTrackerPlugin();
+    const result = plugin.analyze([debtFile1, debtFile2, cleanFile]);
+
+    expect(result.pluginName).toBe('DebtTracker');
+    expect(result.perFile.get(debtFile1.filePath)).toBe(3);
+    expect(result.perFile.get(debtFile2.filePath)).toBe(2);
+    expect(result.perFile.get(cleanFile.filePath)).toBe(0);
+    expect(result.summaryValue).toBe(5);
+  });
+
+  it('should return 0 for files with no debt markers', () => {
+    const plugin = new DebtTrackerPlugin();
+    const result = plugin.analyze([cleanFile]);
+
+    expect(result.perFile.get(cleanFile.filePath)).toBe(0);
+    expect(result.summaryValue).toBe(0);
+  });
+
+  it('should return debt hotspots sorted by count descending', () => {
+    const plugin = new DebtTrackerPlugin();
+    const hotspots = plugin.getDebtHotspots([debtFile1, debtFile2, cleanFile]);
+
+    expect(hotspots.length).toBe(2); // cleanFile has 0 so it's excluded
+    expect(hotspots[0].filePath).toBe(debtFile1.filePath);
+    expect(hotspots[0].count).toBe(3);
+    expect(hotspots[1].filePath).toBe(debtFile2.filePath);
+    expect(hotspots[1].count).toBe(2);
+  });
+
+  it('should handle empty file list', () => {
+    const plugin = new DebtTrackerPlugin();
+    const result = plugin.analyze([]);
+
+    expect(result.summaryValue).toBe(0);
+    expect(result.perFile.size).toBe(0);
+  });
+
+  it('should not match markers without the colon', () => {
+    const noColonFile = makeFile('/project/src/nocolon.ts', '.ts', [
+      '// TODO refactor later',
+      '// FIXME this is broken',
+      '// HACK around the issue',
+    ]);
+    const plugin = new DebtTrackerPlugin();
+    const result = plugin.analyze([noColonFile]);
+
+    expect(result.perFile.get(noColonFile.filePath)).toBe(0);
   });
 });

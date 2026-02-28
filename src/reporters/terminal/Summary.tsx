@@ -126,6 +126,32 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
         </Box>
       )}
 
+      {/* Debt Hotspots */}
+      {stats.debtHotspots.length > 0 && (
+        <Box
+          flexDirection="column"
+          borderStyle="single"
+          borderColor="red"
+          paddingX={2}
+          paddingY={1}
+          marginTop={1}
+        >
+          <Text color="red" bold>  DEBT HOTSPOTS (TODO/FIXME/HACK)</Text>
+          <Box marginTop={1} flexDirection="column">
+            {stats.debtHotspots.map((item, i) => {
+              const relPath = path.relative(stats.rootDir, item.filePath);
+              return (
+                <Box key={item.filePath}>
+                  <Box width={4}><Text color="gray">{i + 1}.</Text></Box>
+                  <Box width={40}><Text color="white" wrap="truncate-end">{relPath}</Text></Box>
+                  <Text color="red">{item.count} markers</Text>
+                </Box>
+              );
+            })}
+          </Box>
+        </Box>
+      )}
+
       {/* Footer */}
       <Box marginTop={1}>
         <Text color="gray">Scanned at {stats.scannedAt.toLocaleString()}</Text>

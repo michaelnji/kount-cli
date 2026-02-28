@@ -53,6 +53,8 @@ export interface ProjectStats {
   languageDistribution: Map<string, number>;
   /** Top N largest files by size. */
   largestFiles: Array<{ filePath: string; size: number }>;
+  /** Top files with the most technical debt markers (TODO/FIXME/HACK). */
+  debtHotspots: Array<{ filePath: string; count: number }>;
   /** Timestamp of when the scan completed. */
   scannedAt: Date;
 }

@@ -1,13 +1,14 @@
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import {
-    BlankLinesPlugin,
-    CommentLinesPlugin,
-    FileSizePlugin,
-    LanguageDistributionPlugin,
-    LargestFilesPlugin,
-    TotalFilesPlugin,
-    TotalLinesPlugin,
+  BlankLinesPlugin,
+  CommentLinesPlugin,
+  DebtTrackerPlugin,
+  FileSizePlugin,
+  LanguageDistributionPlugin,
+  LargestFilesPlugin,
+  TotalFilesPlugin,
+  TotalLinesPlugin,
 } from '../plugins/index.js';
 import type { AnalyzedFileData, AnalyzerPlugin, PluginResult, ProjectStats } from '../plugins/types.js';
 import type { ScannedFile } from '../scanner/stream-reader.js';
@@ -26,6 +27,7 @@ function getDefaultPlugins(): AnalyzerPlugin[] {
     new TotalFilesPlugin(),
     new LanguageDistributionPlugin(),
     new LargestFilesPlugin(),
+    new DebtTrackerPlugin(),
   ];
 }
 
@@ -130,12 +132,21 @@ export class Aggregator {
       ? largestPlugin.getTopFiles(analyzedFiles)
       : [];
 
+    // 8. Compute debt hotspots
+    const debtPlugin = this.plugins.find(
+      (p): p is DebtTrackerPlugin => p.name === 'DebtTracker'
+    ) as DebtTrackerPlugin | undefined;
+    const debtHotspots = debtPlugin
+      ? debtPlugin.getDebtHotspots(analyzedFiles)
+      : [];
+
     return {
       rootDir: this.rootDir,
       totalFiles: scannedFiles.length,
       pluginResults,
       languageDistribution,
       largestFiles,
+      debtHotspots,
       scannedAt: new Date(),
     };
   }
