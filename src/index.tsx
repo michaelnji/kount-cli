@@ -17,6 +17,7 @@ import { Splash } from './reporters/terminal/Splash.js';
 import { Summary } from './reporters/terminal/Summary.js';
 import type { WizardResult } from './reporters/terminal/Wizard.js';
 import { Wizard } from './reporters/terminal/Wizard.js';
+import { saveRun } from './state/history.js';
 
 // ---------------------------------------------------------------------------
 // Non-interactive execution (markdown / html modes, or terminal with flags)
@@ -27,9 +28,13 @@ async function runHeadless(config: KountConfig): Promise<void> {
         respectGitignore: config.respectGitignore,
         cacheEnabled: config.cache.enabled,
         clearCache: config.cache.clearFirst,
+        diffBranch: config.diffBranch,
     });
 
     const stats = await aggregator.run();
+
+    // Persist run for trend tracking
+    await saveRun(config.rootDir, stats);
 
     // Quality gate check
     const failures = checkQualityGates(config, stats);
@@ -91,6 +96,7 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
             respectGitignore: config.respectGitignore,
             cacheEnabled: config.cache.enabled,
             clearCache: config.cache.clearFirst,
+            diffBranch: config.diffBranch,
         });
 
         aggregator
@@ -108,6 +114,8 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
                     setTimeout(() => process.exit(1), 100);
                     return;
                 }
+                // Persist run for trend tracking
+                saveRun(config.rootDir, result).catch(() => {});
                 setStats(result);
                 setPhase('done');
             })

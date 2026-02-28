@@ -8,7 +8,7 @@ import type { ProjectStats } from '../plugins/types.js';
  * Columns: Path, Lines, Blank Lines, Comment Lines, Size, Debt Markers
  */
 export function generateCsvReport(stats: ProjectStats): string {
-  const header = 'Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers';
+  const header = 'Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers,Commits,Debt Score';
   const rows: string[] = [header];
 
   const totalLinesPerFile = stats.pluginResults.get('TotalLines')?.perFile ?? new Map();
@@ -16,6 +16,8 @@ export function generateCsvReport(stats: ProjectStats): string {
   const commentPerFile = stats.pluginResults.get('CommentLines')?.perFile ?? new Map();
   const sizePerFile = stats.pluginResults.get('FileSize')?.perFile ?? new Map();
   const debtPerFile = stats.pluginResults.get('DebtTracker')?.perFile ?? new Map();
+  const churnPerFile = stats.pluginResults.get('CodeChurn')?.perFile ?? new Map();
+  const debtScorePerFile = stats.pluginResults.get('TechDebt')?.perFile ?? new Map();
 
   for (const [filePath, lines] of totalLinesPerFile) {
     const relPath = path.relative(stats.rootDir, filePath);
@@ -31,6 +33,8 @@ export function generateCsvReport(stats: ProjectStats): string {
       commentPerFile.get(filePath) ?? 0,
       sizePerFile.get(filePath) ?? 0,
       debtPerFile.get(filePath) ?? 0,
+      churnPerFile.get(filePath) ?? 0,
+      debtScorePerFile.get(filePath) ?? 0,
     ].join(','));
   }
 

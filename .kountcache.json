@@ -10,7 +10,10 @@
         "CommentLines": 0,
         "FileSize": 977,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 40
       }
     },
     "/Users/michaelnji/Projects/kount/kount.md": {
@@ -22,7 +25,10 @@
         "CommentLines": 0,
         "FileSize": 7502,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 176
       }
     },
     "/Users/michaelnji/Projects/kount/tests/cache.test.ts": {
@@ -34,19 +40,25 @@
         "CommentLines": 5,
         "FileSize": 3425,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 29
       }
     },
     "/Users/michaelnji/Projects/kount/tests/plugins.test.ts": {
-      "mtimeMs": 1772203919679,
-      "size": 5740,
+      "mtimeMs": 1772259201170,
+      "size": 13065,
       "metrics": {
-        "TotalLines": 184,
-        "BlankLines": 32,
-        "CommentLines": 8,
-        "FileSize": 5740,
+        "TotalLines": 388,
+        "BlankLines": 71,
+        "CommentLines": 14,
+        "FileSize": 13065,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 6,
+        "CodeChurn": 2,
+        "TechDebt": 113
       }
     },
     "/Users/michaelnji/Projects/kount/tests/fixtures/.gitkeep": {
@@ -58,19 +70,26 @@
         "CommentLines": 0,
         "FileSize": 0,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 10
       }
     },
     "/Users/michaelnji/Projects/kount/tests/reporters.test.ts": {
-      "mtimeMs": 1772206351109,
-      "size": 5920,
+      "mtimeMs": 1772264189973,
+      "size": 16217,
       "metrics": {
-        "TotalLines": 165,
-        "BlankLines": 30,
-        "CommentLines": 5,
-        "FileSize": 5920,
+        "TotalLines": 429,
+        "BlankLines": 71,
+        "CommentLines": 11,
+        "FileSize": 16217,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "LargestFiles": 16217,
+        "DebtTracker": 0,
+        "CodeChurn": 2,
+        "TechDebt": 175
       }
     },
     "/Users/michaelnji/Projects/kount/tests/scanner.test.ts": {
@@ -82,7 +101,10 @@
         "CommentLines": 5,
         "FileSize": 2389,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 8
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/typescript-advanced-types/SKILL.md": {
@@ -95,7 +117,10 @@
         "FileSize": 17085,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 17085
+        "LargestFiles": 17085,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 734
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-escape-sequence-batching.md": {
@@ -107,7 +132,10 @@
         "CommentLines": 0,
         "FileSize": 1859,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 71
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-group-flow.md": {
@@ -119,7 +147,10 @@
         "CommentLines": 0,
         "FileSize": 2565,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 103
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-graceful-degradation.md": {
@@ -131,7 +162,10 @@
         "CommentLines": 0,
         "FileSize": 2815,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 127
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-spinner-tasks.md": {
@@ -143,7 +177,10 @@
         "CommentLines": 0,
         "FileSize": 1989,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 101
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-text-styling.md": {
@@ -155,7 +192,10 @@
         "CommentLines": 0,
         "FileSize": 1583,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 76
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-usememo-expensive.md": {
@@ -167,7 +207,10 @@
         "CommentLines": 0,
         "FileSize": 2469,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 101
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-custom-render.md": {
@@ -179,7 +222,10 @@
         "CommentLines": 0,
         "FileSize": 2086,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 90
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-immediate-feedback.md": {
@@ -191,7 +237,10 @@
         "CommentLines": 0,
         "FileSize": 2192,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 90
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-border-styles.md": {
@@ -203,7 +252,10 @@
         "CommentLines": 0,
         "FileSize": 2057,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 83
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-tty-detection.md": {
@@ -215,7 +267,10 @@
         "CommentLines": 0,
         "FileSize": 2241,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 111
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-cleanup-effects.md": {
@@ -227,7 +282,10 @@
         "CommentLines": 0,
         "FileSize": 1880,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 90
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-exit-codes.md": {
@@ -239,7 +297,10 @@
         "CommentLines": 0,
         "FileSize": 2466,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 122
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-color-semantics.md": {
@@ -251,7 +312,10 @@
         "CommentLines": 0,
         "FileSize": 2068,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 74
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-useinput-hook.md": {
@@ -263,7 +327,10 @@
         "CommentLines": 0,
         "FileSize": 1658,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 75
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-error-messages.md": {
@@ -275,7 +342,10 @@
         "CommentLines": 0,
         "FileSize": 2216,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 99
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-json-output.md": {
@@ -287,7 +357,10 @@
         "CommentLines": 0,
         "FileSize": 2464,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 127
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-useapp-exit.md": {
@@ -299,7 +372,10 @@
         "CommentLines": 0,
         "FileSize": 1847,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 98
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-single-write.md": {
@@ -311,7 +387,10 @@
         "CommentLines": 0,
         "FileSize": 1294,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 49
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-modifier-keys.md": {
@@ -323,7 +402,10 @@
         "CommentLines": 0,
         "FileSize": 1701,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 78
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-60fps-baseline.md": {
@@ -335,7 +417,10 @@
         "CommentLines": 0,
         "FileSize": 1688,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 73
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-partial-updates.md": {
@@ -347,7 +432,10 @@
         "CommentLines": 0,
         "FileSize": 1926,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 75
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-sensible-defaults.md": {
@@ -359,7 +447,10 @@
         "CommentLines": 0,
         "FileSize": 2140,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 94
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-intro-outro.md": {
@@ -371,7 +462,10 @@
         "CommentLines": 0,
         "FileSize": 2013,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 99
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-cancellation.md": {
@@ -383,7 +477,10 @@
         "CommentLines": 0,
         "FileSize": 1932,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 89
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-next-steps.md": {
@@ -395,7 +492,10 @@
         "CommentLines": 0,
         "FileSize": 2040,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 100
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-overwrite-dont-clear.md": {
@@ -407,7 +507,10 @@
         "CommentLines": 0,
         "FileSize": 1402,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 57
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-help-system.md": {
@@ -419,7 +522,10 @@
         "CommentLines": 0,
         "FileSize": 2635,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 116
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-env-vars.md": {
@@ -431,7 +537,10 @@
         "CommentLines": 0,
         "FileSize": 2128,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 93
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/prompt-validation.md": {
@@ -443,7 +552,10 @@
         "CommentLines": 0,
         "FileSize": 2158,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 96
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-isactive-focus.md": {
@@ -455,7 +567,10 @@
         "CommentLines": 0,
         "FileSize": 2122,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 95
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicfg-flags-over-args.md": {
@@ -467,7 +582,10 @@
         "CommentLines": 0,
         "FileSize": 2229,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 91
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-percentage-widths.md": {
@@ -479,7 +597,10 @@
         "CommentLines": 0,
         "FileSize": 1977,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 104
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-signal-handling.md": {
@@ -491,7 +612,10 @@
         "CommentLines": 0,
         "FileSize": 2506,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 122
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/ux-progress-indicators.md": {
@@ -503,7 +627,10 @@
         "CommentLines": 0,
         "FileSize": 2218,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 92
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/input-escape-routes.md": {
@@ -515,7 +642,10 @@
         "CommentLines": 0,
         "FileSize": 1873,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 97
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-functional-updates.md": {
@@ -527,7 +657,10 @@
         "CommentLines": 0,
         "FileSize": 2080,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 103
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/robust-terminal-restore.md": {
@@ -539,7 +672,10 @@
         "CommentLines": 0,
         "FileSize": 2340,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 120
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-static-for-logs.md": {
@@ -551,7 +687,10 @@
         "CommentLines": 0,
         "FileSize": 1898,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 90
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuistate-usecallback-stable.md": {
@@ -563,7 +702,10 @@
         "CommentLines": 0,
         "FileSize": 1967,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 84
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-box-flexbox.md": {
@@ -575,7 +717,10 @@
         "CommentLines": 0,
         "FileSize": 1613,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 77
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/tuicomp-measure-element.md": {
@@ -587,7 +732,10 @@
         "CommentLines": 0,
         "FileSize": 2017,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 80
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/references/render-synchronized-output.md": {
@@ -599,7 +747,10 @@
         "CommentLines": 0,
         "FileSize": 1476,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 53
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/README.md": {
@@ -611,7 +762,10 @@
         "CommentLines": 0,
         "FileSize": 4386,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 155
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/SKILL.md": {
@@ -623,7 +777,10 @@
         "CommentLines": 0,
         "FileSize": 5184,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 121
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/terminal-ui/AGENTS.md": {
@@ -635,7 +792,10 @@
         "CommentLines": 0,
         "FileSize": 8539,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 104
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/executing-plans/SKILL.md": {
@@ -647,7 +807,10 @@
         "CommentLines": 0,
         "FileSize": 2550,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 94
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/eval-viewer/generate_review.py": {
@@ -660,7 +823,10 @@
         "FileSize": 16365,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 16365
+        "LargestFiles": 16365,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 108
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/eval-viewer/viewer.html": {
@@ -673,7 +839,10 @@
         "FileSize": 44998,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 44998
+        "LargestFiles": 44998,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 1335
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/references/schemas.md": {
@@ -686,7 +855,9 @@
         "FileSize": 12061,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 12061
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 440
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/agents/grader.md": {
@@ -698,7 +869,10 @@
         "CommentLines": 0,
         "FileSize": 9049,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 233
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/agents/comparator.md": {
@@ -710,7 +884,10 @@
         "CommentLines": 0,
         "FileSize": 7287,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 212
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/agents/analyzer.md": {
@@ -722,7 +899,10 @@
         "CommentLines": 0,
         "FileSize": 10376,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 284
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/run_eval.py": {
@@ -734,7 +914,10 @@
         "CommentLines": 9,
         "FileSize": 11464,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 110
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/package_skill.py": {
@@ -746,7 +929,10 @@
         "CommentLines": 11,
         "FileSize": 4234,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 18
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/quick_validate.py": {
@@ -758,7 +944,10 @@
         "CommentLines": 15,
         "FileSize": 3972,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 8
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/improve_description.py": {
@@ -770,7 +959,10 @@
         "CommentLines": 7,
         "FileSize": 10723,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 91
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/aggregate_benchmark.py": {
@@ -783,7 +975,10 @@
         "FileSize": 14386,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 14386
+        "LargestFiles": 14386,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 75
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/run_loop.py": {
@@ -796,7 +991,10 @@
         "FileSize": 13685,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 13685
+        "LargestFiles": 13685,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 63
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/generate_report.py": {
@@ -809,7 +1007,9 @@
         "FileSize": 12847,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 12847
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 78
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/scripts/utils.py": {
@@ -821,7 +1021,10 @@
         "CommentLines": 1,
         "FileSize": 1661,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 27
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/SKILL.md": {
@@ -834,7 +1037,10 @@
         "FileSize": 32370,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 32370
+        "LargestFiles": 32370,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 489
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/LICENSE.txt": {
@@ -846,7 +1052,10 @@
         "CommentLines": 0,
         "FileSize": 11357,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 212
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/skill-creator/assets/eval_review.html": {
@@ -858,7 +1067,10 @@
         "CommentLines": 0,
         "FileSize": 7058,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 156
       }
     },
     "/Users/michaelnji/Projects/kount/.agents/skills/brainstorming/SKILL.md": {
@@ -870,56 +1082,71 @@
         "CommentLines": 0,
         "FileSize": 4690,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 106
       }
     },
     "/Users/michaelnji/Projects/kount/bun.lock": {
-      "mtimeMs": 1772201672707,
-      "size": 32164,
+      "mtimeMs": 1772218636617,
+      "size": 106111,
       "metrics": {
-        "TotalLines": 306,
-        "BlankLines": 139,
+        "TotalLines": 1014,
+        "BlankLines": 492,
         "CommentLines": 0,
-        "FileSize": 32164,
+        "FileSize": 106111,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 32164
+        "LargestFiles": 106111,
+        "DebtTracker": 0,
+        "CodeChurn": 3,
+        "TechDebt": 1044
       }
     },
     "/Users/michaelnji/Projects/kount/README.md": {
-      "mtimeMs": 1772194150043,
-      "size": 1,
+      "mtimeMs": 1772216811120,
+      "size": 10830,
       "metrics": {
-        "TotalLines": 1,
-        "BlankLines": 1,
-        "CommentLines": 0,
-        "FileSize": 1,
+        "TotalLines": 375,
+        "BlankLines": 96,
+        "CommentLines": 1,
+        "FileSize": 10830,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 4,
+        "TechDebt": 415
       }
     },
     "/Users/michaelnji/Projects/kount/.gitignore": {
-      "mtimeMs": 1772194927989,
-      "size": 388,
+      "mtimeMs": 1772220721703,
+      "size": 404,
       "metrics": {
-        "TotalLines": 34,
+        "TotalLines": 35,
         "BlankLines": 7,
         "CommentLines": 0,
-        "FileSize": 388,
+        "FileSize": 404,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 2,
+        "TechDebt": 55
       }
     },
     "/Users/michaelnji/Projects/kount/package.json": {
-      "mtimeMs": 1772206687867,
-      "size": 642,
+      "mtimeMs": 1772222196396,
+      "size": 1432,
       "metrics": {
-        "TotalLines": 29,
+        "TotalLines": 65,
         "BlankLines": 0,
         "CommentLines": 0,
-        "FileSize": 642,
+        "FileSize": 1432,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 17,
+        "TechDebt": 235
       }
     },
     "/Users/michaelnji/Projects/kount/tsconfig.json": {
@@ -931,7 +1158,10 @@
         "CommentLines": 0,
         "FileSize": 299,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 23
       }
     },
     "/Users/michaelnji/Projects/kount/AGENTS.md": {
@@ -943,7 +1173,10 @@
         "CommentLines": 0,
         "FileSize": 0,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 10
       }
     },
     "/Users/michaelnji/Projects/kount/.kountrc.json": {
@@ -955,19 +1188,25 @@
         "CommentLines": 0,
         "FileSize": 165,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 20
       }
     },
     "/Users/michaelnji/Projects/kount/src/index.tsx": {
-      "mtimeMs": 1772206638338,
-      "size": 5879,
+      "mtimeMs": 1772258806907,
+      "size": 8024,
       "metrics": {
-        "TotalLines": 167,
-        "BlankLines": 21,
-        "CommentLines": 15,
-        "FileSize": 5879,
+        "TotalLines": 217,
+        "BlankLines": 25,
+        "CommentLines": 20,
+        "FileSize": 8024,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 3,
+        "TechDebt": 27
       }
     },
     "/Users/michaelnji/Projects/kount/src/core/.gitkeep": {
@@ -979,7 +1218,10 @@
         "CommentLines": 0,
         "FileSize": 0,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 10
       }
     },
     "/Users/michaelnji/Projects/kount/src/core/cache.ts": {
@@ -991,19 +1233,25 @@
         "CommentLines": 38,
         "FileSize": 3391,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 5
       }
     },
     "/Users/michaelnji/Projects/kount/src/core/aggregator.ts": {
-      "mtimeMs": 1772204239864,
-      "size": 6655,
+      "mtimeMs": 1772258741740,
+      "size": 11353,
       "metrics": {
-        "TotalLines": 204,
-        "BlankLines": 25,
-        "CommentLines": 41,
-        "FileSize": 6655,
+        "TotalLines": 333,
+        "BlankLines": 36,
+        "CommentLines": 53,
+        "FileSize": 11353,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 2,
+        "TechDebt": 22
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/.gitkeep": {
@@ -1015,7 +1263,10 @@
         "CommentLines": 0,
         "FileSize": 0,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 10
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/largest-files.ts": {
@@ -1027,7 +1278,10 @@
         "CommentLines": 8,
         "FileSize": 1213,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 3
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/total-lines.ts": {
@@ -1039,7 +1293,10 @@
         "CommentLines": 3,
         "FileSize": 585,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 2
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/language-distribution.ts": {
@@ -1051,7 +1308,10 @@
         "CommentLines": 13,
         "FileSize": 2498,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 8
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/comment-lines.ts": {
@@ -1063,7 +1323,10 @@
         "CommentLines": 10,
         "FileSize": 2665,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 9
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/total-files.ts": {
@@ -1075,7 +1338,10 @@
         "CommentLines": 3,
         "FileSize": 482,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 2
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/file-size.ts": {
@@ -1087,7 +1353,10 @@
         "CommentLines": 3,
         "FileSize": 552,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 2
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/blank-lines.ts": {
@@ -1099,31 +1368,40 @@
         "CommentLines": 3,
         "FileSize": 712,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 3
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/types.ts": {
-      "mtimeMs": 1772203757650,
-      "size": 1880,
+      "mtimeMs": 1772258665438,
+      "size": 2806,
       "metrics": {
-        "TotalLines": 58,
+        "TotalLines": 80,
         "BlankLines": 4,
-        "CommentLines": 31,
-        "FileSize": 1880,
+        "CommentLines": 37,
+        "FileSize": 2806,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 2,
+        "TechDebt": 2
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/index.ts": {
-      "mtimeMs": 1772203870202,
-      "size": 556,
+      "mtimeMs": 1772258663440,
+      "size": 806,
       "metrics": {
-        "TotalLines": 10,
+        "TotalLines": 14,
         "BlankLines": 2,
         "CommentLines": 0,
-        "FileSize": 556,
+        "FileSize": 806,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 2,
+        "TechDebt": 34
       }
     },
     "/Users/michaelnji/Projects/kount/src/utils/.gitkeep": {
@@ -1135,7 +1413,10 @@
         "CommentLines": 0,
         "FileSize": 0,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 10
       }
     },
     "/Users/michaelnji/Projects/kount/src/utils/language-map.ts": {
@@ -1147,7 +1428,10 @@
         "CommentLines": 41,
         "FileSize": 2416,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 2
       }
     },
     "/Users/michaelnji/Projects/kount/src/cli/.gitkeep": {
@@ -1159,31 +1443,40 @@
         "CommentLines": 0,
         "FileSize": 0,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 10
       }
     },
     "/Users/michaelnji/Projects/kount/src/cli/parser.ts": {
-      "mtimeMs": 1772206606688,
-      "size": 1776,
+      "mtimeMs": 1772255411423,
+      "size": 2231,
       "metrics": {
-        "TotalLines": 52,
+        "TotalLines": 61,
         "BlankLines": 4,
         "CommentLines": 7,
-        "FileSize": 1776,
+        "FileSize": 2231,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 2,
+        "TechDebt": 7
       }
     },
     "/Users/michaelnji/Projects/kount/src/cli/config-resolver.ts": {
-      "mtimeMs": 1772206604764,
-      "size": 4817,
+      "mtimeMs": 1772255412674,
+      "size": 5639,
       "metrics": {
-        "TotalLines": 175,
-        "BlankLines": 19,
+        "TotalLines": 202,
+        "BlankLines": 22,
         "CommentLines": 32,
-        "FileSize": 4817,
+        "FileSize": 5639,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 2,
+        "TechDebt": 14
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/.gitkeep": {
@@ -1195,19 +1488,25 @@
         "CommentLines": 0,
         "FileSize": 0,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 10
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/markdown.ts": {
-      "mtimeMs": 1772206089970,
-      "size": 4534,
+      "mtimeMs": 1772258952545,
+      "size": 7057,
       "metrics": {
-        "TotalLines": 129,
-        "BlankLines": 18,
-        "CommentLines": 19,
-        "FileSize": 4534,
+        "TotalLines": 200,
+        "BlankLines": 27,
+        "CommentLines": 22,
+        "FileSize": 7057,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 19
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/Progress.tsx": {
@@ -1219,7 +1518,10 @@
         "CommentLines": 6,
         "FileSize": 1258,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 3
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/Wizard.tsx": {
@@ -1231,7 +1533,10 @@
         "CommentLines": 8,
         "FileSize": 4524,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 21
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/Splash.tsx": {
@@ -1243,7 +1548,10 @@
         "CommentLines": 5,
         "FileSize": 1330,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 3
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/index.ts": {
@@ -1255,32 +1563,40 @@
         "CommentLines": 0,
         "FileSize": 208,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 16
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/Summary.tsx": {
-      "mtimeMs": 1772206022944,
-      "size": 4864,
+      "mtimeMs": 1772258878332,
+      "size": 9380,
       "metrics": {
-        "TotalLines": 135,
-        "BlankLines": 8,
-        "CommentLines": 11,
-        "FileSize": 4864,
+        "TotalLines": 247,
+        "BlankLines": 14,
+        "CommentLines": 18,
+        "FileSize": 9380,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 2,
+        "TechDebt": 37
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/html.ts": {
-      "mtimeMs": 1772207510468,
-      "size": 18992,
+      "mtimeMs": 1772264148401,
+      "size": 5677,
       "metrics": {
-        "TotalLines": 385,
-        "BlankLines": 29,
-        "CommentLines": 15,
-        "FileSize": 18992,
+        "TotalLines": 171,
+        "BlankLines": 20,
+        "CommentLines": 19,
+        "FileSize": 5677,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 18992
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 16
       }
     },
     "/Users/michaelnji/Projects/kount/src/scanner/.gitkeep": {
@@ -1292,19 +1608,25 @@
         "CommentLines": 0,
         "FileSize": 0,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 10
       }
     },
     "/Users/michaelnji/Projects/kount/src/scanner/ignore-parser.ts": {
-      "mtimeMs": 1772201712864,
-      "size": 6115,
+      "mtimeMs": 1772258622660,
+      "size": 6152,
       "metrics": {
-        "TotalLines": 168,
+        "TotalLines": 169,
         "BlankLines": 25,
         "CommentLines": 43,
-        "FileSize": 6115,
+        "FileSize": 6152,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 7
       }
     },
     "/Users/michaelnji/Projects/kount/src/scanner/stream-reader.ts": {
@@ -1316,7 +1638,252 @@
         "CommentLines": 23,
         "FileSize": 3291,
         "TotalFiles": 1,
-        "LanguageDistribution": 1
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 5
+      }
+    },
+    "/Users/michaelnji/Projects/kount/.kountignore": {
+      "mtimeMs": 1772220698518,
+      "size": 16,
+      "metrics": {
+        "TotalLines": 1,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 16,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 11
+      }
+    },
+    "/Users/michaelnji/Projects/kount/tests/quality-gates.test.ts": {
+      "mtimeMs": 1772252158537,
+      "size": 4030,
+      "metrics": {
+        "TotalLines": 118,
+        "BlankLines": 20,
+        "CommentLines": 3,
+        "FileSize": 4030,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 50
+      }
+    },
+    "/Users/michaelnji/Projects/kount/tests/git.test.ts": {
+      "mtimeMs": 1772255719836,
+      "size": 5440,
+      "metrics": {
+        "TotalLines": 171,
+        "BlankLines": 25,
+        "CommentLines": 10,
+        "FileSize": 5440,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 29
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/core/quality-gates.ts": {
+      "mtimeMs": 1772251970844,
+      "size": 1480,
+      "metrics": {
+        "TotalLines": 49,
+        "BlankLines": 8,
+        "CommentLines": 9,
+        "FileSize": 1480,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 3
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/debt-tracker.ts": {
+      "mtimeMs": 1772251869242,
+      "size": 1260,
+      "metrics": {
+        "TotalLines": 45,
+        "BlankLines": 7,
+        "CommentLines": 7,
+        "FileSize": 1260,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 1,
+        "CodeChurn": 1,
+        "TechDebt": 4
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/author-metrics.ts": {
+      "mtimeMs": 1772255449134,
+      "size": 1104,
+      "metrics": {
+        "TotalLines": 37,
+        "BlankLines": 6,
+        "CommentLines": 12,
+        "FileSize": 1104,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 1
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/code-churn.ts": {
+      "mtimeMs": 1772255447125,
+      "size": 1124,
+      "metrics": {
+        "TotalLines": 37,
+        "BlankLines": 5,
+        "CommentLines": 8,
+        "FileSize": 1124,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 2
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/json.ts": {
+      "mtimeMs": 1772258905721,
+      "size": 4288,
+      "metrics": {
+        "TotalLines": 123,
+        "BlankLines": 11,
+        "CommentLines": 18,
+        "FileSize": 4288,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 9
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/csv.ts": {
+      "mtimeMs": 1772258926527,
+      "size": 2258,
+      "metrics": {
+        "TotalLines": 59,
+        "BlankLines": 6,
+        "CommentLines": 13,
+        "FileSize": 2258,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 1,
+        "TechDebt": 3
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/git/index.ts": {
+      "mtimeMs": 1772255376230,
+      "size": 3481,
+      "metrics": {
+        "TotalLines": 125,
+        "BlankLines": 16,
+        "CommentLines": 25,
+        "FileSize": 3481,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 6
+      }
+    },
+    "/Users/michaelnji/Projects/kount/kount-report.json": {
+      "mtimeMs": 1772256516497,
+      "size": 26310,
+      "metrics": {
+        "TotalLines": 1178,
+        "BlankLines": 0,
+        "CommentLines": 0,
+        "FileSize": 26310,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 26310,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 1178
+      }
+    },
+    "/Users/michaelnji/Projects/kount/tests/state.test.ts": {
+      "mtimeMs": 1772259132255,
+      "size": 5248,
+      "metrics": {
+        "TotalLines": 143,
+        "BlankLines": 24,
+        "CommentLines": 7,
+        "FileSize": 5248,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 29
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/plugins/built-in/tech-debt.ts": {
+      "mtimeMs": 1772258634794,
+      "size": 1930,
+      "metrics": {
+        "TotalLines": 63,
+        "BlankLines": 10,
+        "CommentLines": 19,
+        "FileSize": 1930,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 2
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/state/history.ts": {
+      "mtimeMs": 1772258633552,
+      "size": 3011,
+      "metrics": {
+        "TotalLines": 104,
+        "BlankLines": 13,
+        "CommentLines": 25,
+        "FileSize": 3011,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 4
+      }
+    },
+    "/Users/michaelnji/Projects/kount/scripts/preview-dashboard.ts": {
+      "mtimeMs": 1772264397948,
+      "size": 3483,
+      "metrics": {
+        "TotalLines": 72,
+        "BlankLines": 2,
+        "CommentLines": 0,
+        "FileSize": 3483,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 72
+      }
+    },
+    "/Users/michaelnji/Projects/kount/src/reporters/html-template.ts": {
+      "mtimeMs": 1772267365402,
+      "size": 44902,
+      "metrics": {
+        "TotalLines": 956,
+        "BlankLines": 81,
+        "CommentLines": 24,
+        "FileSize": 44902,
+        "TotalFiles": 1,
+        "LanguageDistribution": 1,
+        "LargestFiles": 44902,
+        "DebtTracker": 0,
+        "CodeChurn": 0,
+        "TechDebt": 381
       }
     }
   }

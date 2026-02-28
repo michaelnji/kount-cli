@@ -1,22 +1,27 @@
 import fsp from 'node:fs/promises';
 import path from 'node:path';
+import { batchGetFileChurn, getChangedFiles, getTopAuthors, isGitRepo } from '../git/index.js';
 import {
+  AuthorMetricsPlugin,
   BlankLinesPlugin,
+  CodeChurnPlugin,
   CommentLinesPlugin,
   DebtTrackerPlugin,
   FileSizePlugin,
   LanguageDistributionPlugin,
   LargestFilesPlugin,
+  TechDebtPlugin,
   TotalFilesPlugin,
   TotalLinesPlugin,
 } from '../plugins/index.js';
 import type { AnalyzedFileData, AnalyzerPlugin, PluginResult, ProjectStats } from '../plugins/types.js';
 import type { ScannedFile } from '../scanner/stream-reader.js';
 import { Scanner } from '../scanner/stream-reader.js';
+import { getPreviousRun } from '../state/history.js';
 import { CacheManager } from './cache.js';
 
 /**
- * Default set of built-in v1 plugins.
+ * Default set of built-in plugins (including Git-based ones).
  */
 function getDefaultPlugins(): AnalyzerPlugin[] {
   return [
@@ -28,6 +33,9 @@ function getDefaultPlugins(): AnalyzerPlugin[] {
     new LanguageDistributionPlugin(),
     new LargestFilesPlugin(),
     new DebtTrackerPlugin(),
+    new CodeChurnPlugin(),
+    new AuthorMetricsPlugin(),
+    new TechDebtPlugin(),
   ];
 }
 
@@ -36,12 +44,14 @@ export interface AggregatorOptions {
   plugins?: AnalyzerPlugin[];
   cacheEnabled?: boolean;
   clearCache?: boolean;
+  diffBranch?: string;
 }
 
 /**
  * Orchestrator: connects the Scanner to the Plugin pipeline.
  * Streams each file, builds AnalyzedFileData, then runs all plugins.
  * Integrates the CacheManager to skip unchanged files.
+ * Supports Git intelligence: diff filtering, churn tracking, author metrics.
  */
 export class Aggregator {
   private scanner: Scanner;
@@ -49,6 +59,7 @@ export class Aggregator {
   private rootDir: string;
   private cache: CacheManager;
   private clearCacheFirst: boolean;
+  private diffBranch?: string;
 
   constructor(rootDir: string, options?: AggregatorOptions) {
     this.rootDir = path.resolve(rootDir);
@@ -56,10 +67,11 @@ export class Aggregator {
     this.plugins = options?.plugins ?? getDefaultPlugins();
     this.cache = new CacheManager(this.rootDir, options?.cacheEnabled ?? true);
     this.clearCacheFirst = options?.clearCache ?? false;
+    this.diffBranch = options?.diffBranch;
   }
 
   /**
-   * Runs the full pipeline: discover → cache check → stream → analyze → aggregate → save cache.
+   * Runs the full pipeline: discover → diff filter → stream → churn → analyze → aggregate.
    * Returns a ProjectStats payload ready for reporters.
    *
    * @param onProgress Optional callback fired per file for progress tracking.
@@ -72,9 +84,21 @@ export class Aggregator {
     await this.cache.load();
 
     // 1. Discover files
-    const scannedFiles = await this.scanner.discover(this.rootDir);
+    let scannedFiles = await this.scanner.discover(this.rootDir);
 
-    // 2. Stream each file (or use cache) and build enriched data
+    // 2. Check Git availability
+    const gitAvailable = await isGitRepo(this.rootDir);
+
+    // 3. Diff filtering (if --diff is set and Git is available)
+    if (this.diffBranch && gitAvailable) {
+      const changedFiles = await getChangedFiles(this.rootDir, this.diffBranch);
+      const changedSet = new Set(
+        changedFiles.map((f) => path.resolve(this.rootDir, f))
+      );
+      scannedFiles = scannedFiles.filter((sf) => changedSet.has(sf.filePath));
+    }
+
+    // 4. Stream each file (or use cache) and build enriched data
     const analyzedFiles: AnalyzedFileData[] = [];
     let current = 0;
 
@@ -88,14 +112,54 @@ export class Aggregator {
       }
     }
 
-    // 3. Run each plugin against the full analyzed data
+    // 5. Fetch Git churn data (if Git is available)
+    if (gitAvailable) {
+      const churnMap = await batchGetFileChurn(
+        this.rootDir,
+        analyzedFiles.map((f) => path.relative(this.rootDir, f.filePath)),
+        20
+      );
+      for (const file of analyzedFiles) {
+        const relPath = path.relative(this.rootDir, file.filePath);
+        file.commits = churnMap.get(relPath) ?? 0;
+      }
+    }
+
+    // 6. Fetch author data and inject into AuthorMetricsPlugin (if Git is available)
+    let topAuthors: Array<{ name: string; commits: number }> = [];
+    if (gitAvailable) {
+      topAuthors = await getTopAuthors(this.rootDir);
+      const authorPlugin = this.plugins.find(
+        (p): p is AuthorMetricsPlugin => p.name === 'AuthorMetrics'
+      ) as AuthorMetricsPlugin | undefined;
+      if (authorPlugin) {
+        authorPlugin.setAuthors(topAuthors);
+      }
+    }
+
+    // 6.5 Inject comment data into TechDebtPlugin before analyze
+    const commentLinesPlugin = this.plugins.find(
+      (p) => p.name === 'CommentLines'
+    );
+    if (commentLinesPlugin) {
+      // Run CommentLines first to get per-file data
+      const commentResult = commentLinesPlugin.analyze(analyzedFiles);
+      const techDebtPlugin = this.plugins.find(
+        (p): p is TechDebtPlugin => p.name === 'TechDebt'
+      ) as TechDebtPlugin | undefined;
+      if (techDebtPlugin) {
+        techDebtPlugin.setCommentData(commentResult.perFile);
+      }
+    }
+
+    // 7. Run each plugin against the full analyzed data
     const pluginResults = new Map<string, PluginResult>();
     for (const plugin of this.plugins) {
       const result = plugin.analyze(analyzedFiles);
       pluginResults.set(plugin.name, result);
     }
 
-    // 4. Update cache with fresh per-file metrics from plugins
+    // 8. Update cache with fresh per-file metrics from plugins
     for (const file of analyzedFiles) {
       const metrics: Record<string, number> = {};
       for (const [pluginName, result] of pluginResults) {
@@ -113,10 +177,10 @@ export class Aggregator {
       }
     }
 
-    // 5. Save cache to disk
+    // 9. Save cache to disk
     await this.cache.save();
 
-    // 6. Compute language distribution
+    // 10. Compute language distribution
     const langPlugin = this.plugins.find(
       (p): p is LanguageDistributionPlugin => p.name === 'LanguageDistribution'
     ) as LanguageDistributionPlugin | undefined;
@@ -124,7 +188,7 @@ export class Aggregator {
       ? langPlugin.getDistribution(analyzedFiles)
       : new Map<string, number>();
 
-    // 7. Compute largest files
+    // 11. Compute largest files
     const largestPlugin = this.plugins.find(
       (p): p is LargestFilesPlugin => p.name === 'LargestFiles'
     ) as LargestFilesPlugin | undefined;
@@ -132,13 +196,63 @@ export class Aggregator {
       ? largestPlugin.getTopFiles(analyzedFiles)
       : [];
 
-    // 8. Compute debt hotspots
+    // 12. Compute debt hotspots
     const debtPlugin = this.plugins.find(
       (p): p is DebtTrackerPlugin => p.name === 'DebtTracker'
     ) as DebtTrackerPlugin | undefined;
     const debtHotspots = debtPlugin
       ? debtPlugin.getDebtHotspots(analyzedFiles)
       : [];
+
+    // 13. Build gitInsights (only when Git is available)
+    let gitInsights: ProjectStats['gitInsights'];
+    if (gitAvailable) {
+      const churnPlugin = this.plugins.find(
+        (p): p is CodeChurnPlugin => p.name === 'CodeChurn'
+      ) as CodeChurnPlugin | undefined;
+      const highChurnFiles = churnPlugin
+        ? churnPlugin.getHighChurnFiles(analyzedFiles)
+        : [];
+
+      gitInsights = {
+        diffBranch: this.diffBranch,
+        topAuthors,
+        highChurnFiles,
+      };
+    }
+
+    // 14. Compute tech debt score and high-debt files
+    const techDebtPlugin = this.plugins.find(
+      (p): p is TechDebtPlugin => p.name === 'TechDebt'
+    ) as TechDebtPlugin | undefined;
+    const techDebtScore = pluginResults.get('TechDebt')?.summaryValue ?? 0;
+    const highDebtFiles = techDebtPlugin
+      ? techDebtPlugin.getHighestDebtFiles(analyzedFiles)
+      : [];
+
+    // 15. Compute trends from previous run
+    let trends: ProjectStats['trends'];
+    try {
+      const prevRun = await getPreviousRun(this.rootDir);
+      if (prevRun) {
+        const totalLines = pluginResults.get('TotalLines')?.summaryValue ?? 0;
+        const commentLines = pluginResults.get('CommentLines')?.summaryValue ?? 0;
+        const totalBytes = pluginResults.get('FileSize')?.summaryValue ?? 0;
+        const commentRatio = totalLines > 0
+          ? Number(((commentLines / totalLines) * 100).toFixed(1))
+          : 0;
+
+        trends = {
+          linesDelta: totalLines - prevRun.totalLines,
+          fileDelta: scannedFiles.length - prevRun.totalFiles,
+          sizeDelta: totalBytes - prevRun.totalSize,
+          commentRatioDelta: Number((commentRatio - prevRun.commentRatio).toFixed(1)),
+          debtDelta: techDebtScore - prevRun.techDebtScore,
+        };
+      }
+    } catch {
+      // Graceful degradation — skip trends if history read fails
+    }
 
     return {
       rootDir: this.rootDir,
@@ -147,6 +261,10 @@ export class Aggregator {
       languageDistribution,
       largestFiles,
       debtHotspots,
+      gitInsights,
+      techDebtScore,
+      highDebtFiles,
+      trends,
       scannedAt: new Date(),
     };
   }

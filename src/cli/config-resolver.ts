@@ -19,6 +19,7 @@ export interface KountConfig {
     failOnSize?: number;
     minCommentRatio?: number;
   };
+  diffBranch?: string;
 }
 
 /**
@@ -35,6 +36,7 @@ interface ConfigFile {
   };
   failOnSize?: number;
   minCommentRatio?: number;
+  diffBranch?: string;
 }
 
 /**
@@ -51,6 +53,7 @@ export interface CliFlags {
   output?: string;
   failOnSize?: number;
   minCommentRatio?: number;
+  diff?: string;
 }
 
 const DEFAULTS: KountConfig = {
@@ -174,6 +177,7 @@ export async function resolveConfig(cliFlags: CliFlags, cwd: string = process.cw
     force: cliFlags.force ?? DEFAULTS.force,
     outputPath: cliFlags.output,
     qualityGates: buildQualityGates(cliFlags, fileConfig),
+    diffBranch: cliFlags.diff ?? fileConfig.diffBranch,
   };
 }
 

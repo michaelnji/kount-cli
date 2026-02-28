@@ -19,6 +19,17 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
   const totalBytes = stats.pluginResults.get('FileSize')?.summaryValue ?? 0;
   const codeLines = totalLines - blankLines - commentLines;
   const codeRatio = totalLines > 0 ? ((codeLines / totalLines) * 100).toFixed(1) : '0.0';
+  const t = stats.trends;
+
+  /** Renders a trend delta inline: ↑150 (red) or ↓20 (green) */
+  const TrendDelta = ({ delta, invert }: { delta?: number; invert?: boolean }) => {
+    if (delta === undefined || delta === 0) return null;
+    const isPositive = delta > 0;
+    const arrow = isPositive ? '↑' : '↓';
+    // For debt/size, positive = bad (red). For comments, positive = good (green).
+    const color = invert ? (isPositive ? 'green' : 'red') : (isPositive ? 'red' : 'green');
+    return <Text color={color}> {arrow}{Math.abs(delta).toLocaleString()}</Text>;
+  };
 
   // Format bytes
   const formatSize = (bytes: number): string => {
@@ -46,10 +57,12 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
           <Box>
             <Box width={20}><Text color="white">Files</Text></Box>
             <Text color="cyan" bold>{stats.totalFiles.toLocaleString()}</Text>
+            <TrendDelta delta={t?.fileDelta} />
           </Box>
           <Box>
             <Box width={20}><Text color="white">Total Lines</Text></Box>
             <Text color="cyan" bold>{totalLines.toLocaleString()}</Text>
+            <TrendDelta delta={t?.linesDelta} />
           </Box>
           <Box>
             <Box width={20}><Text color="white">Code Lines</Text></Box>
@@ -58,6 +71,7 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
           <Box>
             <Box width={20}><Text color="white">Comment Lines</Text></Box>
             <Text color="yellow" bold>{commentLines.toLocaleString()}</Text>
+            <TrendDelta delta={t?.commentRatioDelta} invert />
           </Box>
           <Box>
             <Box width={20}><Text color="white">Blank Lines</Text></Box>
@@ -70,6 +84,7 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
           <Box>
             <Box width={20}><Text color="white">Total Size</Text></Box>
             <Text color="cyan" bold>{formatSize(totalBytes)}</Text>
+            <TrendDelta delta={t?.sizeDelta} />
           </Box>
         </Box>
       </Box>
@@ -145,6 +160,77 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
                   <Box width={4}><Text color="gray">{i + 1}.</Text></Box>
                   <Box width={40}><Text color="white" wrap="truncate-end">{relPath}</Text></Box>
                   <Text color="red">{item.count} markers</Text>
+                </Box>
+              );
+            })}
+          </Box>
+        </Box>
+      )}
+
+      {/* Git Intelligence */}
+      {stats.gitInsights && (
+        <Box
+          flexDirection="column"
+          borderStyle="single"
+          borderColor="cyan"
+          paddingX={2}
+          paddingY={1}
+          marginTop={1}
+        >
+          <Text color="cyan" bold>  GIT INTELLIGENCE{stats.gitInsights.diffBranch ? ` (diff vs ${stats.gitInsights.diffBranch})` : ''}</Text>
+
+          {/* Top Authors */}
+          {stats.gitInsights.topAuthors.length > 0 && (
+            <Box marginTop={1} flexDirection="column">
+              <Text color="white" bold>Top Contributors</Text>
+              {stats.gitInsights.topAuthors.map((author, i) => (
+                <Box key={author.name}>
+                  <Box width={4}><Text color="gray">{i + 1}.</Text></Box>
+                  <Box width={30}><Text color="white">{author.name}</Text></Box>
+                  <Text color="cyan">{author.commits} commits</Text>
+                </Box>
+              ))}
+            </Box>
+          )}
+
+          {/* High-Churn Files */}
+          {stats.gitInsights.highChurnFiles.length > 0 && (
+            <Box marginTop={1} flexDirection="column">
+              <Text color="white" bold>High-Churn Files</Text>
+              {stats.gitInsights.highChurnFiles.map((file, i) => {
+                const relPath = path.relative(stats.rootDir, file.filePath);
+                return (
+                  <Box key={file.filePath}>
+                    <Box width={4}><Text color="gray">{i + 1}.</Text></Box>
+                    <Box width={40}><Text color="white" wrap="truncate-end">{relPath}</Text></Box>
+                    <Text color="yellow">{file.commits} commits</Text>
+                  </Box>
+                );
+              })}
+            </Box>
+          )}
+        </Box>
+      )}
+
+      {/* Tech Debt Score */}
+      {stats.highDebtFiles && stats.highDebtFiles.length > 0 && (
+        <Box
+          flexDirection="column"
+          borderStyle="single"
+          borderColor="yellow"
+          paddingX={2}
+          paddingY={1}
+          marginTop={1}
+        >
+          <Text color="yellow" bold>  TECH DEBT (Score: {(stats.techDebtScore ?? 0).toLocaleString()}{t ? <TrendDelta delta={t.debtDelta} /> : null})</Text>
+          <Box marginTop={1} flexDirection="column">
+            {stats.highDebtFiles.map((file, i) => {
+              const relPath = path.relative(stats.rootDir, file.filePath);
+              return (
+                <Box key={file.filePath}>
+                  <Box width={4}><Text color="gray">{i + 1}.</Text></Box>
+                  <Box width={40}><Text color="white" wrap="truncate-end">{relPath}</Text></Box>
+                  <Text color="yellow">{file.score.toLocaleString()} pts</Text>
                 </Box>
               );
             })}

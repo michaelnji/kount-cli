@@ -14,20 +14,21 @@ export function createCli(argv: string[]): CliFlags {
   program
     .name('kount')
     .description('Project Intelligence for Codebases — analyze your code with precision.')
-    .version('1.0.0')
-    .option('-d, --root-dir <path>', 'Root directory to scan (default: current directory)')
+    .version('1.0.3')
+    .option('-d, --root-dir <path>', 'Specify the root directory to scan (default: current directory)')
     .option(
       '-o, --output-mode <mode>',
-      'Output mode: terminal, markdown, or html (default: terminal)'
+      'Choose output format: "terminal" (interactive UI), "markdown", "html" (dashboard), "json", or "csv"'
     )
-    .option('-t, --include-tests', 'Include test files in the analysis')
-    .option('--no-gitignore', 'Ignore .gitignore rules')
-    .option('--no-cache', 'Disable caching')
-    .option('--clear-cache', 'Clear the cache before scanning')
-    .option('-f, --force', 'Force overwrite output files (for markdown mode)')
-    .option('--output <path>', 'Output file path (for markdown mode)')
-    .option('--fail-on-size <mb>', 'Maximum allowed codebase size in MB (CI mode)', parseFloat)
-    .option('--min-comment-ratio <percent>', 'Minimum required comment ratio as % (CI mode)', parseFloat)
+    .option('-t, --include-tests', 'Include test files and directories in the analysis')
+    .option('--no-gitignore', 'Disable parsing of .gitignore and .kountignore rules')
+    .option('--no-cache', 'Disable the incremental high-performance caching engine')
+    .option('--clear-cache', 'Purge the existing cache before running the scan')
+    .option('-f, --force', 'Force overwrite of the output file (Markdown/JSON/CSV modes)')
+    .option('--output <path>', 'Specify the destination file path for reports')
+    .option('--fail-on-size <mb>', 'CI/CD Gate: Fail with exit code 1 if codebase exceeds <mb> MB', parseFloat)
+    .option('--min-comment-ratio <percent>', 'CI/CD Gate: Fail with exit code 1 if comment ratio is below <percent>%', parseFloat)
+    .option('--diff <branch>', 'Git Intelligence: Only analyze files changed relative to the specified <branch>')
     .parse(argv);
 
   const opts = program.opts<{
@@ -41,6 +42,7 @@ export function createCli(argv: string[]): CliFlags {
     output?: string;
     failOnSize?: number;
     minCommentRatio?: number;
+    diff?: string;
   }>();
 
   return {
@@ -54,5 +56,6 @@ export function createCli(argv: string[]): CliFlags {
     output: opts.output,
     failOnSize: opts.failOnSize,
     minCommentRatio: opts.minCommentRatio,
+    diff: opts.diff,
   };
 }

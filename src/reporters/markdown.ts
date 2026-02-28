@@ -76,6 +76,77 @@ function generateMarkdownReport(stats: ProjectStats): string {
     lines.push('');
   }
 
+  // Git Insights (only when git data is available)
+  if (stats.gitInsights) {
+    lines.push('### Git Insights');
+    lines.push('');
+
+    if (stats.gitInsights.diffBranch) {
+      lines.push(`> Differential scan vs \`${stats.gitInsights.diffBranch}\``);
+      lines.push('');
+    }
+
+    if (stats.gitInsights.topAuthors.length > 0) {
+      lines.push('#### Top Contributors');
+      lines.push('');
+      lines.push('| # | Author | Commits |');
+      lines.push('|---|--------|---------|');
+
+      for (let i = 0; i < stats.gitInsights.topAuthors.length; i++) {
+        const author = stats.gitInsights.topAuthors[i];
+        lines.push(`| ${i + 1} | ${author.name} | ${author.commits} |`);
+      }
+      lines.push('');
+    }
+
+    if (stats.gitInsights.highChurnFiles.length > 0) {
+      lines.push('#### High-Churn Files');
+      lines.push('');
+      lines.push('| # | File | Commits |');
+      lines.push('|---|------|---------|');
+
+      for (let i = 0; i < stats.gitInsights.highChurnFiles.length; i++) {
+        const file = stats.gitInsights.highChurnFiles[i];
+        const relPath = path.relative(stats.rootDir, file.filePath);
+        lines.push(`| ${i + 1} | \`${relPath}\` | ${file.commits} |`);
+      }
+      lines.push('');
+    }
+  }
+
+  // Tech Debt (only when data is available)
+  if (stats.highDebtFiles && stats.highDebtFiles.length > 0) {
+    lines.push('### Tech Debt');
+    lines.push('');
+    lines.push(`**Total Score:** ${(stats.techDebtScore ?? 0).toLocaleString()}`);
+    lines.push('');
+    lines.push('| # | File | Score |');
+    lines.push('|---|------|-------|');
+
+    for (let i = 0; i < stats.highDebtFiles.length; i++) {
+      const file = stats.highDebtFiles[i];
+      const relPath = path.relative(stats.rootDir, file.filePath);
+      lines.push(`| ${i + 1} | \`${relPath}\` | ${file.score.toLocaleString()} |`);
+    }
+    lines.push('');
+  }
+
+  // Trends (only when previous run data is available)
+  if (stats.trends) {
+    const t = stats.trends;
+    const fmt = (v: number) => (v > 0 ? `+${v.toLocaleString()}` : v.toLocaleString());
+    lines.push('### Trends (vs Previous Scan)');
+    lines.push('');
+    lines.push('| Metric | Delta |');
+    lines.push('|--------|-------|');
+    lines.push(`| Files | ${fmt(t.fileDelta)} |`);
+    lines.push(`| Lines | ${fmt(t.linesDelta)} |`);
+    lines.push(`| Size | ${fmt(t.sizeDelta)} B |`);
+    lines.push(`| Comment Ratio | ${fmt(t.commentRatioDelta)}% |`);
+    lines.push(`| Debt Score | ${fmt(t.debtDelta)} |`);
+    lines.push('');
+  }
+
   lines.push(KOUNT_FOOTER);
   return lines.join('\n');
 }

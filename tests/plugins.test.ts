@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest';
+import { AuthorMetricsPlugin } from '../src/plugins/built-in/author-metrics';
 import { BlankLinesPlugin } from '../src/plugins/built-in/blank-lines';
+import { CodeChurnPlugin } from '../src/plugins/built-in/code-churn';
 import { CommentLinesPlugin } from '../src/plugins/built-in/comment-lines';
 import { DebtTrackerPlugin } from '../src/plugins/built-in/debt-tracker';
 import { FileSizePlugin } from '../src/plugins/built-in/file-size';
 import { LanguageDistributionPlugin } from '../src/plugins/built-in/language-distribution';
 import { LargestFilesPlugin } from '../src/plugins/built-in/largest-files';
+import { TechDebtPlugin } from '../src/plugins/built-in/tech-debt';
 import { TotalFilesPlugin } from '../src/plugins/built-in/total-files';
 import { TotalLinesPlugin } from '../src/plugins/built-in/total-lines';
 import type { AnalyzedFileData } from '../src/plugins/types';
@@ -253,5 +256,133 @@ describe('DebtTrackerPlugin', () => {
     const result = plugin.analyze([noColonFile]);
 
     expect(result.perFile.get(noColonFile.filePath)).toBe(0);
+  });
+});
+
+describe('CodeChurnPlugin', () => {
+  const fileWith5Commits = makeFile('/project/src/hot.ts', '.ts', ['code']);
+  fileWith5Commits.commits = 5;
+
+  const fileWith2Commits = makeFile('/project/src/warm.ts', '.ts', ['code']);
+  fileWith2Commits.commits = 2;
+
+  const fileWithNoCommits = makeFile('/project/src/cold.ts', '.ts', ['code']);
+
+  it('should read commits from AnalyzedFileData', () => {
+    const plugin = new CodeChurnPlugin();
+    const result = plugin.analyze([fileWith5Commits, fileWith2Commits, fileWithNoCommits]);
+
+    expect(result.pluginName).toBe('CodeChurn');
+    expect(result.perFile.get(fileWith5Commits.filePath)).toBe(5);
+    expect(result.perFile.get(fileWith2Commits.filePath)).toBe(2);
+    expect(result.perFile.get(fileWithNoCommits.filePath)).toBe(0);
+    expect(result.summaryValue).toBe(7);
+  });
+
+  it('should return high-churn files sorted by commits descending', () => {
+    const plugin = new CodeChurnPlugin();
+    const highChurn = plugin.getHighChurnFiles([fileWith5Commits, fileWith2Commits, fileWithNoCommits]);
+
+    expect(highChurn.length).toBe(2); // cold.ts excluded (0 commits)
+    expect(highChurn[0].filePath).toBe(fileWith5Commits.filePath);
+    expect(highChurn[0].commits).toBe(5);
+    expect(highChurn[1].filePath).toBe(fileWith2Commits.filePath);
+  });
+
+  it('should handle files with no commits field', () => {
+    const plugin = new CodeChurnPlugin();
+    const result = plugin.analyze([fileWithNoCommits]);
+
+    expect(result.perFile.get(fileWithNoCommits.filePath)).toBe(0);
+    expect(result.summaryValue).toBe(0);
+  });
+});
+
+describe('AuthorMetricsPlugin', () => {
+  it('should store and return injected author data', () => {
+    const plugin = new AuthorMetricsPlugin();
+    const authors = [
+      { name: 'Alice', commits: 100 },
+      { name: 'Bob', commits: 50 },
+    ];
+    plugin.setAuthors(authors);
+
+    const result = plugin.analyze([]);
+    expect(result.pluginName).toBe('AuthorMetrics');
+    expect(result.summaryValue).toBe(150);
+    expect(result.perFile.size).toBe(0); // repo-level metric
+  });
+
+  it('should return top authors via accessor', () => {
+    const plugin = new AuthorMetricsPlugin();
+    const authors = [
+      { name: 'Alice', commits: 100 },
+      { name: 'Bob', commits: 50 },
+    ];
+    plugin.setAuthors(authors);
+    plugin.analyze([]);
+
+    const topAuthors = plugin.getTopAuthors();
+    expect(topAuthors).toEqual(authors);
+  });
+
+  it('should return 0 summaryValue with no authors', () => {
+    const plugin = new AuthorMetricsPlugin();
+    const result = plugin.analyze([]);
+
+    expect(result.summaryValue).toBe(0);
+    expect(plugin.getTopAuthors()).toEqual([]);
+  });
+});
+
+describe('TechDebtPlugin', () => {
+  it('should calculate debt score using formula (lines + churn*10) / max(commentRatio, 1)', () => {
+    const plugin = new TechDebtPlugin();
+    const file = makeFile('/project/src/main.ts', '.ts', Array(100).fill('code'));
+    file.commits = 5;
+
+    // Inject comment data: 10 comment lines out of 100 = 10% ratio
+    plugin.setCommentData(new Map([['/project/src/main.ts', 10]]));
+    const result = plugin.analyze([file]);
+
+    // Score = (100 + 5*10) / max(10, 1) = 150 / 10 = 15
+    expect(result.perFile.get('/project/src/main.ts')).toBe(15);
+    expect(result.summaryValue).toBe(15);
+  });
+
+  it('should treat missing churn as 0', () => {
+    const plugin = new TechDebtPlugin();
+    const file = makeFile('/project/src/utils.ts', '.ts', Array(50).fill('code'));
+    // No commits field
+
+    plugin.setCommentData(new Map([['/project/src/utils.ts', 5]]));
+    const result = plugin.analyze([file]);
+
+    // Score = (50 + 0*10) / max(10, 1) = 50 / 10 = 5
+    expect(result.perFile.get('/project/src/utils.ts')).toBe(5);
+  });
+
+  it('should use max(commentRatio, 1) to avoid division by zero', () => {
+    const plugin = new TechDebtPlugin();
+    const file = makeFile('/project/src/hot.ts', '.ts', Array(200).fill('code'));
+    file.commits = 10;
+
+    // No comment data = 0% comment ratio
+    const result = plugin.analyze([file]);
+
+    // Score = (200 + 100) / max(0, 1) = 300 / 1 = 300
+    expect(result.perFile.get('/project/src/hot.ts')).toBe(300);
+  });
+
+  it('should return highest debt files via accessor', () => {
+    const plugin = new TechDebtPlugin();
+    const file1 = makeFile('/project/a.ts', '.ts', Array(200).fill('code'));
+    file1.commits = 10;
+    const file2 = makeFile('/project/b.ts', '.ts', Array(10).fill('code'));
+
+    const top = plugin.getHighestDebtFiles([file1, file2], 1);
+    expect(top).toHaveLength(1);
+    expect(top[0].filePath).toBe('/project/a.ts');
+    expect(top[0].score).toBeGreaterThan(0);
   });
 });

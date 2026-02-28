@@ -21,6 +21,8 @@ function buildJsonReport(stats: ProjectStats): Record<string, unknown> {
   const commentPerFile = stats.pluginResults.get('CommentLines')?.perFile ?? new Map();
   const sizePerFile = stats.pluginResults.get('FileSize')?.perFile ?? new Map();
   const debtPerFile = stats.pluginResults.get('DebtTracker')?.perFile ?? new Map();
+  const churnPerFile = stats.pluginResults.get('CodeChurn')?.perFile ?? new Map();
+  const debtScorePerFile = stats.pluginResults.get('TechDebt')?.perFile ?? new Map();
 
   for (const [filePath, lines] of totalLinesPerFile) {
     files.push({
@@ -30,6 +32,8 @@ function buildJsonReport(stats: ProjectStats): Record<string, unknown> {
       commentLines: commentPerFile.get(filePath) ?? 0,
       size: sizePerFile.get(filePath) ?? 0,
       debtMarkers: debtPerFile.get(filePath) ?? 0,
+      commits: churnPerFile.get(filePath) ?? 0,
+      debtScore: debtScorePerFile.get(filePath) ?? 0,
     });
   }
 
@@ -39,7 +43,7 @@ function buildJsonReport(stats: ProjectStats): Record<string, unknown> {
     languages[lang] = count;
   }
 
-  return {
+  const report: Record<string, unknown> = {
     summary: {
       totalFiles: stats.totalFiles,
       totalLines,
@@ -62,6 +66,36 @@ function buildJsonReport(stats: ProjectStats): Record<string, unknown> {
     })),
     scannedAt: stats.scannedAt.toISOString(),
   };
+
+  // Include Git insights only when available
+  if (stats.gitInsights) {
+    report.gitInsights = {
+      diffBranch: stats.gitInsights.diffBranch ?? null,
+      topAuthors: stats.gitInsights.topAuthors,
+      highChurnFiles: stats.gitInsights.highChurnFiles.map((f) => ({
+        path: path.relative(stats.rootDir, f.filePath),
+        commits: f.commits,
+      })),
+    };
+  }
+
+  // Include tech debt only when available
+  if (stats.techDebtScore !== undefined) {
+    report.techDebtScore = stats.techDebtScore;
+  }
+  if (stats.highDebtFiles && stats.highDebtFiles.length > 0) {
+    report.highDebtFiles = stats.highDebtFiles.map((f) => ({
+      path: path.relative(stats.rootDir, f.filePath),
+      score: f.score,
+    }));
+  }
+
+  // Include trends only when available
+  if (stats.trends) {
+    report.trends = stats.trends;
+  }
+
+  return report;
 }
 
 /**

@@ -1,0 +1,1178 @@
+{
+  "summary": {
+    "totalFiles": 119,
+    "totalLines": 16243,
+    "codeLines": 12552,
+    "commentLines": 658,
+    "blankLines": 3033,
+    "commentRatio": 4.1,
+    "totalBytes": 625472,
+    "debtMarkers": 7
+  },
+  "files": [
+    {
+      "path": "skills-lock.json",
+      "lines": 30,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 977,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "kount.md",
+      "lines": 166,
+      "blankLines": 47,
+      "commentLines": 0,
+      "size": 7502,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".kountignore",
+      "lines": 1,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 16,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "tests/cache.test.ts",
+      "lines": 116,
+      "blankLines": 29,
+      "commentLines": 5,
+      "size": 3425,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "tests/plugins.test.ts",
+      "lines": 335,
+      "blankLines": 60,
+      "commentLines": 8,
+      "size": 11011,
+      "debtMarkers": 6,
+      "commits": 2
+    },
+    {
+      "path": "tests/quality-gates.test.ts",
+      "lines": 118,
+      "blankLines": 20,
+      "commentLines": 3,
+      "size": 4030,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "tests/git.test.ts",
+      "lines": 171,
+      "blankLines": 25,
+      "commentLines": 10,
+      "size": 5440,
+      "debtMarkers": 0,
+      "commits": 0
+    },
+    {
+      "path": "tests/fixtures/.gitkeep",
+      "lines": 0,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 0,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "tests/reporters.test.ts",
+      "lines": 344,
+      "blankLines": 60,
+      "commentLines": 11,
+      "size": 13392,
+      "debtMarkers": 0,
+      "commits": 2
+    },
+    {
+      "path": "tests/scanner.test.ts",
+      "lines": 60,
+      "blankLines": 11,
+      "commentLines": 5,
+      "size": 2389,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/typescript-advanced-types/SKILL.md",
+      "lines": 724,
+      "blankLines": 158,
+      "commentLines": 0,
+      "size": 17085,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/render-escape-sequence-batching.md",
+      "lines": 61,
+      "blankLines": 13,
+      "commentLines": 0,
+      "size": 1859,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/prompt-group-flow.md",
+      "lines": 93,
+      "blankLines": 17,
+      "commentLines": 0,
+      "size": 2565,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/robust-graceful-degradation.md",
+      "lines": 117,
+      "blankLines": 25,
+      "commentLines": 0,
+      "size": 2815,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/prompt-spinner-tasks.md",
+      "lines": 91,
+      "blankLines": 21,
+      "commentLines": 0,
+      "size": 1989,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicomp-text-styling.md",
+      "lines": 66,
+      "blankLines": 15,
+      "commentLines": 0,
+      "size": 1583,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuistate-usememo-expensive.md",
+      "lines": 91,
+      "blankLines": 16,
+      "commentLines": 0,
+      "size": 2469,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/prompt-custom-render.md",
+      "lines": 80,
+      "blankLines": 18,
+      "commentLines": 0,
+      "size": 2086,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/input-immediate-feedback.md",
+      "lines": 80,
+      "blankLines": 17,
+      "commentLines": 0,
+      "size": 2192,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicomp-border-styles.md",
+      "lines": 73,
+      "blankLines": 12,
+      "commentLines": 0,
+      "size": 2057,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/robust-tty-detection.md",
+      "lines": 101,
+      "blankLines": 22,
+      "commentLines": 0,
+      "size": 2241,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuistate-cleanup-effects.md",
+      "lines": 80,
+      "blankLines": 18,
+      "commentLines": 0,
+      "size": 1880,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/robust-exit-codes.md",
+      "lines": 112,
+      "blankLines": 21,
+      "commentLines": 0,
+      "size": 2466,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/ux-color-semantics.md",
+      "lines": 64,
+      "blankLines": 14,
+      "commentLines": 0,
+      "size": 2068,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/input-useinput-hook.md",
+      "lines": 65,
+      "blankLines": 15,
+      "commentLines": 0,
+      "size": 1658,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/ux-error-messages.md",
+      "lines": 89,
+      "blankLines": 16,
+      "commentLines": 0,
+      "size": 2216,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicfg-json-output.md",
+      "lines": 117,
+      "blankLines": 20,
+      "commentLines": 0,
+      "size": 2464,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuistate-useapp-exit.md",
+      "lines": 88,
+      "blankLines": 19,
+      "commentLines": 0,
+      "size": 1847,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/render-single-write.md",
+      "lines": 39,
+      "blankLines": 9,
+      "commentLines": 0,
+      "size": 1294,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/input-modifier-keys.md",
+      "lines": 68,
+      "blankLines": 13,
+      "commentLines": 0,
+      "size": 1701,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/render-60fps-baseline.md",
+      "lines": 63,
+      "blankLines": 15,
+      "commentLines": 0,
+      "size": 1688,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/render-partial-updates.md",
+      "lines": 65,
+      "blankLines": 12,
+      "commentLines": 0,
+      "size": 1926,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicfg-sensible-defaults.md",
+      "lines": 84,
+      "blankLines": 13,
+      "commentLines": 0,
+      "size": 2140,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/ux-intro-outro.md",
+      "lines": 89,
+      "blankLines": 21,
+      "commentLines": 0,
+      "size": 2013,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/prompt-cancellation.md",
+      "lines": 79,
+      "blankLines": 17,
+      "commentLines": 0,
+      "size": 1932,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/ux-next-steps.md",
+      "lines": 90,
+      "blankLines": 23,
+      "commentLines": 0,
+      "size": 2040,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/render-overwrite-dont-clear.md",
+      "lines": 47,
+      "blankLines": 9,
+      "commentLines": 0,
+      "size": 1402,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicfg-help-system.md",
+      "lines": 106,
+      "blankLines": 23,
+      "commentLines": 0,
+      "size": 2635,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicfg-env-vars.md",
+      "lines": 83,
+      "blankLines": 17,
+      "commentLines": 0,
+      "size": 2128,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/prompt-validation.md",
+      "lines": 86,
+      "blankLines": 13,
+      "commentLines": 0,
+      "size": 2158,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/input-isactive-focus.md",
+      "lines": 85,
+      "blankLines": 15,
+      "commentLines": 0,
+      "size": 2122,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicfg-flags-over-args.md",
+      "lines": 81,
+      "blankLines": 17,
+      "commentLines": 0,
+      "size": 2229,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicomp-percentage-widths.md",
+      "lines": 94,
+      "blankLines": 13,
+      "commentLines": 0,
+      "size": 1977,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/robust-signal-handling.md",
+      "lines": 112,
+      "blankLines": 27,
+      "commentLines": 0,
+      "size": 2506,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/ux-progress-indicators.md",
+      "lines": 82,
+      "blankLines": 16,
+      "commentLines": 0,
+      "size": 2218,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/input-escape-routes.md",
+      "lines": 87,
+      "blankLines": 18,
+      "commentLines": 0,
+      "size": 1873,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuistate-functional-updates.md",
+      "lines": 93,
+      "blankLines": 17,
+      "commentLines": 0,
+      "size": 2080,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/robust-terminal-restore.md",
+      "lines": 110,
+      "blankLines": 25,
+      "commentLines": 0,
+      "size": 2340,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicomp-static-for-logs.md",
+      "lines": 80,
+      "blankLines": 11,
+      "commentLines": 0,
+      "size": 1898,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuistate-usecallback-stable.md",
+      "lines": 74,
+      "blankLines": 16,
+      "commentLines": 0,
+      "size": 1967,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicomp-box-flexbox.md",
+      "lines": 67,
+      "blankLines": 12,
+      "commentLines": 0,
+      "size": 1613,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/tuicomp-measure-element.md",
+      "lines": 70,
+      "blankLines": 13,
+      "commentLines": 0,
+      "size": 2017,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/references/render-synchronized-output.md",
+      "lines": 43,
+      "blankLines": 10,
+      "commentLines": 0,
+      "size": 1476,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/README.md",
+      "lines": 145,
+      "blankLines": 39,
+      "commentLines": 0,
+      "size": 4386,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/SKILL.md",
+      "lines": 111,
+      "blankLines": 28,
+      "commentLines": 0,
+      "size": 5184,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/terminal-ui/AGENTS.md",
+      "lines": 94,
+      "blankLines": 15,
+      "commentLines": 0,
+      "size": 8539,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/executing-plans/SKILL.md",
+      "lines": 84,
+      "blankLines": 22,
+      "commentLines": 0,
+      "size": 2550,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/eval-viewer/generate_review.py",
+      "lines": 471,
+      "blankLines": 64,
+      "commentLines": 21,
+      "size": 16365,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/eval-viewer/viewer.html",
+      "lines": 1325,
+      "blankLines": 116,
+      "commentLines": 11,
+      "size": 44998,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/references/schemas.md",
+      "lines": 430,
+      "blankLines": 43,
+      "commentLines": 0,
+      "size": 12061,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/agents/grader.md",
+      "lines": 223,
+      "blankLines": 43,
+      "commentLines": 0,
+      "size": 9049,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/agents/comparator.md",
+      "lines": 202,
+      "blankLines": 37,
+      "commentLines": 0,
+      "size": 7287,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/agents/analyzer.md",
+      "lines": 274,
+      "blankLines": 62,
+      "commentLines": 0,
+      "size": 10376,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/run_eval.py",
+      "lines": 310,
+      "blankLines": 44,
+      "commentLines": 9,
+      "size": 11464,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/package_skill.py",
+      "lines": 136,
+      "blankLines": 27,
+      "commentLines": 11,
+      "size": 4234,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/quick_validate.py",
+      "lines": 103,
+      "blankLines": 16,
+      "commentLines": 15,
+      "size": 3972,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/improve_description.py",
+      "lines": 248,
+      "blankLines": 43,
+      "commentLines": 7,
+      "size": 10723,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/aggregate_benchmark.py",
+      "lines": 401,
+      "blankLines": 67,
+      "commentLines": 22,
+      "size": 14386,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/run_loop.py",
+      "lines": 332,
+      "blankLines": 48,
+      "commentLines": 18,
+      "size": 13685,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/generate_report.py",
+      "lines": 326,
+      "blankLines": 39,
+      "commentLines": 14,
+      "size": 12847,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/utils.py",
+      "lines": 47,
+      "blankLines": 9,
+      "commentLines": 1,
+      "size": 1661,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/SKILL.md",
+      "lines": 479,
+      "blankLines": 157,
+      "commentLines": 0,
+      "size": 32370,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/LICENSE.txt",
+      "lines": 202,
+      "blankLines": 33,
+      "commentLines": 0,
+      "size": 11357,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/skill-creator/assets/eval_review.html",
+      "lines": 146,
+      "blankLines": 15,
+      "commentLines": 0,
+      "size": 7058,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".agents/skills/brainstorming/SKILL.md",
+      "lines": 96,
+      "blankLines": 23,
+      "commentLines": 0,
+      "size": 4690,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "bun.lock",
+      "lines": 1014,
+      "blankLines": 492,
+      "commentLines": 0,
+      "size": 106111,
+      "debtMarkers": 0,
+      "commits": 3
+    },
+    {
+      "path": "README.md",
+      "lines": 375,
+      "blankLines": 96,
+      "commentLines": 1,
+      "size": 10830,
+      "debtMarkers": 0,
+      "commits": 4
+    },
+    {
+      "path": ".gitignore",
+      "lines": 35,
+      "blankLines": 7,
+      "commentLines": 0,
+      "size": 404,
+      "debtMarkers": 0,
+      "commits": 2
+    },
+    {
+      "path": "package.json",
+      "lines": 65,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 1432,
+      "debtMarkers": 0,
+      "commits": 17
+    },
+    {
+      "path": "tsconfig.json",
+      "lines": 13,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 299,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "AGENTS.md",
+      "lines": 0,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 0,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": ".kountrc.json",
+      "lines": 10,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 165,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/index.tsx",
+      "lines": 211,
+      "blankLines": 24,
+      "commentLines": 18,
+      "size": 7782,
+      "debtMarkers": 0,
+      "commits": 3
+    },
+    {
+      "path": "src/core/.gitkeep",
+      "lines": 0,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 0,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/core/quality-gates.ts",
+      "lines": 49,
+      "blankLines": 8,
+      "commentLines": 9,
+      "size": 1480,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/core/cache.ts",
+      "lines": 130,
+      "blankLines": 21,
+      "commentLines": 38,
+      "size": 3391,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/core/aggregator.ts",
+      "lines": 279,
+      "blankLines": 32,
+      "commentLines": 48,
+      "size": 9267,
+      "debtMarkers": 0,
+      "commits": 2
+    },
+    {
+      "path": "src/plugins/.gitkeep",
+      "lines": 0,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 0,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/plugins/built-in/largest-files.ts",
+      "lines": 41,
+      "blankLines": 8,
+      "commentLines": 8,
+      "size": 1213,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/plugins/built-in/total-lines.ts",
+      "lines": 21,
+      "blankLines": 4,
+      "commentLines": 3,
+      "size": 585,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/plugins/built-in/language-distribution.ts",
+      "lines": 95,
+      "blankLines": 6,
+      "commentLines": 13,
+      "size": 2498,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/plugins/built-in/comment-lines.ts",
+      "lines": 90,
+      "blankLines": 14,
+      "commentLines": 10,
+      "size": 2665,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/plugins/built-in/debt-tracker.ts",
+      "lines": 45,
+      "blankLines": 7,
+      "commentLines": 7,
+      "size": 1260,
+      "debtMarkers": 1,
+      "commits": 1
+    },
+    {
+      "path": "src/plugins/built-in/author-metrics.ts",
+      "lines": 37,
+      "blankLines": 6,
+      "commentLines": 12,
+      "size": 1104,
+      "debtMarkers": 0,
+      "commits": 0
+    },
+    {
+      "path": "src/plugins/built-in/total-files.ts",
+      "lines": 18,
+      "blankLines": 4,
+      "commentLines": 3,
+      "size": 482,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/plugins/built-in/file-size.ts",
+      "lines": 20,
+      "blankLines": 4,
+      "commentLines": 3,
+      "size": 552,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/plugins/built-in/code-churn.ts",
+      "lines": 37,
+      "blankLines": 5,
+      "commentLines": 8,
+      "size": 1124,
+      "debtMarkers": 0,
+      "commits": 0
+    },
+    {
+      "path": "src/plugins/built-in/blank-lines.ts",
+      "lines": 26,
+      "blankLines": 4,
+      "commentLines": 3,
+      "size": 712,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/plugins/types.ts",
+      "lines": 68,
+      "blankLines": 4,
+      "commentLines": 34,
+      "size": 2389,
+      "debtMarkers": 0,
+      "commits": 2
+    },
+    {
+      "path": "src/plugins/index.ts",
+      "lines": 13,
+      "blankLines": 2,
+      "commentLines": 0,
+      "size": 748,
+      "debtMarkers": 0,
+      "commits": 2
+    },
+    {
+      "path": "src/utils/.gitkeep",
+      "lines": 0,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 0,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/utils/language-map.ts",
+      "lines": 79,
+      "blankLines": 7,
+      "commentLines": 41,
+      "size": 2416,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/cli/.gitkeep",
+      "lines": 0,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 0,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/cli/parser.ts",
+      "lines": 61,
+      "blankLines": 4,
+      "commentLines": 7,
+      "size": 2231,
+      "debtMarkers": 0,
+      "commits": 2
+    },
+    {
+      "path": "src/cli/config-resolver.ts",
+      "lines": 202,
+      "blankLines": 22,
+      "commentLines": 32,
+      "size": 5639,
+      "debtMarkers": 0,
+      "commits": 2
+    },
+    {
+      "path": "src/reporters/json.ts",
+      "lines": 105,
+      "blankLines": 9,
+      "commentLines": 16,
+      "size": 3695,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/reporters/csv.ts",
+      "lines": 57,
+      "blankLines": 6,
+      "commentLines": 13,
+      "size": 2118,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/reporters/.gitkeep",
+      "lines": 0,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 0,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/reporters/markdown.ts",
+      "lines": 167,
+      "blankLines": 24,
+      "commentLines": 20,
+      "size": 5786,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/reporters/terminal/Progress.tsx",
+      "lines": 39,
+      "blankLines": 5,
+      "commentLines": 6,
+      "size": 1258,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/reporters/terminal/Wizard.tsx",
+      "lines": 125,
+      "blankLines": 13,
+      "commentLines": 8,
+      "size": 4524,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/reporters/terminal/Splash.tsx",
+      "lines": 32,
+      "blankLines": 2,
+      "commentLines": 5,
+      "size": 1330,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/reporters/terminal/index.ts",
+      "lines": 6,
+      "blankLines": 1,
+      "commentLines": 0,
+      "size": 208,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/reporters/terminal/Summary.tsx",
+      "lines": 206,
+      "blankLines": 12,
+      "commentLines": 15,
+      "size": 7558,
+      "debtMarkers": 0,
+      "commits": 2
+    },
+    {
+      "path": "src/reporters/html.ts",
+      "lines": 385,
+      "blankLines": 29,
+      "commentLines": 15,
+      "size": 18992,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/scanner/.gitkeep",
+      "lines": 0,
+      "blankLines": 0,
+      "commentLines": 0,
+      "size": 0,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/scanner/ignore-parser.ts",
+      "lines": 168,
+      "blankLines": 25,
+      "commentLines": 43,
+      "size": 6115,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/scanner/stream-reader.ts",
+      "lines": 99,
+      "blankLines": 16,
+      "commentLines": 23,
+      "size": 3291,
+      "debtMarkers": 0,
+      "commits": 1
+    },
+    {
+      "path": "src/git/index.ts",
+      "lines": 125,
+      "blankLines": 16,
+      "commentLines": 25,
+      "size": 3481,
+      "debtMarkers": 0,
+      "commits": 0
+    }
+  ],
+  "languages": {
+    "JSON": 4,
+    "Markdown": 56,
+    "Other": 11,
+    "TypeScript": 32,
+    "Python": 9,
+    "HTML": 2,
+    "TypeScript (TSX)": 5
+  },
+  "largestFiles": [
+    {
+      "path": "bun.lock",
+      "size": 106111
+    },
+    {
+      "path": ".agents/skills/skill-creator/eval-viewer/viewer.html",
+      "size": 44998
+    },
+    {
+      "path": ".agents/skills/skill-creator/SKILL.md",
+      "size": 32370
+    },
+    {
+      "path": "src/reporters/html.ts",
+      "size": 18992
+    },
+    {
+      "path": ".agents/skills/typescript-advanced-types/SKILL.md",
+      "size": 17085
+    },
+    {
+      "path": ".agents/skills/skill-creator/eval-viewer/generate_review.py",
+      "size": 16365
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/aggregate_benchmark.py",
+      "size": 14386
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/run_loop.py",
+      "size": 13685
+    },
+    {
+      "path": "tests/reporters.test.ts",
+      "size": 13392
+    },
+    {
+      "path": ".agents/skills/skill-creator/scripts/generate_report.py",
+      "size": 12847
+    }
+  ],
+  "debtHotspots": [
+    {
+      "path": "tests/plugins.test.ts",
+      "count": 6
+    },
+    {
+      "path": "src/plugins/built-in/debt-tracker.ts",
+      "count": 1
+    }
+  ],
+  "scannedAt": "2026-02-28T05:28:36.496Z",
+  "gitInsights": {
+    "diffBranch": null,
+    "topAuthors": [
+      {
+        "name": "theCod3v1l",
+        "commits": 21
+      }
+    ],
+    "highChurnFiles": [
+      {
+        "path": "package.json",
+        "commits": 17
+      },
+      {
+        "path": "README.md",
+        "commits": 4
+      },
+      {
+        "path": "bun.lock",
+        "commits": 3
+      },
+      {
+        "path": "src/index.tsx",
+        "commits": 3
+      },
+      {
+        "path": "tests/plugins.test.ts",
+        "commits": 2
+      }
+    ]
+  }
+}

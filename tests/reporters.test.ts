@@ -26,6 +26,8 @@ function makeMockStats(overrides?: Partial<ProjectStats>): ProjectStats {
   pluginResults.set('FileSize', makePluginResult('FileSize', 25000));
   pluginResults.set('TotalFiles', makePluginResult('TotalFiles', 10));
   pluginResults.set('DebtTracker', makePluginResult('DebtTracker', 5));
+  pluginResults.set('CodeChurn', makePluginResult('CodeChurn', 15));
+  pluginResults.set('TechDebt', makePluginResult('TechDebt', 500));
 
   const languageDistribution = new Map<string, number>();
   languageDistribution.set('TypeScript', 6);
@@ -141,12 +143,12 @@ describe('Markdown Reporter', () => {
 });
 
 describe('HTML Reporter', () => {
-  it('should generate valid HTML with Tailwind CDN', () => {
+  it('should generate valid HTML with Chart.js and Alpine CDN', () => {
     const stats = makeMockStats();
     const html = generateHtmlDashboard(stats);
 
     expect(html).toContain('<!DOCTYPE html>');
-    expect(html).toContain('cdn.tailwindcss.com');
+    expect(html).toContain('chart.js');
     expect(html).toContain('alpinejs');
     expect(html).toContain('KOUNT');
   });
@@ -231,7 +233,7 @@ describe('CSV Reporter', () => {
     const csv = generateCsvReport(stats);
     const lines = csv.trim().split('\n');
 
-    expect(lines[0]).toBe('Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers');
+    expect(lines[0]).toBe('Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers,Commits,Debt Score');
   });
 
   it('should have correct number of columns per row', () => {
@@ -245,6 +247,8 @@ describe('CSV Reporter', () => {
     pluginResults.set('CommentLines', { pluginName: 'CommentLines', summaryValue: 20, perFile: new Map([["/project/src/index.ts", 15], ["/project/src/utils.ts", 5]]) });
     pluginResults.set('FileSize', { pluginName: 'FileSize', summaryValue: 5000, perFile: new Map([["/project/src/index.ts", 3000], ["/project/src/utils.ts", 2000]]) });
     pluginResults.set('DebtTracker', { pluginName: 'DebtTracker', summaryValue: 3, perFile: new Map([["/project/src/index.ts", 2], ["/project/src/utils.ts", 1]]) });
+    pluginResults.set('CodeChurn', { pluginName: 'CodeChurn', summaryValue: 5, perFile: new Map([["/project/src/index.ts", 3], ["/project/src/utils.ts", 2]]) });
+    pluginResults.set('TechDebt', { pluginName: 'TechDebt', summaryValue: 50, perFile: new Map([["/project/src/index.ts", 30], ["/project/src/utils.ts", 20]]) });
 
     const stats = makeMockStats({ pluginResults });
     const csv = generateCsvReport(stats);
@@ -253,9 +257,9 @@ describe('CSV Reporter', () => {
     // Header + 2 data rows
     expect(lines.length).toBe(3);
 
-    // Each data row should have 6 columns
+    // Each data row should have 8 columns
     for (let i = 1; i < lines.length; i++) {
-      expect(lines[i].split(',').length).toBe(6);
+      expect(lines[i].split(',').length).toBe(8);
     }
   });
 
@@ -269,12 +273,14 @@ describe('CSV Reporter', () => {
     pluginResults.set('CommentLines', { pluginName: 'CommentLines', summaryValue: 30, perFile: new Map([["/project/src/app.ts", 30]]) });
     pluginResults.set('FileSize', { pluginName: 'FileSize', summaryValue: 4000, perFile: new Map([["/project/src/app.ts", 4000]]) });
     pluginResults.set('DebtTracker', { pluginName: 'DebtTracker', summaryValue: 2, perFile: new Map([["/project/src/app.ts", 2]]) });
+    pluginResults.set('CodeChurn', { pluginName: 'CodeChurn', summaryValue: 5, perFile: new Map([["/project/src/app.ts", 5]]) });
+    pluginResults.set('TechDebt', { pluginName: 'TechDebt', summaryValue: 42, perFile: new Map([["/project/src/app.ts", 42]]) });
 
     const stats = makeMockStats({ pluginResults });
     const csv = generateCsvReport(stats);
     const lines = csv.trim().split('\n');
 
-    expect(lines[1]).toBe('src/app.ts,200,20,30,4000,2');
+    expect(lines[1]).toBe('src/app.ts,200,20,30,4000,2,5,42');
   });
 
   it('should not include a summary row', () => {
@@ -287,5 +293,137 @@ describe('CSV Reporter', () => {
     for (let i = 1; i < lines.length; i++) {
       expect(lines[i]).not.toMatch(/^(Total|Summary|TOTAL)/i);
     }
+  });
+});
+
+describe('JSON Reporter — Git Insights', () => {
+  it('should include gitInsights when present', () => {
+    const stats = makeMockStats({
+      gitInsights: {
+        diffBranch: 'main',
+        topAuthors: [{ name: 'Alice', commits: 100 }],
+        highChurnFiles: [{ filePath: '/project/src/hot.ts', commits: 50 }],
+      },
+    });
+    const parsed = JSON.parse(generateJsonReport(stats));
+
+    expect(parsed.gitInsights).toBeDefined();
+    expect(parsed.gitInsights.diffBranch).toBe('main');
+    expect(parsed.gitInsights.topAuthors[0].name).toBe('Alice');
+    expect(parsed.gitInsights.highChurnFiles[0].path).toBe('src/hot.ts');
+  });
+
+  it('should omit gitInsights when not available', () => {
+    const stats = makeMockStats();
+    const parsed = JSON.parse(generateJsonReport(stats));
+
+    expect(parsed.gitInsights).toBeUndefined();
+  });
+});
+
+describe('Markdown Reporter — Git Insights', () => {
+  it('should include Git Insights section when gitInsights present', () => {
+    const stats = makeMockStats({
+      gitInsights: {
+        diffBranch: 'develop',
+        topAuthors: [{ name: 'Bob', commits: 75 }],
+        highChurnFiles: [{ filePath: '/project/src/core.ts', commits: 30 }],
+      },
+    });
+    const md = generateMarkdownReport(stats);
+
+    expect(md).toContain('### Git Insights');
+    expect(md).toContain('Differential scan vs `develop`');
+    expect(md).toContain('Bob');
+    expect(md).toContain('`src/core.ts`');
+  });
+
+  it('should not include Git Insights section when gitInsights absent', () => {
+    const stats = makeMockStats();
+    const md = generateMarkdownReport(stats);
+
+    expect(md).not.toContain('### Git Insights');
+  });
+});
+
+describe('JSON Reporter — Tech Debt & Trends', () => {
+  it('should include techDebtScore and highDebtFiles when present', () => {
+    const stats = makeMockStats({
+      techDebtScore: 450,
+      highDebtFiles: [
+        { filePath: '/project/src/legacy.ts', score: 200 },
+        { filePath: '/project/src/old.ts', score: 100 },
+      ],
+    });
+    const parsed = JSON.parse(generateJsonReport(stats));
+
+    expect(parsed.techDebtScore).toBe(450);
+    expect(parsed.highDebtFiles).toHaveLength(2);
+    expect(parsed.highDebtFiles[0].path).toBe('src/legacy.ts');
+    expect(parsed.highDebtFiles[0].score).toBe(200);
+  });
+
+  it('should include trends when present', () => {
+    const stats = makeMockStats({
+      trends: {
+        linesDelta: 150,
+        fileDelta: 3,
+        sizeDelta: 5000,
+        commentRatioDelta: -1.2,
+        debtDelta: -20,
+      },
+    });
+    const parsed = JSON.parse(generateJsonReport(stats));
+
+    expect(parsed.trends).toBeDefined();
+    expect(parsed.trends.linesDelta).toBe(150);
+    expect(parsed.trends.debtDelta).toBe(-20);
+  });
+
+  it('should omit trends when not available', () => {
+    const stats = makeMockStats();
+    const parsed = JSON.parse(generateJsonReport(stats));
+    expect(parsed.trends).toBeUndefined();
+  });
+});
+
+describe('Markdown Reporter — Tech Debt & Trends', () => {
+  it('should include Tech Debt section when data present', () => {
+    const stats = makeMockStats({
+      techDebtScore: 450,
+      highDebtFiles: [
+        { filePath: '/project/src/legacy.ts', score: 200 },
+      ],
+    });
+    const md = generateMarkdownReport(stats);
+
+    expect(md).toContain('### Tech Debt');
+    expect(md).toContain('**Total Score:** 450');
+    expect(md).toContain('`src/legacy.ts`');
+  });
+
+  it('should include Trends section when trends present', () => {
+    const stats = makeMockStats({
+      trends: {
+        linesDelta: 150,
+        fileDelta: 3,
+        sizeDelta: 5000,
+        commentRatioDelta: -1.2,
+        debtDelta: -20,
+      },
+    });
+    const md = generateMarkdownReport(stats);
+
+    expect(md).toContain('### Trends (vs Previous Scan)');
+    expect(md).toContain('+150');
+    expect(md).toContain('-20');
+  });
+
+  it('should not include Tech Debt or Trends when absent', () => {
+    const stats = makeMockStats();
+    const md = generateMarkdownReport(stats);
+
+    expect(md).not.toContain('### Tech Debt');
+    expect(md).not.toContain('### Trends');
   });
 });

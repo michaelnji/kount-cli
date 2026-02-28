@@ -36,6 +36,8 @@ export interface AnalyzedFileData {
   extension: string;
   /** All lines of the file as strings. */
   lines: string[];
+  /** Number of git commits that modified this file (populated by aggregator if git available). */
+  commits?: number;
 }
 
 /**
@@ -55,6 +57,24 @@ export interface ProjectStats {
   largestFiles: Array<{ filePath: string; size: number }>;
   /** Top files with the most technical debt markers (TODO/FIXME/HACK). */
   debtHotspots: Array<{ filePath: string; count: number }>;
+  /** Git intelligence data (undefined when not a git repo or git unavailable). */
+  gitInsights?: {
+    diffBranch?: string;
+    topAuthors: Array<{ name: string; commits: number }>;
+    highChurnFiles: Array<{ filePath: string; commits: number }>;
+  };
+  /** Composite tech debt score for the entire project. */
+  techDebtScore?: number;
+  /** Top files with highest tech debt scores. */
+  highDebtFiles?: Array<{ filePath: string; score: number }>;
+  /** Trend deltas vs. previous run (undefined if no previous run exists). */
+  trends?: {
+    linesDelta: number;
+    fileDelta: number;
+    sizeDelta: number;
+    commentRatioDelta: number;
+    debtDelta: number;
+  };
   /** Timestamp of when the scan completed. */
   scannedAt: Date;
 }

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1772259400136-1rlgc1",
+    "timestamp": "2026-02-28T06:16:40.136Z",
+    "totalFiles": 123,
+    "totalLines": 18205,
+    "commentRatio": 4,
+    "totalSize": 681858,
+    "techDebtScore": 13288
+  },
+  {
+    "id": "1772265332139-ed3nab",
+    "timestamp": "2026-02-28T07:55:32.139Z",
+    "totalFiles": 125,
+    "totalLines": 18858,
+    "commentRatio": 4,
+    "totalSize": 708808,
+    "techDebtScore": 13589
+  },
+  {
+    "id": "1772267231610-iepoah",
+    "timestamp": "2026-02-28T08:27:11.610Z",
+    "totalFiles": 125,
+    "totalLines": 18840,
+    "commentRatio": 4,
+    "totalSize": 708030,
+    "techDebtScore": 13575
+  },
+  {
+    "id": "1772268963969-uk5tjp",
+    "timestamp": "2026-02-28T08:56:03.969Z",
+    "totalFiles": 125,
+    "totalLines": 18851,
+    "commentRatio": 4,
+    "totalSize": 708586,
+    "techDebtScore": 13584
+  }
+]
