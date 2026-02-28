@@ -18,7 +18,14 @@ export function buildHtmlTemplate(jsonData: string): string {
   <title>KOUNT Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <script>
+    window.__K_FONTS_LOADED__ = false;
+    function onKountAssetsLoaded() {
+      window.__K_FONTS_LOADED__ = true;
+      document.dispatchEvent(new Event('kount-assets-ready'));
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" onload="onKountAssetsLoaded()" onerror="onKountAssetsLoaded()">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
@@ -113,7 +120,7 @@ export function buildHtmlTemplate(jsonData: string): string {
 
     .sidebar-brand span { font-weight: 700; font-size: 18px; letter-spacing: -0.5px; }
 
-    .sidebar-nav { flex: 1; padding: 12px 8px; display: flex; flex-direction: column; gap: 2px; }
+    .sidebar-nav { flex: 1; padding: 12px 8px; margin-top: 16px; display: flex; flex-direction: column; gap: 2px; }
 
     .sidebar-nav a {
       display: flex; align-items: center; gap: 12px;
@@ -373,6 +380,14 @@ export function buildHtmlTemplate(jsonData: string): string {
     @media (max-width: 480px) {
       .stats-grid { grid-template-columns: 1fr; }
     }
+
+    /* Skeleton UI */
+    @keyframes kount-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .skel-card { background-color: var(--border); border-radius: 12px; height: 120px; animation: kount-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    .skel-header { background-color: var(--border); border-radius: 8px; height: 36px; width: 180px; margin-bottom: 24px; animation: kount-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
   </style>
 </head>
 <body x-data="dashboard()" x-init="init()">
@@ -453,7 +468,24 @@ export function buildHtmlTemplate(jsonData: string): string {
   <!-- Main Content -->
   <main class="main-content">
 
-    <!-- ===== OVERVIEW ===== -->
+    <!-- Skeleton Loader -->
+    <div x-show="isLoading" class="skeleton-dashboard" style="width: 100%; padding: 20px 0;">
+      <div class="skel-header"></div>
+      <div class="stats-grid" style="margin-bottom: 32px;">
+        <div class="skel-card"></div>
+        <div class="skel-card"></div>
+        <div class="skel-card"></div>
+        <div class="skel-card"></div>
+      </div>
+      <div class="stats-grid" style="grid-template-columns: 2fr 1fr;">
+        <div class="skel-card" style="height: 380px;"></div>
+        <div class="skel-card" style="height: 380px;"></div>
+      </div>
+    </div>
+
+    <!-- Actual Content -->
+    <div x-show="!isLoading" style="display: none;" :style="{ display: isLoading ? 'none' : 'block' }">
+      <!-- ===== OVERVIEW ===== -->
     <div class="section-view" :class="{ active: currentSection === 'overview' }">
       <div style="margin-bottom: 24px;" class="page-header">
         <h1>Overview</h1>
@@ -901,6 +933,7 @@ docs/drafts/*.md</pre>
       </div>
     </div>
 
+    </div>
   </main>
 
   <script>
@@ -1030,6 +1063,7 @@ docs/drafts/*.md</pre>
     function dashboard() {
       const raw = ${jsonData};
       return {
+        isLoading: true,
         data: raw,
         currentSection: 'overview',
         sidebarOpen: false,
@@ -1044,6 +1078,17 @@ docs/drafts/*.md</pre>
         trendsMetric: 'totalFiles',
 
         init() {
+          // Handle Devicons loading
+          if (window.__K_FONTS_LOADED__) {
+            this.isLoading = false;
+          } else {
+            document.addEventListener('kount-assets-ready', () => {
+              this.isLoading = false;
+            });
+            // Fallback
+            setTimeout(() => { this.isLoading = false; }, 3000);
+          }
+
           const savedTheme = localStorage.getItem('kount-theme');
           if (savedTheme === 'light') { this.isDark = false; document.documentElement.classList.remove('dark'); }
 

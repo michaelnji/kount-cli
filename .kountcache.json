@@ -2,7 +2,7 @@
   "version": 1,
   "entries": {
     "/Users/michaelnji/Projects/kount/skills-lock.json": {
-      "mtimeMs": 1772200910800,
+      "mtimeMs": 1772200910800.241,
       "size": 977,
       "metrics": {
         "TotalLines": 30,
@@ -34,7 +34,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tests/cache.test.ts": {
-      "mtimeMs": 1772204279006,
+      "mtimeMs": 1772204279006.5276,
       "size": 3425,
       "metrics": {
         "TotalLines": 116,
@@ -50,7 +50,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tests/plugins.test.ts": {
-      "mtimeMs": 1772285876332,
+      "mtimeMs": 1772285876332.638,
       "size": 16957,
       "metrics": {
         "TotalLines": 496,
@@ -67,7 +67,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tests/fixtures/.gitkeep": {
-      "mtimeMs": 1772195256200,
+      "mtimeMs": 1772195256200.2122,
       "size": 0,
       "metrics": {
         "TotalLines": 0,
@@ -83,7 +83,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tests/reporters.test.ts": {
-      "mtimeMs": 1772294721658,
+      "mtimeMs": 1772294721658.3035,
       "size": 16339,
       "metrics": {
         "TotalLines": 429,
@@ -100,7 +100,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tests/scanner.test.ts": {
-      "mtimeMs": 1772286580534,
+      "mtimeMs": 1772286580534.656,
       "size": 2374,
       "metrics": {
         "TotalLines": 60,
@@ -1161,7 +1161,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/bun.lock": {
-      "mtimeMs": 1772284294282,
+      "mtimeMs": 1772284294282.1663,
       "size": 106995,
       "metrics": {
         "TotalLines": 1024,
@@ -1178,7 +1178,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/README.md": {
-      "mtimeMs": 1772310064490,
+      "mtimeMs": 1772310064490.6716,
       "size": 6707,
       "metrics": {
         "TotalLines": 183,
@@ -1195,7 +1195,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/.gitignore": {
-      "mtimeMs": 1772220721703,
+      "mtimeMs": 1772220721703.7405,
       "size": 404,
       "metrics": {
         "TotalLines": 35,
@@ -1211,7 +1211,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/package.json": {
-      "mtimeMs": 1772311364789,
+      "mtimeMs": 1772311364789.8594,
       "size": 1525,
       "metrics": {
         "TotalLines": 67,
@@ -1227,7 +1227,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tsconfig.json": {
-      "mtimeMs": 1772195235338,
+      "mtimeMs": 1772195235338.031,
       "size": 299,
       "metrics": {
         "TotalLines": 13,
@@ -1243,7 +1243,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/AGENTS.md": {
-      "mtimeMs": 1772193722225,
+      "mtimeMs": 1772193722225.1204,
       "size": 0,
       "metrics": {
         "TotalLines": 0,
@@ -1275,7 +1275,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/index.tsx": {
-      "mtimeMs": 1772313693989,
+      "mtimeMs": 1772313693989.9265,
       "size": 10639,
       "metrics": {
         "TotalLines": 265,
@@ -1286,13 +1286,13 @@
         "LanguageDistribution": 1,
         "LargestFiles": 10639,
         "DebtTracker": 0,
-        "CodeChurn": 6,
+        "CodeChurn": 7,
         "DependencyTracker": 2,
-        "TechDebt": 36
+        "TechDebt": 37
       }
     },
     "/Users/michaelnji/Projects/kount/src/core/.gitkeep": {
-      "mtimeMs": 1772195256199,
+      "mtimeMs": 1772195256199.5222,
       "size": 0,
       "metrics": {
         "TotalLines": 0,
@@ -1308,7 +1308,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/core/cache.ts": {
-      "mtimeMs": 1772286651605,
+      "mtimeMs": 1772286651605.592,
       "size": 3396,
       "metrics": {
         "TotalLines": 130,
@@ -1324,7 +1324,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/core/aggregator.ts": {
-      "mtimeMs": 1772291130935,
+      "mtimeMs": 1772291130935.695,
       "size": 16010,
       "metrics": {
         "TotalLines": 446,
@@ -1341,7 +1341,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/.gitkeep": {
-      "mtimeMs": 1772195256199,
+      "mtimeMs": 1772195256199.8115,
       "size": 0,
       "metrics": {
         "TotalLines": 0,
@@ -1357,7 +1357,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/largest-files.ts": {
-      "mtimeMs": 1772203823154,
+      "mtimeMs": 1772203823154.5337,
       "size": 1213,
       "metrics": {
         "TotalLines": 41,
@@ -1373,7 +1373,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/total-lines.ts": {
-      "mtimeMs": 1772203786809,
+      "mtimeMs": 1772203786809.3389,
       "size": 585,
       "metrics": {
         "TotalLines": 21,
@@ -1389,7 +1389,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/language-distribution.ts": {
-      "mtimeMs": 1772203821141,
+      "mtimeMs": 1772203821141.2957,
       "size": 2498,
       "metrics": {
         "TotalLines": 95,
@@ -1405,7 +1405,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/comment-lines.ts": {
-      "mtimeMs": 1772203800816,
+      "mtimeMs": 1772203800816.487,
       "size": 2665,
       "metrics": {
         "TotalLines": 90,
@@ -1421,7 +1421,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/total-files.ts": {
-      "mtimeMs": 1772203815157,
+      "mtimeMs": 1772203815157.4336,
       "size": 482,
       "metrics": {
         "TotalLines": 18,
@@ -1437,7 +1437,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/file-size.ts": {
-      "mtimeMs": 1772203803360,
+      "mtimeMs": 1772203803360.7424,
       "size": 552,
       "metrics": {
         "TotalLines": 20,
@@ -1453,7 +1453,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/blank-lines.ts": {
-      "mtimeMs": 1772203797831,
+      "mtimeMs": 1772203797831.796,
       "size": 712,
       "metrics": {
         "TotalLines": 26,
@@ -1469,7 +1469,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/types.ts": {
-      "mtimeMs": 1772291128839,
+      "mtimeMs": 1772291128839.027,
       "size": 4695,
       "metrics": {
         "TotalLines": 140,
@@ -1485,7 +1485,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/index.ts": {
-      "mtimeMs": 1772285659498,
+      "mtimeMs": 1772285659498.4548,
       "size": 882,
       "metrics": {
         "TotalLines": 15,
@@ -1501,7 +1501,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/utils/.gitkeep": {
-      "mtimeMs": 1772195256200,
+      "mtimeMs": 1772195256200.0815,
       "size": 0,
       "metrics": {
         "TotalLines": 0,
@@ -1517,7 +1517,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/utils/language-map.ts": {
-      "mtimeMs": 1772201655397,
+      "mtimeMs": 1772201655397.1653,
       "size": 2416,
       "metrics": {
         "TotalLines": 79,
@@ -1533,7 +1533,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/cli/.gitkeep": {
-      "mtimeMs": 1772195256199,
+      "mtimeMs": 1772195256199.3696,
       "size": 0,
       "metrics": {
         "TotalLines": 0,
@@ -1549,7 +1549,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/cli/parser.ts": {
-      "mtimeMs": 1772290449600,
+      "mtimeMs": 1772290449600.0073,
       "size": 2841,
       "metrics": {
         "TotalLines": 67,
@@ -1565,7 +1565,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/cli/config-resolver.ts": {
-      "mtimeMs": 1772290450850,
+      "mtimeMs": 1772290450850.2595,
       "size": 5999,
       "metrics": {
         "TotalLines": 212,
@@ -1581,7 +1581,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/.gitkeep": {
-      "mtimeMs": 1772195256199,
+      "mtimeMs": 1772195256199.9548,
       "size": 0,
       "metrics": {
         "TotalLines": 0,
@@ -1597,7 +1597,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/markdown.ts": {
-      "mtimeMs": 1772291905921,
+      "mtimeMs": 1772291905921.247,
       "size": 8767,
       "metrics": {
         "TotalLines": 244,
@@ -1629,7 +1629,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/Wizard.tsx": {
-      "mtimeMs": 1772206024994,
+      "mtimeMs": 1772206024994.1802,
       "size": 4524,
       "metrics": {
         "TotalLines": 125,
@@ -1645,7 +1645,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/Splash.tsx": {
-      "mtimeMs": 1772205985791,
+      "mtimeMs": 1772205985791.0723,
       "size": 1330,
       "metrics": {
         "TotalLines": 32,
@@ -1661,7 +1661,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/index.ts": {
-      "mtimeMs": 1772206056428,
+      "mtimeMs": 1772206056428.9702,
       "size": 208,
       "metrics": {
         "TotalLines": 6,
@@ -1677,7 +1677,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/Summary.tsx": {
-      "mtimeMs": 1772291078686,
+      "mtimeMs": 1772291078686.9597,
       "size": 11852,
       "metrics": {
         "TotalLines": 308,
@@ -1694,7 +1694,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/html.ts": {
-      "mtimeMs": 1772305034409,
+      "mtimeMs": 1772305034409.068,
       "size": 6452,
       "metrics": {
         "TotalLines": 192,
@@ -1711,7 +1711,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/scanner/.gitkeep": {
-      "mtimeMs": 1772195256199,
+      "mtimeMs": 1772195256199.6658,
       "size": 0,
       "metrics": {
         "TotalLines": 0,
@@ -1727,7 +1727,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/scanner/ignore-parser.ts": {
-      "mtimeMs": 1772309792735,
+      "mtimeMs": 1772309792735.1262,
       "size": 6226,
       "metrics": {
         "TotalLines": 173,
@@ -1743,7 +1743,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/scanner/stream-reader.ts": {
-      "mtimeMs": 1772286655667,
+      "mtimeMs": 1772286655667.4531,
       "size": 3665,
       "metrics": {
         "TotalLines": 106,
@@ -1775,7 +1775,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tests/quality-gates.test.ts": {
-      "mtimeMs": 1772252158537,
+      "mtimeMs": 1772252158537.0952,
       "size": 4030,
       "metrics": {
         "TotalLines": 118,
@@ -1791,7 +1791,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tests/git.test.ts": {
-      "mtimeMs": 1772255719836,
+      "mtimeMs": 1772255719836.9775,
       "size": 5440,
       "metrics": {
         "TotalLines": 171,
@@ -1807,7 +1807,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/core/quality-gates.ts": {
-      "mtimeMs": 1772251970844,
+      "mtimeMs": 1772251970844.4692,
       "size": 1480,
       "metrics": {
         "TotalLines": 49,
@@ -1823,7 +1823,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/debt-tracker.ts": {
-      "mtimeMs": 1772251869242,
+      "mtimeMs": 1772251869242.0625,
       "size": 1260,
       "metrics": {
         "TotalLines": 45,
@@ -1839,7 +1839,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/author-metrics.ts": {
-      "mtimeMs": 1772255449134,
+      "mtimeMs": 1772255449134.5825,
       "size": 1104,
       "metrics": {
         "TotalLines": 37,
@@ -1855,7 +1855,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/code-churn.ts": {
-      "mtimeMs": 1772255447125,
+      "mtimeMs": 1772255447125.363,
       "size": 1124,
       "metrics": {
         "TotalLines": 37,
@@ -1871,7 +1871,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/json.ts": {
-      "mtimeMs": 1772291204195,
+      "mtimeMs": 1772291204195.745,
       "size": 5261,
       "metrics": {
         "TotalLines": 147,
@@ -1887,7 +1887,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/csv.ts": {
-      "mtimeMs": 1772291231711,
+      "mtimeMs": 1772291231711.4968,
       "size": 2821,
       "metrics": {
         "TotalLines": 69,
@@ -1903,7 +1903,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/git/index.ts": {
-      "mtimeMs": 1772290534914,
+      "mtimeMs": 1772290534914.8694,
       "size": 6127,
       "metrics": {
         "TotalLines": 202,
@@ -1936,7 +1936,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tests/state.test.ts": {
-      "mtimeMs": 1772291446462,
+      "mtimeMs": 1772291446462.497,
       "size": 5304,
       "metrics": {
         "TotalLines": 144,
@@ -1952,7 +1952,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/tech-debt.ts": {
-      "mtimeMs": 1772285758934,
+      "mtimeMs": 1772285758934.0698,
       "size": 2581,
       "metrics": {
         "TotalLines": 79,
@@ -1968,7 +1968,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/state/history.ts": {
-      "mtimeMs": 1772294658068,
+      "mtimeMs": 1772294658068.2227,
       "size": 3329,
       "metrics": {
         "TotalLines": 113,
@@ -1984,7 +1984,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/scripts/preview-dashboard.ts": {
-      "mtimeMs": 1772264397948,
+      "mtimeMs": 1772264397948.3892,
       "size": 3483,
       "metrics": {
         "TotalLines": 72,
@@ -2000,24 +2000,24 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/html-template.ts": {
-      "mtimeMs": 1772314727463,
-      "size": 65094,
+      "mtimeMs": 1772315034878.3235,
+      "size": 66974,
       "metrics": {
-        "TotalLines": 1327,
-        "BlankLines": 113,
-        "CommentLines": 252,
-        "FileSize": 65094,
+        "TotalLines": 1372,
+        "BlankLines": 116,
+        "CommentLines": 266,
+        "FileSize": 66974,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 65094,
+        "LargestFiles": 66974,
         "DebtTracker": 0,
-        "CodeChurn": 5,
+        "CodeChurn": 6,
         "DependencyTracker": 0,
-        "TechDebt": 73
+        "TechDebt": 74
       }
     },
     "/Users/michaelnji/Projects/kount/src/plugins/built-in/dependency-tracker.ts": {
-      "mtimeMs": 1772285647496,
+      "mtimeMs": 1772285647496.3843,
       "size": 3433,
       "metrics": {
         "TotalLines": 107,
@@ -2033,7 +2033,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/ProgressIndicator.tsx": {
-      "mtimeMs": 1772284394293,
+      "mtimeMs": 1772284394293.7485,
       "size": 684,
       "metrics": {
         "TotalLines": 24,
@@ -2049,7 +2049,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/ExecutionChecklist.tsx": {
-      "mtimeMs": 1772284925020,
+      "mtimeMs": 1772284925020.224,
       "size": 3275,
       "metrics": {
         "TotalLines": 86,
