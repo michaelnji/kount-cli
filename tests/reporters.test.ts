@@ -1,4 +1,4 @@
-import fsp from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -76,11 +76,11 @@ describe('Markdown Reporter', () => {
     let tmpDir: string;
 
     beforeEach(async () => {
-      tmpDir = await fsp.mkdtemp(path.join(os.tmpdir(), 'kount-md-test-'));
+      tmpDir = await mkdtemp(path.join(os.tmpdir(), 'kount-md-test-'));
     });
 
     afterEach(async () => {
-      await fsp.rm(tmpDir, { recursive: true, force: true });
+      await rm(tmpDir, { recursive: true, force: true });
     });
 
     it('should create a new file when none exists', async () => {
@@ -90,18 +90,18 @@ describe('Markdown Reporter', () => {
       const result = await writeMarkdownReport(stats, outputPath, false);
       expect(result).toBe(outputPath);
 
-      const content = await fsp.readFile(outputPath, 'utf8');
+      const content = await readFile(outputPath, 'utf8');
       expect(content).toContain('<!-- KOUNT:START -->');
     });
 
     it('should append to an existing file without KOUNT markers', async () => {
       const stats = makeMockStats({ rootDir: tmpDir });
       const outputPath = path.join(tmpDir, 'README.md');
-      await fsp.writeFile(outputPath, '# My Project\n\nSome existing content.\n', 'utf8');
+      await writeFile(outputPath, '# My Project\n\nSome existing content.\n', 'utf8');
 
       await writeMarkdownReport(stats, outputPath, false);
 
-      const content = await fsp.readFile(outputPath, 'utf8');
+      const content = await readFile(outputPath, 'utf8');
       expect(content).toContain('# My Project');
       expect(content).toContain('Some existing content.');
       expect(content).toContain('<!-- KOUNT:START -->');
@@ -112,7 +112,7 @@ describe('Markdown Reporter', () => {
       const outputPath = path.join(tmpDir, 'README.md');
 
       // First write
-      await fsp.writeFile(
+      await writeFile(
         outputPath,
         '# My Project\n\n<!-- KOUNT:START -->\nOLD DATA\n<!-- KOUNT:END -->\n\n## Footer\n',
         'utf8'
@@ -120,7 +120,7 @@ describe('Markdown Reporter', () => {
 
       await writeMarkdownReport(stats, outputPath, false);
 
-      const content = await fsp.readFile(outputPath, 'utf8');
+      const content = await readFile(outputPath, 'utf8');
       expect(content).toContain('# My Project');
       expect(content).toContain('## Footer');
       expect(content).not.toContain('OLD DATA');
@@ -130,11 +130,11 @@ describe('Markdown Reporter', () => {
     it('should overwrite the entire file with --force', async () => {
       const stats = makeMockStats({ rootDir: tmpDir });
       const outputPath = path.join(tmpDir, 'README.md');
-      await fsp.writeFile(outputPath, '# My Project\n\nShould be gone.\n', 'utf8');
+      await writeFile(outputPath, '# My Project\n\nShould be gone.\n', 'utf8');
 
       await writeMarkdownReport(stats, outputPath, true);
 
-      const content = await fsp.readFile(outputPath, 'utf8');
+      const content = await readFile(outputPath, 'utf8');
       expect(content).not.toContain('# My Project');
       expect(content).not.toContain('Should be gone.');
       expect(content).toContain('<!-- KOUNT:START -->');
@@ -233,7 +233,7 @@ describe('CSV Reporter', () => {
     const csv = generateCsvReport(stats);
     const lines = csv.trim().split('\n');
 
-    expect(lines[0]).toBe('Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers,Commits,Debt Score');
+    expect(lines[0]).toBe('Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers,Commits,Debt Score,Imports,Age,Bus Factor,Top Owner,Volatility (Insertions),Volatility (Deletions)');
   });
 
   it('should have correct number of columns per row', () => {
@@ -257,9 +257,9 @@ describe('CSV Reporter', () => {
     // Header + 2 data rows
     expect(lines.length).toBe(3);
 
-    // Each data row should have 8 columns
+    // Each data row should have 14 columns
     for (let i = 1; i < lines.length; i++) {
-      expect(lines[i].split(',').length).toBe(8);
+      expect(lines[i].split(',').length).toBe(14);
     }
   });
 
@@ -280,7 +280,7 @@ describe('CSV Reporter', () => {
     const csv = generateCsvReport(stats);
     const lines = csv.trim().split('\n');
 
-    expect(lines[1]).toBe('src/app.ts,200,20,30,4000,2,5,42');
+    expect(lines[1]).toBe('src/app.ts,200,20,30,4000,2,5,42,0,,,,,');
   });
 
   it('should not include a summary row', () => {

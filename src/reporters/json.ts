@@ -1,4 +1,4 @@
-import fsp from 'node:fs/promises';
+import * as fsp from 'node:fs/promises';
 import path from 'node:path';
 import type { ProjectStats } from '../plugins/types.js';
 
@@ -23,17 +23,29 @@ function buildJsonReport(stats: ProjectStats): Record<string, unknown> {
   const debtPerFile = stats.pluginResults.get('DebtTracker')?.perFile ?? new Map();
   const churnPerFile = stats.pluginResults.get('CodeChurn')?.perFile ?? new Map();
   const debtScorePerFile = stats.pluginResults.get('TechDebt')?.perFile ?? new Map();
+  const importsPerFile = stats.pluginResults.get('DependencyTracker')?.perFile ?? new Map();
+  const filesData: Array<Record<string, unknown>> = [];
+  const gitMetricsMap = stats.gitInsights?.fileGitMetrics ?? new Map();
 
   for (const [filePath, lines] of totalLinesPerFile) {
-    files.push({
-      path: path.relative(stats.rootDir, filePath),
+    const rawSize = sizePerFile.get(filePath) ?? 0;
+    const relPath = path.relative(stats.rootDir, filePath);
+    const gitMeta = gitMetricsMap.get(relPath);
+
+    filesData.push({
+      path: relPath,
       lines,
       blankLines: blankPerFile.get(filePath) ?? 0,
       commentLines: commentPerFile.get(filePath) ?? 0,
-      size: sizePerFile.get(filePath) ?? 0,
+      size: rawSize,
       debtMarkers: debtPerFile.get(filePath) ?? 0,
       commits: churnPerFile.get(filePath) ?? 0,
       debtScore: debtScorePerFile.get(filePath) ?? 0,
+      age: gitMeta?.age ?? null,
+      busFactor: gitMeta?.busFactor ?? null,
+      topOwner: gitMeta?.topOwner ?? null,
+      volatility: gitMeta?.volatility ?? null,
+      imports: importsPerFile.get(filePath) ?? 0,
     });
   }
 
@@ -54,7 +66,7 @@ function buildJsonReport(stats: ProjectStats): Record<string, unknown> {
       totalBytes,
       debtMarkers,
     },
-    files,
+    files: filesData,
     languages,
     largestFiles: stats.largestFiles.map((f) => ({
       path: path.relative(stats.rootDir, f.filePath),
@@ -68,15 +80,22 @@ function buildJsonReport(stats: ProjectStats): Record<string, unknown> {
   };
 
   // Include Git insights only when available
-  if (stats.gitInsights) {
-    report.gitInsights = {
-      diffBranch: stats.gitInsights.diffBranch ?? null,
-      topAuthors: stats.gitInsights.topAuthors,
-      highChurnFiles: stats.gitInsights.highChurnFiles.map((f) => ({
-        path: path.relative(stats.rootDir, f.filePath),
-        commits: f.commits,
-      })),
-    };
+  // Prepare git insights data
+  const gitData = stats.gitInsights ? {
+    diffBranch: stats.gitInsights.diffBranch ?? null,
+    topAuthors: stats.gitInsights.topAuthors,
+    highChurnFiles: stats.gitInsights.highChurnFiles.map((f, i) => ({
+      rank: i + 1,
+      path: path.relative(stats.rootDir, f.filePath),
+      commits: f.commits,
+    })),
+    staleFilesCount: stats.gitInsights.staleFilesCount,
+    knowledgeSilos: stats.gitInsights.knowledgeSilos,
+    suggestedReviewers: stats.gitInsights.suggestedReviewers,
+  } : undefined;
+
+  if (gitData) {
+    report.gitInsights = gitData;
   }
 
   // Include tech debt only when available
@@ -93,6 +112,11 @@ function buildJsonReport(stats: ProjectStats): Record<string, unknown> {
   // Include trends only when available
   if (stats.trends) {
     report.trends = stats.trends;
+  }
+
+  // Top dependencies
+  if (stats.topDependencies && stats.topDependencies.length > 0) {
+    report.topDependencies = stats.topDependencies;
   }
 
   return report;

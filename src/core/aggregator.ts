@@ -1,12 +1,13 @@
-import fsp from 'node:fs/promises';
+import * as fsp from 'node:fs/promises';
 import path from 'node:path';
-import { batchGetFileChurn, getChangedFiles, getTopAuthors, isGitRepo } from '../git/index.js';
+import { batchGetFileChurn, getBusFactor, getChangedFiles, getFileAge, getFileVolatility, getSurvivingOwnership, getTopAuthors, isGitRepo } from '../git/index.js';
 import {
   AuthorMetricsPlugin,
   BlankLinesPlugin,
   CodeChurnPlugin,
   CommentLinesPlugin,
   DebtTrackerPlugin,
+  DependencyTrackerPlugin,
   FileSizePlugin,
   LanguageDistributionPlugin,
   LargestFilesPlugin,
@@ -14,7 +15,7 @@ import {
   TotalFilesPlugin,
   TotalLinesPlugin,
 } from '../plugins/index.js';
-import type { AnalyzedFileData, AnalyzerPlugin, PluginResult, ProgressCallback, ProjectStats } from '../plugins/types.js';
+import type { AnalyzedFileData, AnalyzerPlugin, PluginResult, ProjectStats, StageCallback } from '../plugins/types.js';
 import type { ScannedFile } from '../scanner/stream-reader.js';
 import { Scanner } from '../scanner/stream-reader.js';
 import { getPreviousRun } from '../state/history.js';
@@ -35,6 +36,7 @@ function getDefaultPlugins(): AnalyzerPlugin[] {
     new DebtTrackerPlugin(),
     new CodeChurnPlugin(),
     new AuthorMetricsPlugin(),
+    new DependencyTrackerPlugin(),
     new TechDebtPlugin(),
   ];
 }
@@ -45,6 +47,8 @@ export interface AggregatorOptions {
   cacheEnabled?: boolean;
   clearCache?: boolean;
   diffBranch?: string;
+  deepGit?: boolean;
+  staleThreshold?: number;
 }
 
 /**
@@ -60,6 +64,8 @@ export class Aggregator {
   private cache: CacheManager;
   private clearCacheFirst: boolean;
   private diffBranch?: string;
+  private deepGit: boolean;
+  private staleThreshold: number;
 
   constructor(rootDir: string, options?: AggregatorOptions) {
     this.rootDir = path.resolve(rootDir);
@@ -68,6 +74,8 @@ export class Aggregator {
     this.cache = new CacheManager(this.rootDir, options?.cacheEnabled ?? true);
     this.clearCacheFirst = options?.clearCache ?? false;
     this.diffBranch = options?.diffBranch;
+    this.deepGit = options?.deepGit ?? false;
+    this.staleThreshold = options?.staleThreshold ?? 2;
   }
 
   /**
@@ -76,16 +84,15 @@ export class Aggregator {
    *
    * @param onProgress Optional callback fired per step for UI progress tracking.
    */
-  async run(onProgress?: ProgressCallback): Promise<ProjectStats> {
+  async run(onProgress?: StageCallback): Promise<ProjectStats> {
     // 0. Cache setup
-    if (onProgress) onProgress('Loading cache...');
     if (this.clearCacheFirst) {
       await this.cache.clear();
     }
     await this.cache.load();
 
     // 1. Discover files
-    if (onProgress) onProgress('Scanning...', 'Initializing ignore rules');
+    if (onProgress) onProgress('DISCOVERING');
     let scannedFiles = await this.scanner.discover(this.rootDir, onProgress);
 
     // 2. Check Git availability
@@ -104,29 +111,61 @@ export class Aggregator {
     const analyzedFiles: AnalyzedFileData[] = [];
     let current = 0;
 
-    if (onProgress) onProgress('Analyzing files...', `0 / ${scannedFiles.length}`);
+    if (onProgress) onProgress('ANALYZING');
 
     for (const scannedFile of scannedFiles) {
       const fileData = await this.processFile(scannedFile);
       analyzedFiles.push(fileData);
       current++;
 
-      if (onProgress && current % 10 === 0) {
-        onProgress('Analyzing files...', `${current.toLocaleString()} / ${scannedFiles.length.toLocaleString()}`);
+      if (onProgress && current % 50 === 0) {
+        onProgress('ANALYZING', scannedFile.filePath);
       }
     }
 
-    // 5. Fetch Git churn data (if Git is available)
+    // 5. Fetch Git churn data and advanced metrics (if Git is available)
     if (gitAvailable) {
-      if (onProgress) onProgress('Fetching Git metrics...', 'Analyzing file churn');
-      const churnMap = await batchGetFileChurn(
-        this.rootDir,
-        analyzedFiles.map((f) => path.relative(this.rootDir, f.filePath)),
-        20
-      );
+      if (onProgress) onProgress('GIT_METRICS');
+      const relPaths = analyzedFiles.map((f) => path.relative(this.rootDir, f.filePath));
+
+      const churnMap = await batchGetFileChurn(this.rootDir, relPaths, 20);
+
+      // Batch fetch age, bus factor, volatility, ownership
+      const ageMap = new Map<string, string | null>();
+      const busFactorMap = new Map<string, { count: number; primaryAuthor?: string }>();
+      const volatilityMap = new Map<string, { insertions: number; deletions: number }>();
+      const topOwnerMap = new Map<string, string>();
+
+      for (let i = 0; i < relPaths.length; i += 20) {
+        const batch = relPaths.slice(i, i + 20);
+        await Promise.all(batch.map(async (fp) => {
+          ageMap.set(fp, await getFileAge(this.rootDir, fp));
+          busFactorMap.set(fp, await getBusFactor(this.rootDir, fp));
+
+          if (this.deepGit || this.diffBranch) {
+            volatilityMap.set(fp, await getFileVolatility(this.rootDir, fp));
+            const owners = await getSurvivingOwnership(this.rootDir, fp);
+            if (owners.length > 0) topOwnerMap.set(fp, owners[0].author);
+          }
+        }));
+      }
+
       for (const file of analyzedFiles) {
         const relPath = path.relative(this.rootDir, file.filePath);
         file.commits = churnMap.get(relPath) ?? 0;
+        file.age = ageMap.get(relPath);
+
+        const bf = busFactorMap.get(relPath);
+        if (bf) {
+          file.busFactor = bf.count;
+          if (bf.primaryAuthor) file.topOwner = bf.primaryAuthor;
+        }
+
+        if (this.deepGit || this.diffBranch) {
+          file.volatility = volatilityMap.get(relPath);
+          const trueOwner = topOwnerMap.get(relPath);
+          if (trueOwner) file.topOwner = trueOwner;
+        }
       }
     }
 
@@ -219,18 +258,78 @@ export class Aggregator {
         ? churnPlugin.getHighChurnFiles(analyzedFiles)
         : [];
 
+      // Calculate stale files and knowledge silos
+      let staleFilesCount = 0;
+      const knowledgeSilos: Array<{ filePath: string; author: string }> = [];
+      const changedFileReviewers = new Map<string, number>();
+      const fileGitMetrics = new Map<string, { age?: string | null; busFactor?: number; volatility?: { insertions: number; deletions: number }; topOwner?: string }>();
+
+      for (const file of analyzedFiles) {
+        const relPath = path.relative(this.rootDir, file.filePath);
+        fileGitMetrics.set(relPath, {
+          age: file.age,
+          busFactor: file.busFactor,
+          volatility: file.volatility,
+          topOwner: file.topOwner,
+        });
+
+        if (file.age) {
+          // Parse "X years ago" or "X year ago"
+          const match = file.age.match(/^(\d+)\s+years?/);
+          if (match && parseInt(match[1], 10) >= this.staleThreshold) {
+            staleFilesCount++;
+          }
+        }
+        if (file.lines.length > 500 && file.busFactor === 1 && file.topOwner) {
+          knowledgeSilos.push({ filePath: path.relative(this.rootDir, file.filePath), author: file.topOwner });
+        }
+
+        // If --diff is active, collect ownership of changed files
+        if (this.diffBranch && file.topOwner) {
+          const linesAmount = file.lines.length;
+          changedFileReviewers.set(file.topOwner, (changedFileReviewers.get(file.topOwner) || 0) + linesAmount);
+        }
+      }
+
+      let suggestedReviewers: Array<{ name: string; ownedLines: number }> | undefined;
+      if (this.diffBranch) {
+        suggestedReviewers = Array.from(changedFileReviewers.entries())
+          .map(([name, ownedLines]) => ({ name, ownedLines }))
+          .sort((a, b) => b.ownedLines - a.ownedLines)
+          .slice(0, 2);
+      }
+
       gitInsights = {
         diffBranch: this.diffBranch,
         topAuthors,
         highChurnFiles,
+        staleFilesCount,
+        knowledgeSilos,
+        suggestedReviewers,
+        fileGitMetrics,
       };
     }
 
     // 14. Compute tech debt score and high-debt files
-    if (onProgress) onProgress('Calculating Tech Debt...');
+    if (onProgress) onProgress('CALCULATING_DEBT');
+
+    // Inject dependency import counts into TechDebt for coupling penalty
+    const depPlugin = this.plugins.find(
+      (p): p is DependencyTrackerPlugin => p.name === 'DependencyTracker'
+    ) as DependencyTrackerPlugin | undefined;
+    const depResult = depPlugin ? pluginResults.get('DependencyTracker') : undefined;
+
     const techDebtPlugin = this.plugins.find(
       (p): p is TechDebtPlugin => p.name === 'TechDebt'
     ) as TechDebtPlugin | undefined;
+    if (techDebtPlugin && depResult) {
+      techDebtPlugin.setDependencyData(depResult.perFile);
+    }
+    // Re-run TechDebt with the dependency data injected
+    if (techDebtPlugin) {
+      const freshResult = techDebtPlugin.analyze(analyzedFiles);
+      pluginResults.set('TechDebt', freshResult);
+    }
     const techDebtScore = pluginResults.get('TechDebt')?.summaryValue ?? 0;
     const highDebtFiles = techDebtPlugin
       ? techDebtPlugin.getHighestDebtFiles(analyzedFiles)
@@ -260,6 +359,13 @@ export class Aggregator {
       // Graceful degradation — skip trends if history read fails
     }
 
+    // 16. Compute top dependencies
+    const topDependencies = depPlugin
+      ? depPlugin.getTopDependencies(10)
+      : undefined;
+
+    if (onProgress) onProgress('RENDERING');
+
     return {
       rootDir: this.rootDir,
       totalFiles: scannedFiles.length,
@@ -271,6 +377,7 @@ export class Aggregator {
       techDebtScore,
       highDebtFiles,
       trends,
+      topDependencies,
       scannedAt: new Date(),
     };
   }

@@ -56,6 +56,9 @@ function generateHtmlDashboard(stats: ProjectStats): string {
       path: path.relative(stats.rootDir, f.filePath),
       commits: f.commits,
     })),
+    staleFilesCount: stats.gitInsights.staleFilesCount,
+    knowledgeSilos: stats.gitInsights.knowledgeSilos,
+    suggestedReviewers: stats.gitInsights.suggestedReviewers,
   } : null;
 
   // Prepare tech debt data
@@ -76,10 +79,15 @@ function generateHtmlDashboard(stats: ProjectStats): string {
   const debtScorePerFile = stats.pluginResults.get('TechDebt')?.perFile ?? new Map();
 
   const filesData: Array<Record<string, unknown>> = [];
+  const gitMetricsMap = stats.gitInsights?.fileGitMetrics ?? new Map();
+
   for (const [filePath, lines] of totalLinesPerFile) {
     const rawSize = sizePerFile.get(filePath) ?? 0;
+    const relPath = path.relative(stats.rootDir, filePath);
+    const gitMeta = gitMetricsMap.get(relPath);
+
     filesData.push({
-      path: path.relative(stats.rootDir, filePath),
+      path: relPath,
       lines,
       comments: commentPerFile.get(filePath) ?? 0,
       blanks: blankPerFile.get(filePath) ?? 0,
@@ -88,6 +96,10 @@ function generateHtmlDashboard(stats: ProjectStats): string {
       debt: debtPerFile.get(filePath) ?? 0,
       commits: churnPerFile.get(filePath) ?? 0,
       debtScore: debtScorePerFile.get(filePath) ?? 0,
+      age: gitMeta?.age ?? null,
+      busFactor: gitMeta?.busFactor ?? null,
+      topOwner: gitMeta?.topOwner ?? null,
+      volatility: gitMeta?.volatility ?? null,
     });
   }
 
@@ -109,6 +121,7 @@ function generateHtmlDashboard(stats: ProjectStats): string {
     debtHotspots: debtData,
     gitInsights: gitData,
     highDebtFiles: highDebtData,
+    topDependencies: stats.topDependencies ?? [],
     trends: stats.trends ?? null,
     scannedAt: stats.scannedAt.toISOString(),
     rootDir: stats.rootDir,

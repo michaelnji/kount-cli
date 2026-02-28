@@ -391,6 +391,10 @@ export function buildHtmlTemplate(jsonData: string): string {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg>
         Git
       </a>
+      <a :class="{ active: currentSection === 'dependencies' }" @click="go('dependencies')" x-show="data.topDependencies && data.topDependencies.length > 0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        Dependencies
+      </a>
       <a :class="{ active: currentSection === 'trends' }" @click="go('trends')" x-show="data.trends">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
         Trends
@@ -540,6 +544,14 @@ export function buildHtmlTemplate(jsonData: string): string {
                 <th @click="sortFiles('debt')" :class="{ sorted: fileSort === 'debt' }">Debt</th>
                 <th @click="sortFiles('commits')" :class="{ sorted: fileSort === 'commits' }">Commits</th>
                 <th @click="sortFiles('debtScore')" :class="{ sorted: fileSort === 'debtScore' }">Score</th>
+                <template x-if="data.gitInsights">
+                  <>
+                    <th @click="sortFiles('topOwner')" :class="{ sorted: fileSort === 'topOwner' }">Owner</th>
+                    <th @click="sortFiles('busFactor')" :class="{ sorted: fileSort === 'busFactor' }">BF</th>
+                    <th @click="sortFiles('age')" :class="{ sorted: fileSort === 'age' }">Age</th>
+                    <th>Vol (I/D)</th>
+                  </>
+                </template>
               </tr>
             </thead>
             <tbody>
@@ -553,6 +565,14 @@ export function buildHtmlTemplate(jsonData: string): string {
                   <td x-text="f.debt"></td>
                   <td x-text="f.commits"></td>
                   <td style="color:var(--neon);font-weight:600" x-text="f.debtScore.toLocaleString()"></td>
+                  <template x-if="data.gitInsights">
+                    <>
+                      <td x-text="f.topOwner || '-'"></td>
+                      <td :style="f.busFactor === 1 ? 'color:#ff4466;font-weight:600' : ''" x-text="f.busFactor || '-'"></td>
+                      <td x-text="f.age || '-'"></td>
+                      <td x-text="f.volatility ? '+' + f.volatility.insertions + ' / -' + f.volatility.deletions : '-'"></td>
+                    </>
+                  </template>
                 </tr>
               </template>
             </tbody>
@@ -644,6 +664,25 @@ export function buildHtmlTemplate(jsonData: string): string {
               <span style="font-size:14px;color:var(--text-secondary)">Diff vs <strong x-text="data.gitInsights.diffBranch" style="color:var(--neon)"></strong></span>
             </div>
           </template>
+
+          <!-- Engineering Health -->
+          <template x-if="data.gitInsights.staleFilesCount !== undefined || data.gitInsights.knowledgeSilos">
+            <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr)">
+              <div class="card anim-fade-up delay-1">
+                <div class="card-title">Knowledge Silos (BF=1)</div>
+                <div class="card-value" :style="data.gitInsights.knowledgeSilos?.length > 0 ? 'color:#ff4466' : 'color:var(--neon)'" x-text="(data.gitInsights.knowledgeSilos?.length || 0) + ' files'"></div>
+              </div>
+              <div class="card anim-fade-up delay-2">
+                <div class="card-title">Stale Files</div>
+                <div class="card-value" :style="data.gitInsights.staleFilesCount > 0 ? 'color:#eab308' : 'color:var(--neon)'" x-text="(data.gitInsights.staleFilesCount || 0) + ' files'"></div>
+              </div>
+              <div class="card anim-fade-up delay-3">
+                <div class="card-title">Suggested Reviewers</div>
+                <div style="font-size:14px;font-weight:600;color:var(--text-primary);margin-top:8px" x-text="data.gitInsights.suggestedReviewers?.map(r => r.name).join(', ') || 'None'"></div>
+              </div>
+            </div>
+          </template>
+
           <div class="chart-row-equal">
             <div class="card anim-scale-in delay-2">
               <div class="section-title">Top Contributors</div>
@@ -663,6 +702,42 @@ export function buildHtmlTemplate(jsonData: string): string {
               </table>
             </div>
           </div>
+
+          <template x-if="data.gitInsights.knowledgeSilos && data.gitInsights.knowledgeSilos.length > 0">
+            <div class="card anim-fade-up delay-4" style="margin-top: 24px;">
+              <div class="section-title">Knowledge Silos Details (Bus Factor = 1)</div>
+              <table class="data-table">
+                <thead><tr><th>File Path</th><th>Sole Author</th></tr></thead>
+                <tbody>
+                  <template x-for="silo in data.gitInsights.knowledgeSilos" :key="silo.filePath">
+                    <tr><td class="path" x-text="silo.filePath"></td><td style="color:#ff4466;font-weight:600" x-text="silo.author"></td></tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+          </template>
+        </div>
+      </template>
+    </div>
+
+    <!-- ===== DEPENDENCIES ===== -->
+    <div class="section-view" :class="{ active: currentSection === 'dependencies' }">
+      <div class="page-header"><h1>Dependencies</h1></div>
+      <template x-if="data.topDependencies && data.topDependencies.length > 0">
+        <div class="card anim-fade-up">
+          <div class="section-title">Top External Packages</div>
+          <table class="data-table">
+            <thead><tr><th>#</th><th>Package Name</th><th>Total Imports Across Codebase</th></tr></thead>
+            <tbody>
+              <template x-for="dep in data.topDependencies" :key="dep.rank">
+                <tr>
+                  <td x-text="dep.rank"></td>
+                  <td class="path" x-text="dep.name" style="color:var(--neon);font-size:14px;font-weight:500;"></td>
+                  <td style="font-weight:600" x-text="dep.count"></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
         </div>
       </template>
     </div>
@@ -687,26 +762,62 @@ export function buildHtmlTemplate(jsonData: string): string {
     <!-- ===== HELP ===== -->
     <div class="section-view" :class="{ active: currentSection === 'help' }">
       <div class="page-header"><h1>Help</h1></div>
+
       <div class="card" style="margin-bottom:20px">
         <div class="section-title">CLI Commands</div>
         <table class="data-table" style="margin-top:8px">
           <thead><tr><th>Command</th><th>Short</th><th>Description</th></tr></thead>
           <tbody>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">-d, --dir</td><td>-d</td><td>Target directory to scan</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--interactive</td><td>-i</td><td>Launch the interactive terminal explorer</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">-d, --dir</td><td>-d</td><td>Target directory to scan (default: current dir)</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--output-mode</td><td></td><td>terminal | markdown | html | json | csv</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--output &lt;path&gt;</td><td>-o</td><td>Output file path</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--all</td><td>-a</td><td>Analyze ALL tracked files, ignoring git diff status</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--no-gitignore</td><td></td><td>Don't respect .gitignore rules</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--diff &lt;branch&gt;</td><td></td><td>Only analyze files changed vs branch</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--fail-on-size &lt;mb&gt;</td><td></td><td>Max codebase size in MB (CI)</td></tr>
-            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--min-comment-ratio &lt;%&gt;</td><td></td><td>Min required comment ratio (CI)</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--fail-on-size &lt;mb&gt;</td><td></td><td>Max codebase size in MB (CI quality gate)</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--min-comment-ratio &lt;%&gt;</td><td></td><td>Min required comment ratio (CI quality gate)</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--config &lt;path&gt;</td><td>-c</td><td>Path to a custom .kountrc.json config file</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--force</td><td>-f</td><td>Overwrite existing files</td></tr>
             <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--version</td><td>-V</td><td>Display version number</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--neon)">--help</td><td>-h</td><td>Display help text</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="card">
-        <div class="section-title">About</div>
-        <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:600px">
+
+      <div class="chart-row-equal">
+        <div class="card">
+          <div class="section-title">Configuration (.kountrc.json)</div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">
+            You can define default settings by creating a <code>.kountrc.json</code> file in your project root.
+          </p>
+          <pre style="background:var(--bg-input);padding:12px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;">
+{
+  "outputMode": "html",
+  "qualityGates": {
+    "maxSizeMb": 50,
+    "minCommentRatio": 10
+  }
+}</pre>
+        </div>
+        <div class="card">
+          <div class="section-title">Ignore Files</div>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">
+            KOUNT automatically ignores files excluded by your local <code>.gitignore</code> rules. It strictly ignores files in standard out directories (node_modules, dist, build, .git).
+          </p>
+          <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+            For KOUNT-specific ignores (files you want in Git but NOT scanned by KOUNT), create a <code>.kountignore</code> file in your project root using standard glob syntax.
+          </p>
+          <pre style="background:var(--bg-input);padding:12px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;margin-top:12px;">
+# .kountignore example
+generated/**/*.ts
+docs/drafts/*.md</pre>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="section-title">About KOUNT</div>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:800px">
           KOUNT is a zero-dependency codebase analyzer built for developers who care about their craft. It scans your project, tracks technical debt, analyzes git history, and helps you make data-driven decisions about code quality.
         </p>
         <p style="font-size:13px;color:var(--text-muted);margin-top:12px">
@@ -867,7 +978,7 @@ export function buildHtmlTemplate(jsonData: string): string {
                       backgroundColor: ['#00ff88', '#6366f1', '#334155'], borderWidth: 0, hoverOffset: 8 }]
                   },
                   options: { responsive: true, maintainAspectRatio: false, cutout: '65%',
-                    plugins: { legend: { position: 'bottom', labels: { color: txtClr, padding: 16, usePointStyle: true, pointStyleWidth: 10 } } },
+                    plugins: { legend: { position: 'bottom', labels: { color: txtClr, padding: 16, useBorderRadius: true, borderRadius: 6, boxWidth: 12, boxHeight: 12 } } },
                     animation: false
                   }
                 });
@@ -885,7 +996,7 @@ export function buildHtmlTemplate(jsonData: string): string {
                       backgroundColor: colors.slice(0, this.data.languages.length), borderWidth: 0, hoverOffset: 6 }]
                   },
                   options: { responsive: true, maintainAspectRatio: false, cutout: '55%',
-                    plugins: { legend: { position: 'bottom', labels: { color: txtClr, padding: 12, usePointStyle: true, pointStyleWidth: 10 } } },
+                    plugins: { legend: { position: 'bottom', labels: { color: txtClr, padding: 12, useBorderRadius: true, borderRadius: 6, boxWidth: 12, boxHeight: 12 } } },
                     animation: false
                   }
                 });

@@ -1,4 +1,4 @@
-import fsp from 'node:fs/promises';
+import * as fsp from 'node:fs/promises';
 import path from 'node:path';
 import type { ProjectStats } from '../plugins/types.js';
 
@@ -112,6 +112,36 @@ function generateMarkdownReport(stats: ProjectStats): string {
       }
       lines.push('');
     }
+
+    if (stats.gitInsights.staleFilesCount !== undefined || stats.gitInsights.knowledgeSilos) {
+      lines.push('### Engineering Health');
+      lines.push('');
+
+      if (stats.gitInsights.staleFilesCount !== undefined) {
+        lines.push(`- **Stale Files:** ${stats.gitInsights.staleFilesCount}`);
+      }
+      if (stats.gitInsights.knowledgeSilos) {
+        lines.push(`- **Knowledge Silos:** ${stats.gitInsights.knowledgeSilos.length}`);
+      }
+
+      if (stats.gitInsights.suggestedReviewers && stats.gitInsights.suggestedReviewers.length > 0) {
+        const reviewers = stats.gitInsights.suggestedReviewers.map(r => `${r.name} (${r.ownedLines} lines)`).join(', ');
+        lines.push(`- **Suggested Reviewers:** ${reviewers}`);
+      }
+      lines.push('');
+
+      if (stats.gitInsights.knowledgeSilos && stats.gitInsights.knowledgeSilos.length > 0) {
+        lines.push('#### Knowledge Silos Details');
+        lines.push('');
+        lines.push('| File | Sole Author |');
+        lines.push('|---|---|');
+        for (const silo of stats.gitInsights.knowledgeSilos) {
+          const relPath = path.relative(stats.rootDir, silo.filePath);
+          lines.push(`| \`${relPath}\` | ${silo.author} |`);
+        }
+        lines.push('');
+      }
+    }
   }
 
   // Tech Debt (only when data is available)
@@ -127,6 +157,20 @@ function generateMarkdownReport(stats: ProjectStats): string {
       const file = stats.highDebtFiles[i];
       const relPath = path.relative(stats.rootDir, file.filePath);
       lines.push(`| ${i + 1} | \`${relPath}\` | ${file.score.toLocaleString()} |`);
+    }
+    lines.push('');
+  }
+
+  // Top Dependencies
+  if (stats.topDependencies && stats.topDependencies.length > 0) {
+    lines.push('### Top Dependencies');
+    lines.push('');
+    lines.push('| # | Package | Imports |');
+    lines.push('|---|---------|---------|');
+
+    for (let i = 0; i < stats.topDependencies.length; i++) {
+      const dep = stats.topDependencies[i];
+      lines.push(`| ${i + 1} | \`${dep.name}\` | ${dep.count} |`);
     }
     lines.push('');
   }

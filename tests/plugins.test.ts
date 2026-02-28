@@ -4,6 +4,7 @@ import { BlankLinesPlugin } from '../src/plugins/built-in/blank-lines';
 import { CodeChurnPlugin } from '../src/plugins/built-in/code-churn';
 import { CommentLinesPlugin } from '../src/plugins/built-in/comment-lines';
 import { DebtTrackerPlugin } from '../src/plugins/built-in/debt-tracker';
+import { DependencyTrackerPlugin } from '../src/plugins/built-in/dependency-tracker';
 import { FileSizePlugin } from '../src/plugins/built-in/file-size';
 import { LanguageDistributionPlugin } from '../src/plugins/built-in/language-distribution';
 import { LargestFilesPlugin } from '../src/plugins/built-in/largest-files';
@@ -384,5 +385,112 @@ describe('TechDebtPlugin', () => {
     expect(top).toHaveLength(1);
     expect(top[0].filePath).toBe('/project/a.ts');
     expect(top[0].score).toBeGreaterThan(0);
+  });
+});
+
+describe('DependencyTrackerPlugin', () => {
+  const importFile = makeFile('/project/src/app.ts', '.ts', [
+    "import React from 'react';",
+    "import { Box, Text } from 'ink';",
+    "import path from 'node:path';",
+    "import { foo } from './utils/foo';",        // relative — should be ignored
+    "import bar from '../bar';",                  // relative — should be ignored
+    "import type { X } from '@mui/material/Button';",
+    "const lodash = require('lodash/merge');",
+    "const fs = require('node:fs');",
+    "const local = require('./local');",          // relative — should be ignored
+    "const abs = require('/absolute/path');",     // absolute — should be ignored
+  ]);
+
+  const cjsFile = makeFile('/project/src/server.js', '.js', [
+    "const express = require('express');",
+    "const cors = require('cors');",
+    "const app = require('./app');",              // relative — should be ignored
+  ]);
+
+  const pyFile = makeFile('/project/scripts/run.py', '.py', [
+    'import os',
+    'from pathlib import Path',
+  ]);
+
+  it('should detect ES6 and CJS imports from external packages', () => {
+    const plugin = new DependencyTrackerPlugin();
+    const result = plugin.analyze([importFile]);
+
+    // Expected: react, ink, node:path, @mui/material, lodash, node:fs = 6
+    expect(result.perFile.get(importFile.filePath)).toBe(6);
+    expect(result.summaryValue).toBe(6);
+  });
+
+  it('should ignore relative imports starting with . or /', () => {
+    const plugin = new DependencyTrackerPlugin();
+    plugin.analyze([importFile]);
+
+    const deps = plugin.getTopDependencies(20);
+    const depNames = deps.map(d => d.name);
+
+    // These should NOT appear
+    expect(depNames).not.toContain('./utils/foo');
+    expect(depNames).not.toContain('../bar');
+    expect(depNames).not.toContain('./local');
+    expect(depNames).not.toContain('/absolute/path');
+  });
+
+  it('should normalize scoped packages correctly', () => {
+    const plugin = new DependencyTrackerPlugin();
+    plugin.analyze([importFile]);
+
+    const deps = plugin.getTopDependencies(20);
+    const depNames = deps.map(d => d.name);
+
+    // @mui/material/Button → @mui/material
+    expect(depNames).toContain('@mui/material');
+    // lodash/merge → lodash
+    expect(depNames).toContain('lodash');
+  });
+
+  it('should return 0 for non-JS/TS files', () => {
+    const plugin = new DependencyTrackerPlugin();
+    const result = plugin.analyze([pyFile]);
+
+    expect(result.perFile.get(pyFile.filePath)).toBe(0);
+    expect(result.summaryValue).toBe(0);
+  });
+
+  it('should aggregate across multiple files', () => {
+    const plugin = new DependencyTrackerPlugin();
+    const result = plugin.analyze([importFile, cjsFile]);
+
+    // importFile: 6, cjsFile: 2 (express, cors)
+    expect(result.perFile.get(importFile.filePath)).toBe(6);
+    expect(result.perFile.get(cjsFile.filePath)).toBe(2);
+    expect(result.summaryValue).toBe(8);
+  });
+
+  it('should return top dependencies sorted by frequency', () => {
+    // Create a file that imports 'react' twice
+    const multiImport = makeFile('/project/src/multi.tsx', '.tsx', [
+      "import React from 'react';",
+      "import { useState } from 'react';",
+      "import { Box } from 'ink';",
+    ]);
+
+    const plugin = new DependencyTrackerPlugin();
+    plugin.analyze([multiImport]);
+
+    const top = plugin.getTopDependencies(5);
+    expect(top[0].name).toBe('react');
+    expect(top[0].count).toBe(2);
+    expect(top[1].name).toBe('ink');
+    expect(top[1].count).toBe(1);
+  });
+
+  it('should handle empty file list', () => {
+    const plugin = new DependencyTrackerPlugin();
+    const result = plugin.analyze([]);
+
+    expect(result.summaryValue).toBe(0);
+    expect(result.perFile.size).toBe(0);
+    expect(plugin.getTopDependencies()).toEqual([]);
   });
 });

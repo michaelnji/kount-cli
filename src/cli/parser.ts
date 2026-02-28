@@ -29,6 +29,8 @@ export function createCli(argv: string[]): CliFlags {
     .option('--fail-on-size <mb>', 'CI/CD Gate: Fail with exit code 1 if codebase exceeds <mb> MB', parseFloat)
     .option('--min-comment-ratio <percent>', 'CI/CD Gate: Fail with exit code 1 if comment ratio is below <percent>%', parseFloat)
     .option('--diff <branch>', 'Git Intelligence: Only analyze files changed relative to the specified <branch>')
+    .option('--deep-git', 'Git Intelligence: Enable deep analytics (blame, numstat) which can be slow on large repos')
+    .option('--stale-threshold <years>', 'Git Intelligence: Define stale file threshold in years (default: 2)', parseFloat)
     .parse(argv);
 
   const opts = program.opts<{
@@ -43,6 +45,8 @@ export function createCli(argv: string[]): CliFlags {
     failOnSize?: number;
     minCommentRatio?: number;
     diff?: string;
+    deepGit?: boolean;
+    staleThreshold?: number;
   }>();
 
   return {
@@ -57,5 +61,7 @@ export function createCli(argv: string[]): CliFlags {
     failOnSize: opts.failOnSize,
     minCommentRatio: opts.minCommentRatio,
     diff: opts.diff,
+    deepGit: opts.deepGit,
+    staleThreshold: opts.staleThreshold,
   };
 }

@@ -211,6 +211,44 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
           )}
         </Box>
       )}
+      
+      {/* Engineering Health */}
+      {stats.gitInsights && (stats.gitInsights.staleFilesCount !== undefined || stats.gitInsights.knowledgeSilos !== undefined) && (
+        <Box
+          flexDirection="column"
+          borderStyle="single"
+          borderColor="blueBright"
+          paddingX={2}
+          paddingY={1}
+          marginTop={1}
+        >
+          <Text color="blueBright" bold>  ENGINEERING HEALTH</Text>
+          <Box marginTop={1} flexDirection="column">
+            {stats.gitInsights.knowledgeSilos !== undefined && (
+              <Box>
+                <Box width={25}><Text color="white">Knowledge Silos (BF=1)</Text></Box>
+                <Text color={stats.gitInsights.knowledgeSilos.length > 0 ? "red" : "green"} bold>
+                  {stats.gitInsights.knowledgeSilos.length} critical files
+                </Text>
+              </Box>
+            )}
+            {stats.gitInsights.staleFilesCount !== undefined && (
+              <Box>
+                <Box width={25}><Text color="white">Stale Files</Text></Box>
+                <Text color={stats.gitInsights.staleFilesCount > 0 ? "yellow" : "green"} bold>
+                  {stats.gitInsights.staleFilesCount} files
+                </Text>
+              </Box>
+            )}
+            {stats.gitInsights.suggestedReviewers && stats.gitInsights.suggestedReviewers.length > 0 && (
+              <Box>
+                <Box width={25}><Text color="white">Suggested Reviewers</Text></Box>
+                <Text color="cyan" bold>{stats.gitInsights.suggestedReviewers.map((r) => r.name).join(', ')}</Text>
+              </Box>
+            )}
+          </Box>
+        </Box>
+      )}
 
       {/* Tech Debt Score */}
       {stats.highDebtFiles && stats.highDebtFiles.length > 0 && (
@@ -234,6 +272,29 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
                 </Box>
               );
             })}
+          </Box>
+        </Box>
+      )}
+
+      {/* Top Dependencies */}
+      {stats.topDependencies && stats.topDependencies.length > 0 && (
+        <Box
+          flexDirection="column"
+          borderStyle="single"
+          borderColor="magenta"
+          paddingX={2}
+          paddingY={1}
+          marginTop={1}
+        >
+          <Text color="magenta" bold>  TOP DEPENDENCIES</Text>
+          <Box marginTop={1} flexDirection="column">
+            {stats.topDependencies.slice(0, 5).map((dep, i) => (
+              <Box key={dep.name}>
+                <Box width={4}><Text color="gray">{i + 1}.</Text></Box>
+                <Box width={30}><Text color="white">{dep.name}</Text></Box>
+                <Text color="magenta">{dep.count} imports</Text>
+              </Box>
+            ))}
           </Box>
         </Box>
       )}

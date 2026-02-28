@@ -17,12 +17,24 @@ export class TechDebtPlugin implements AnalyzerPlugin {
   /** Per-file comment line counts — injected before analyze() */
   private commentPerFile: Map<string, number> = new Map();
 
+  /** Per-file external import counts — injected before analyze() */
+  private depPerFile: Map<string, number> = new Map();
+
   /**
    * Called by the Aggregator to inject per-file comment data
    * (from the CommentLines plugin) before analyze() runs.
    */
   setCommentData(commentPerFile: Map<string, number>): void {
     this.commentPerFile = commentPerFile;
+  }
+
+  /**
+   * Called by the Aggregator to inject per-file dependency import counts
+   * (from the DependencyTracker plugin) before analyze() runs.
+   * Files with > 15 external imports receive a coupling penalty.
+   */
+  setDependencyData(depPerFile: Map<string, number>): void {
+    this.depPerFile = depPerFile;
   }
 
   analyze(files: AnalyzedFileData[]): PluginResult {
@@ -35,8 +47,12 @@ export class TechDebtPlugin implements AnalyzerPlugin {
       const commentLines = this.commentPerFile.get(file.filePath) ?? 0;
       const commentRatio = lines > 0 ? (commentLines / lines) * 100 : 0;
 
+      // Coupling penalty: files with > 15 external imports get +20 debt
+      const imports = this.depPerFile.get(file.filePath) ?? 0;
+      const couplingPenalty = imports > 15 ? 20 : 0;
+
       const score = Math.round(
-        (lines + churn * 10) / Math.max(commentRatio, 1)
+        (lines + churn * 10 + couplingPenalty) / Math.max(commentRatio, 1)
       );
 
       perFile.set(file.filePath, score);

@@ -3,6 +3,7 @@ export { BlankLinesPlugin } from './built-in/blank-lines.js';
 export { CodeChurnPlugin } from './built-in/code-churn.js';
 export { CommentLinesPlugin } from './built-in/comment-lines.js';
 export { DebtTrackerPlugin } from './built-in/debt-tracker.js';
+export { DependencyTrackerPlugin } from './built-in/dependency-tracker.js';
 export { FileSizePlugin } from './built-in/file-size.js';
 export { LanguageDistributionPlugin } from './built-in/language-distribution.js';
 export { LargestFilesPlugin } from './built-in/largest-files.js';

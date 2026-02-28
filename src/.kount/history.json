@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1772291469495-4qx3wy",
+    "timestamp": "2026-02-28T15:11:09.495Z",
+    "totalFiles": 42,
+    "totalLines": 4844,
+    "commentRatio": 16.1,
+    "totalSize": 179790,
+    "techDebtScore": 529
+  },
+  {
+    "id": "1772291470162-8o4baz",
+    "timestamp": "2026-02-28T15:11:10.162Z",
+    "totalFiles": 42,
+    "totalLines": 4844,
+    "commentRatio": 16.1,
+    "totalSize": 179790,
+    "techDebtScore": 529
+  },
+  {
+    "id": "1772291521074-081tf0",
+    "timestamp": "2026-02-28T15:12:01.073Z",
+    "totalFiles": 42,
+    "totalLines": 4844,
+    "commentRatio": 16.1,
+    "totalSize": 179790,
+    "techDebtScore": 529
+  },
+  {
+    "id": "1772291944174-qrs4ar",
+    "timestamp": "2026-02-28T15:19:04.174Z",
+    "totalFiles": 42,
+    "totalLines": 4888,
+    "commentRatio": 16,
+    "totalSize": 181829,
+    "techDebtScore": 537
+  },
+  {
+    "id": "1772291945680-5rwsxj",
+    "timestamp": "2026-02-28T15:19:05.679Z",
+    "totalFiles": 42,
+    "totalLines": 4888,
+    "commentRatio": 16,
+    "totalSize": 181829,
+    "techDebtScore": 537
+  },
+  {
+    "id": "1772292045057-l9m5hu",
+    "timestamp": "2026-02-28T15:20:45.057Z",
+    "totalFiles": 42,
+    "totalLines": 4888,
+    "commentRatio": 16,
+    "totalSize": 181829,
+    "techDebtScore": 537
+  }
+]

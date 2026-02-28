@@ -1,7 +1,7 @@
 import fs from 'node:fs';
-import fsp from 'node:fs/promises';
+import * as fsp from 'node:fs/promises';
 import path from 'node:path';
-import type { ProgressCallback } from '../plugins/types.js';
+import type { StageCallback } from '../plugins/types.js';
 import { IgnoreParser } from './ignore-parser.js';
 
 export interface ScannedFile {
@@ -26,13 +26,13 @@ export class Scanner {
   /**
    * Discovers all files in the directory tree matching rules.
    */
-  async discover(dirPath: string, onProgress?: ProgressCallback): Promise<ScannedFile[]> {
+  async discover(dirPath: string, onProgress?: StageCallback): Promise<ScannedFile[]> {
     this.discoveredCount = 0;
     await this.parser.init();
     return this.walk(path.resolve(dirPath), onProgress);
   }
 
-  private async walk(currentDir: string, onProgress?: ProgressCallback): Promise<ScannedFile[]> {
+  private async walk(currentDir: string, onProgress?: StageCallback): Promise<ScannedFile[]> {
     const filesList: ScannedFile[] = [];
 
     // Provide ignore rules for this specific directory level
@@ -60,7 +60,7 @@ export class Scanner {
              filesList.push({ filePath: fullPath, size: stats.size });
              this.discoveredCount++;
              if (onProgress && this.discoveredCount % 50 === 0) {
-               onProgress('Scanning...', `Found ${this.discoveredCount.toLocaleString()} files`);
+               onProgress('DISCOVERING', fullPath);
              }
            } catch (e) {
              // Handle gracefully: e.g. broken symlink or permission denied

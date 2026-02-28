@@ -1,4 +1,4 @@
-import fsp from 'node:fs/promises';
+import * as fsp from 'node:fs/promises';
 import path from 'node:path';
 import type { ProjectStats } from '../plugins/types.js';
 

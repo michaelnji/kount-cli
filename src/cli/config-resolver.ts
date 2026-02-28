@@ -1,4 +1,4 @@
-import fsp from 'node:fs/promises';
+import * as fsp from 'node:fs/promises';
 import path from 'node:path';
 
 /**
@@ -20,6 +20,8 @@ export interface KountConfig {
     minCommentRatio?: number;
   };
   diffBranch?: string;
+  deepGit: boolean;
+  staleThreshold: number;
 }
 
 /**
@@ -37,6 +39,8 @@ interface ConfigFile {
   failOnSize?: number;
   minCommentRatio?: number;
   diffBranch?: string;
+  deepGit?: boolean;
+  staleThreshold?: number;
 }
 
 /**
@@ -54,6 +58,8 @@ export interface CliFlags {
   failOnSize?: number;
   minCommentRatio?: number;
   diff?: string;
+  deepGit?: boolean;
+  staleThreshold?: number;
 }
 
 const DEFAULTS: KountConfig = {
@@ -66,6 +72,8 @@ const DEFAULTS: KountConfig = {
     clearFirst: false,
   },
   force: false,
+  deepGit: false,
+  staleThreshold: 2,
 };
 
 /**
@@ -178,6 +186,8 @@ export async function resolveConfig(cliFlags: CliFlags, cwd: string = process.cw
     outputPath: cliFlags.output,
     qualityGates: buildQualityGates(cliFlags, fileConfig),
     diffBranch: cliFlags.diff ?? fileConfig.diffBranch,
+    deepGit: cliFlags.deepGit ?? fileConfig.deepGit ?? DEFAULTS.deepGit,
+    staleThreshold: cliFlags.staleThreshold ?? fileConfig.staleThreshold ?? DEFAULTS.staleThreshold,
   };
 }
 

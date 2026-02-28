@@ -1,4 +1,4 @@
-import fsp from 'node:fs/promises';
+import * as fsp from 'node:fs/promises';
 import path from 'node:path';
 import type { ProjectStats } from '../plugins/types.js';
 
@@ -8,7 +8,7 @@ import type { ProjectStats } from '../plugins/types.js';
  * Columns: Path, Lines, Blank Lines, Comment Lines, Size, Debt Markers
  */
 export function generateCsvReport(stats: ProjectStats): string {
-  const header = 'Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers,Commits,Debt Score';
+  const header = 'Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers,Commits,Debt Score,Imports,Age,Bus Factor,Top Owner,Volatility (Insertions),Volatility (Deletions)';
   const rows: string[] = [header];
 
   const totalLinesPerFile = stats.pluginResults.get('TotalLines')?.perFile ?? new Map();
@@ -18,6 +18,8 @@ export function generateCsvReport(stats: ProjectStats): string {
   const debtPerFile = stats.pluginResults.get('DebtTracker')?.perFile ?? new Map();
   const churnPerFile = stats.pluginResults.get('CodeChurn')?.perFile ?? new Map();
   const debtScorePerFile = stats.pluginResults.get('TechDebt')?.perFile ?? new Map();
+  const importsPerFile = stats.pluginResults.get('DependencyTracker')?.perFile ?? new Map();
+  const gitMetricsMap = stats.gitInsights?.fileGitMetrics ?? new Map();
 
   for (const [filePath, lines] of totalLinesPerFile) {
     const relPath = path.relative(stats.rootDir, filePath);
@@ -25,6 +27,8 @@ export function generateCsvReport(stats: ProjectStats): string {
     const escapedPath = relPath.includes(',') || relPath.includes('"')
       ? `"${relPath.replace(/"/g, '""')}"`
       : relPath;
+
+    const gitMeta = gitMetricsMap.get(relPath);
 
     rows.push([
       escapedPath,
@@ -35,6 +39,12 @@ export function generateCsvReport(stats: ProjectStats): string {
       debtPerFile.get(filePath) ?? 0,
       churnPerFile.get(filePath) ?? 0,
       debtScorePerFile.get(filePath) ?? 0,
+      importsPerFile.get(filePath) ?? 0,
+      gitMeta?.age ? `"${gitMeta.age}"` : '',
+      gitMeta?.busFactor ?? '',
+      gitMeta?.topOwner ? `"${gitMeta.topOwner}"` : '',
+      gitMeta?.volatility?.insertions ?? '',
+      gitMeta?.volatility?.deletions ?? '',
     ].join(','));
   }
 

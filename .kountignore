@@ -1,1 +1,5 @@
 .kountcache.json
+.agent/
+.kount/
+.agents/
+.trae/

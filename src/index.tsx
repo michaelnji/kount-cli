@@ -7,12 +7,12 @@ import { resolveConfig } from './cli/config-resolver.js';
 import { createCli } from './cli/parser.js';
 import { Aggregator } from './core/aggregator.js';
 import { checkQualityGates } from './core/quality-gates.js';
-import type { ProjectStats } from './plugins/types.js';
+import type { ExecutionStage, ProjectStats } from './plugins/types.js';
 import { writeCsvReport } from './reporters/csv.js';
 import { serveHtmlDashboard } from './reporters/html.js';
 import { writeJsonReport } from './reporters/json.js';
 import { writeMarkdownReport } from './reporters/markdown.js';
-import { ProgressIndicator } from './reporters/terminal/ProgressIndicator.js';
+import { ExecutionChecklist } from './reporters/terminal/ExecutionChecklist.js';
 import { Splash } from './reporters/terminal/Splash.js';
 import { Summary } from './reporters/terminal/Summary.js';
 import type { WizardResult } from './reporters/terminal/Wizard.js';
@@ -20,7 +20,7 @@ import { Wizard } from './reporters/terminal/Wizard.js';
 import { saveRun } from './state/history.js';
 
 // ---------------------------------------------------------------------------
-// Non-interactive execution (markdown / html modes, or terminal with flags)
+// Non-interactive execution (markdown / html modes)
 // ---------------------------------------------------------------------------
 
 async function runHeadless(config: KountConfig): Promise<void> {
@@ -29,8 +29,11 @@ async function runHeadless(config: KountConfig): Promise<void> {
         cacheEnabled: config.cache.enabled,
         clearCache: config.cache.clearFirst,
         diffBranch: config.diffBranch,
+        deepGit: config.deepGit,
+        staleThreshold: config.staleThreshold,
     });
 
+    // Silent mode — no progress callback
     const stats = await aggregator.run();
 
     // Persist run for trend tracking
@@ -75,7 +78,8 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
     const { exit } = useApp();
     const [phase, setPhase] = useState<AppPhase>(needsWizard ? 'splash' : 'scanning');
     const [config, setConfig] = useState<KountConfig>(initialConfig);
-    const [progress, setProgress] = useState({ status: 'Initializing...', details: '' });
+    const [currentStage, setCurrentStage] = useState<ExecutionStage>('DISCOVERING');
+    const [activeFile, setActiveFile] = useState<string | undefined>();
     const [stats, setStats] = useState<ProjectStats | null>(null);
     const [error, setError] = useState<string | null>(null);
 
@@ -97,11 +101,14 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
             cacheEnabled: config.cache.enabled,
             clearCache: config.cache.clearFirst,
             diffBranch: config.diffBranch,
+            deepGit: config.deepGit,
+            staleThreshold: config.staleThreshold,
         });
 
         aggregator
-            .run((status, details) => {
-                setProgress({ status, details: details ?? '' });
+            .run((stage, file) => {
+                setCurrentStage(stage);
+                setActiveFile(file);
             })
             .then((result) => {
                 // Quality gate check in terminal mode
@@ -160,28 +167,23 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
     }, [phase, stats, exit]);
 
     return (
-        <Box flexDirection= "column" >
-        { phase === 'splash' && <Splash />
-}
-{ phase === 'wizard' && <Wizard onComplete={ handleWizardComplete } /> }
-{
-    phase === 'scanning' && (
-        <ProgressIndicator
-            status={ progress.status }
-            details={ progress.details }
-        />
-    )
-}
-{
-    phase === 'done' && error && (
-        <Box marginY={ 1 }>
-            <Text color="red" bold > Error: { error } </Text>
+        <Box flexDirection="column">
+            {phase === 'splash' && <Splash />}
+            {phase === 'wizard' && <Wizard onComplete={handleWizardComplete} />}
+            {phase === 'scanning' && (
+                <ExecutionChecklist
+                    currentStage={currentStage}
+                    activeFile={activeFile}
+                />
+            )}
+            {phase === 'done' && error && (
+                <Box marginY={1}>
+                    <Text color="red" bold>Error: {error}</Text>
                 </Box>
-      )
-}
-{ phase === 'done' && stats && <Summary stats={ stats } /> }
-</Box>
-  );
+            )}
+            {phase === 'done' && stats && <Summary stats={stats} />}
+        </Box>
+    );
 }
 
 // ---------------------------------------------------------------------------
@@ -191,6 +193,51 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
 async function main(): Promise<void> {
     const cliFlags = createCli(process.argv);
     const config = await resolveConfig(cliFlags);
+
+    // Non-TTY / Data Pipe Bypass:
+    // If stdout is not a TTY (piping) OR output is json/csv,
+    // bypass Ink entirely and run silently to avoid corrupting stdout.
+    const isSilentMode =
+        !process.stdout.isTTY ||
+        config.outputMode === 'json' ||
+        config.outputMode === 'csv';
+
+    if (isSilentMode) {
+        // Run engine silently with no-op callback, output raw data
+        const aggregator = new Aggregator(config.rootDir, {
+            respectGitignore: config.respectGitignore,
+            cacheEnabled: config.cache.enabled,
+            clearCache: config.cache.clearFirst,
+            diffBranch: config.diffBranch,
+            deepGit: config.deepGit,
+            staleThreshold: config.staleThreshold,
+        });
+
+        const stats = await aggregator.run(); // silent — no callback
+
+        await saveRun(config.rootDir, stats);
+
+        const failures = checkQualityGates(config, stats);
+        if (failures.length > 0) {
+            for (const msg of failures) {
+                process.stderr.write(`❌ Quality Gate Failed: ${msg}\n`);
+            }
+            process.exit(1);
+        }
+
+        if (config.outputMode === 'json') {
+            const outputPath = await writeJsonReport(stats, config.outputPath);
+            process.stdout.write(`JSON report written to ${outputPath}\n`);
+        } else if (config.outputMode === 'csv') {
+            const outputPath = await writeCsvReport(stats, config.outputPath);
+            process.stdout.write(`CSV report written to ${outputPath}\n`);
+        } else {
+            // Non-TTY but terminal/markdown/html mode — fall through to headless
+            await runHeadless(config);
+        }
+
+        process.exit(0);
+    }
 
     if (config.outputMode === 'terminal') {
         // Determine if we need the wizard (no explicit flags were passed)
@@ -203,7 +250,7 @@ async function main(): Promise<void> {
             })
         );
     } else {
-        // Markdown, HTML, JSON, CSV — run headless (no Ink UI)
+        // Markdown, HTML — run headless (no Ink UI)
         await runHeadless(config);
     }
 }

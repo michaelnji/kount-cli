@@ -1,4 +1,4 @@
-import fsp from 'node:fs/promises';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { Scanner } from '../src/scanner/stream-reader';
@@ -8,20 +8,20 @@ describe('Scanner', () => {
 
   beforeAll(async () => {
     // Ensuring the fixture directory structure exists
-    await fsp.mkdir(fixturesDir, { recursive: true });
-    await fsp.mkdir(path.join(fixturesDir, 'nested'), { recursive: true });
-    await fsp.mkdir(path.join(fixturesDir, 'node_modules'), { recursive: true });
+    await mkdir(fixturesDir, { recursive: true });
+    await mkdir(path.join(fixturesDir, 'nested'), { recursive: true });
+    await mkdir(path.join(fixturesDir, 'node_modules'), { recursive: true });
 
-    await fsp.writeFile(path.join(fixturesDir, 'file1.ts'), 'content1');
-    await fsp.writeFile(path.join(fixturesDir, 'nested', 'file2.js'), 'content2');
-    await fsp.writeFile(path.join(fixturesDir, 'image.png'), 'binary content');
-    await fsp.writeFile(path.join(fixturesDir, 'node_modules', 'index.js'), 'ignored content');
-    await fsp.writeFile(path.join(fixturesDir, '.gitignore'), 'node_modules\n.kountcache.json\n*.png');
+    await writeFile(path.join(fixturesDir, 'file1.ts'), 'content1');
+    await writeFile(path.join(fixturesDir, 'nested', 'file2.js'), 'content2');
+    await writeFile(path.join(fixturesDir, 'image.png'), 'binary content');
+    await writeFile(path.join(fixturesDir, 'node_modules', 'index.js'), 'ignored content');
+    await writeFile(path.join(fixturesDir, '.gitignore'), 'node_modules\n.kountcache.json\n*.png');
   });
 
   afterAll(async () => {
     // Clean up to keep tests stateless
-    await fsp.rm(fixturesDir, { recursive: true, force: true });
+    await rm(fixturesDir, { recursive: true, force: true });
   });
 
   it('should discover files respecting gitignore and default ignores', async () => {
