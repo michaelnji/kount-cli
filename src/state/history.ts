@@ -102,3 +102,12 @@ export async function getPreviousRun(rootDir: string): Promise<HistoryEntry | nu
 
   return history[history.length - 2];
 }
+
+/**
+ * Returns the run history, limited to the specified number of entries chronologically.
+ */
+export async function getHistory(rootDir: string, limit: number = 30): Promise<HistoryEntry[]> {
+  const history = await readHistory(rootDir);
+  // Return the last `limit` elements.
+  return history.slice(-limit);
+}

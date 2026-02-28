@@ -143,9 +143,9 @@ describe('Markdown Reporter', () => {
 });
 
 describe('HTML Reporter', () => {
-  it('should generate valid HTML with Chart.js and Alpine CDN', () => {
+  it('should generate valid HTML with Chart.js and Alpine CDN', async () => {
     const stats = makeMockStats();
-    const html = generateHtmlDashboard(stats);
+    const html = await generateHtmlDashboard(stats);
 
     expect(html).toContain('<!DOCTYPE html>');
     expect(html).toContain('chart.js');
@@ -153,9 +153,9 @@ describe('HTML Reporter', () => {
     expect(html).toContain('KOUNT');
   });
 
-  it('should inject stats data as JSON into the page', () => {
+  it('should inject stats data as JSON into the page', async () => {
     const stats = makeMockStats();
-    const html = generateHtmlDashboard(stats);
+    const html = await generateHtmlDashboard(stats);
 
     // The JSON data should be present in the script
     expect(html).toContain('"totalLines":500');
@@ -163,9 +163,9 @@ describe('HTML Reporter', () => {
     expect(html).toContain('"TypeScript"');
   });
 
-  it('should handle empty language distribution', () => {
+  it('should handle empty language distribution', async () => {
     const stats = makeMockStats({ languageDistribution: new Map() });
-    const html = generateHtmlDashboard(stats);
+    const html = await generateHtmlDashboard(stats);
 
     // Should still render without errors
     expect(html).toContain('<!DOCTYPE html>');

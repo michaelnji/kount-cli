@@ -7,6 +7,9 @@
  */
 
 export function buildHtmlTemplate(jsonData: string): string {
+  const parsed = JSON.parse(jsonData);
+  const historyJson = JSON.stringify(parsed.history || []);
+
   return `<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -747,7 +750,7 @@ export function buildHtmlTemplate(jsonData: string): string {
       <div class="page-header"><h1>Trends</h1></div>
       <template x-if="data.trends">
         <div>
-          <div class="stats-grid" style="grid-template-columns: repeat(5, 1fr)">
+          <div class="stats-grid" style="grid-template-columns: repeat(5, 1fr); margin-bottom: 24px;">
             <template x-for="(t, i) in trendCards" :key="t.label">
               <div class="card anim-fade-up" :class="'delay-' + (i+1)">
                 <div class="card-title" x-text="t.label"></div>
@@ -757,6 +760,28 @@ export function buildHtmlTemplate(jsonData: string): string {
           </div>
         </div>
       </template>
+
+      <!-- History Chart UI -->
+      <div class="card anim-fade-up delay-2" x-show="window.KOUNT_HISTORY && window.KOUNT_HISTORY.length >= 2" style="margin-top: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div class="section-title" style="margin-bottom: 0;">Historical Trends</div>
+          <select id="chartMetricSelector" style="background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer; outline: none;">
+            <option value="totalLines">Total Lines of Code</option>
+            <option value="totalFiles">Total Files</option>
+            <option value="techDebtScore">Tech Debt Score</option>
+            <option value="commentRatio">Comment Ratio (%)</option>
+          </select>
+        </div>
+        <div style="height: 300px; width: 100%;">
+          <canvas id="trendsChart"></canvas>
+        </div>
+      </div>
+
+      <div class="card anim-fade-up delay-2" x-show="!window.KOUNT_HISTORY || window.KOUNT_HISTORY.length < 2" style="margin-top: 24px; text-align: center; padding: 40px 20px;">
+        <i data-lucide="line-chart" style="width: 48px; height: 48px; color: var(--text-muted); margin-bottom: 16px; display: inline-block;"></i>
+        <div class="section-title" style="margin-bottom: 8px;">Not Enough Data</div>
+        <p style="color: var(--text-muted); font-size: 14px;">Run KOUNT multiple times to generate historical trend charts.</p>
+      </div>
     </div>
 
     <!-- ===== HELP ===== -->
@@ -832,6 +857,8 @@ docs/drafts/*.md</pre>
   </main>
 
   <script>
+    window.KOUNT_HISTORY = ${historyJson};
+
     function dashboard() {
       const raw = ${jsonData};
       return {
@@ -1058,6 +1085,62 @@ docs/drafts/*.md</pre>
                   scales: { x: { grid: { color: gridClr }, ticks: { color: txtClr, precision: 0 } }, y: { grid: { display: false }, ticks: { color: txtClr } } },
                   plugins: { legend: { display: false } }, animation: false
                 }
+              });
+            }
+          }
+
+          if (section === 'trends' && window.KOUNT_HISTORY && window.KOUNT_HISTORY.length >= 2 && !this.chartsInitialized.trendsLine) {
+            const ctx = document.getElementById('trendsChart');
+            if (ctx) {
+              const historyData = window.KOUNT_HISTORY;
+              const labels = historyData.map(entry => {
+                const d = new Date(entry.timestamp);
+                return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+              });
+              
+              const getMetricData = (metric) => historyData.map(entry => entry[metric]);
+              const metricSelector = document.getElementById('chartMetricSelector');
+              
+              this.chartsInitialized.trendsLine = new Chart(ctx, {
+                type: 'line',
+                data: {
+                  labels: labels,
+                  datasets: [{
+                    label: metricSelector.options[metricSelector.selectedIndex].text,
+                    data: getMetricData(metricSelector.value),
+                    borderColor: '#00ff88',
+                    backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#0a0a0f',
+                    pointBorderColor: '#00ff88',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
+                    tension: 0.3
+                  }]
+                },
+                options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  scales: {
+                    x: { grid: { color: gridClr }, ticks: { color: txtClr, maxRotation: 45, minRotation: 0 } },
+                    y: { grid: { color: gridClr }, ticks: { color: txtClr }, beginAtZero: false }
+                  },
+                  plugins: {
+                    legend: { display: true, labels: { color: txtClr } },
+                    tooltip: { mode: 'index', intersect: false }
+                  },
+                  animation: false
+                }
+              });
+              
+              metricSelector.addEventListener('change', (e) => {
+                const chart = this.chartsInitialized.trendsLine;
+                const metric = e.target.value;
+                chart.data.datasets[0].data = getMetricData(metric);
+                chart.data.datasets[0].label = e.target.options[e.target.selectedIndex].text;
+                chart.update();
               });
             }
           }

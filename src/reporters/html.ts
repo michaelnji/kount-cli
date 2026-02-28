@@ -2,13 +2,14 @@ import { exec } from 'node:child_process';
 import http from 'node:http';
 import path from 'node:path';
 import type { ProjectStats } from '../plugins/types.js';
+import { getHistory } from '../state/history.js';
 import { buildHtmlTemplate } from './html-template.js';
 
 /**
  * Generates the full HTML dashboard page with injected data.
  * Uses Chart.js (CDN), Alpine.js (CDN), and Lucide Icons for the dashboard.
  */
-function generateHtmlDashboard(stats: ProjectStats): string {
+async function generateHtmlDashboard(stats: ProjectStats): Promise<string> {
   const totalLines = stats.pluginResults.get('TotalLines')?.summaryValue ?? 0;
   const blankLines = stats.pluginResults.get('BlankLines')?.summaryValue ?? 0;
   const commentLines = stats.pluginResults.get('CommentLines')?.summaryValue ?? 0;
@@ -103,6 +104,8 @@ function generateHtmlDashboard(stats: ProjectStats): string {
     });
   }
 
+  const history = await getHistory(stats.rootDir, 30);
+
   const jsonData = JSON.stringify({
     summary: {
       files: stats.totalFiles,
@@ -123,6 +126,7 @@ function generateHtmlDashboard(stats: ProjectStats): string {
     highDebtFiles: highDebtData,
     topDependencies: stats.topDependencies ?? [],
     trends: stats.trends ?? null,
+    history,
     scannedAt: stats.scannedAt.toISOString(),
     rootDir: stats.rootDir,
   });
@@ -142,7 +146,7 @@ export async function serveHtmlDashboard(
   stats: ProjectStats,
   port: number = 0
 ): Promise<{ url: string; close: () => void }> {
-  const html = generateHtmlDashboard(stats);
+  const html = await generateHtmlDashboard(stats);
 
   return new Promise((resolve, reject) => {
     const server = http.createServer((_req, res) => {
