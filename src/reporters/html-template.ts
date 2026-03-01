@@ -61,13 +61,17 @@ export function buildHtmlTemplate(jsonData: string): string {
     }
 
     html:not(.dark) {
+      --neon: #1C8587;
+      --neon-dim: #176B6D;
+      --neon-glow: rgba(28, 133, 135, 0.15);
+      --neon-glow-strong: rgba(28, 133, 135, 0.3);
       --bg-body: #ffffff;
       --bg-sidebar: #ffffff;
       --bg-card: #ffffff;
       --bg-card-hover: #fafafa;
       --bg-input: #f5f5f5;
       --bg-table-stripe: rgba(0, 0, 0, 0.02);
-      --bg-table-hover: rgba(85, 197, 199, 0.06);
+      --bg-table-hover: rgba(28, 133, 135, 0.06);
       --border: #eaeaea;
       --border-active: #cccccc;
       --text-primary: #000000;

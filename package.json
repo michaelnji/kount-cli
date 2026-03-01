@@ -42,7 +42,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/michaelnji/kount"
+    "url": "https://github.com/michaelnji/kount-cli"
   },
   "devDependencies": {
     "@types/bun": "latest",
