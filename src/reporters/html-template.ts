@@ -42,39 +42,39 @@ export function buildHtmlTemplate(jsonData: string): string {
     }
 
     html.dark {
-      --bg-body: #0b141e;
-      --bg-sidebar: #0f1a26;
-      --bg-card: #13202f;
-      --bg-card-hover: #1c2d42;
-      --bg-input: #1c2d42;
+      --bg-body: #000000;
+      --bg-sidebar: #000000;
+      --bg-card: #000000;
+      --bg-card-hover: #0a0a0a;
+      --bg-input: #0a0a0a;
       --bg-table-stripe: rgba(255, 255, 255, 0.02);
       --bg-table-hover: rgba(85, 197, 199, 0.05); /* neon tint */
-      --border: #1e2c3a;
-      --border-active: #2a3d52;
-      --text-primary: #f0f0f5;
-      --text-secondary: #8888a0;
-      --text-muted: #55556a;
-      --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
-      --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.6);
+      --border: #1a1a1a;
+      --border-active: #333333;
+      --text-primary: #ffffff;
+      --text-secondary: #cccccc;
+      --text-muted: #999999;
+      --shadow-card: none;
+      --shadow-card-hover: none;
       --chart-grid: rgba(255, 255, 255, 0.06);
       --logo-dark: #ffffff;
     }
 
     html:not(.dark) {
-      --bg-body: #f2f5f8;
+      --bg-body: #ffffff;
       --bg-sidebar: #ffffff;
       --bg-card: #ffffff;
-      --bg-card-hover: #f5f8fa;
-      --bg-input: #e6ebf1;
+      --bg-card-hover: #fafafa;
+      --bg-input: #f5f5f5;
       --bg-table-stripe: rgba(0, 0, 0, 0.02);
       --bg-table-hover: rgba(85, 197, 199, 0.06);
-      --border: #dce1e6;
-      --border-active: #c2cbd4;
-      --text-primary: #111218;
-      --text-secondary: #5a5d6a;
-      --text-muted: #9a9daa;
-      --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.06);
-      --shadow-card-hover: 0 6px 20px rgba(0, 0, 0, 0.1);
+      --border: #eaeaea;
+      --border-active: #cccccc;
+      --text-primary: #000000;
+      --text-secondary: #333333;
+      --text-muted: #666666;
+      --shadow-card: none;
+      --shadow-card-hover: none;
       --chart-grid: rgba(0, 0, 0, 0.06);
     }
 
