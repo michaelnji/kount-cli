@@ -151,7 +151,7 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
           paddingY={1}
           marginTop={1}
         >
-          <Text color="red" bold>  DEBT HOTSPOTS (TODO/FIXME/HACK)</Text>
+          <Text color="red" bold>  FILES WITH FIX-IT COMMENTS (TODO/FIXME/HACK)</Text>
           <Box marginTop={1} flexDirection="column">
             {stats.debtHotspots.map((item, i) => {
               const relPath = path.relative(stats.rootDir, item.filePath);
@@ -159,7 +159,7 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
                 <Box key={item.filePath}>
                   <Box width={4}><Text color="gray">{i + 1}.</Text></Box>
                   <Box width={40}><Text color="white" wrap="truncate-end">{relPath}</Text></Box>
-                  <Text color="red">{item.count} markers</Text>
+                  <Text color="red">{item.count} fix-it comments</Text>
                 </Box>
               );
             })}
@@ -260,7 +260,7 @@ export function Summary({ stats }: SummaryProps): React.ReactElement {
           paddingY={1}
           marginTop={1}
         >
-          <Text color="yellow" bold>  TECH DEBT (Score: {(stats.techDebtScore ?? 0).toLocaleString()}{t ? <TrendDelta delta={t.debtDelta} /> : null})</Text>
+          <Text color="yellow" bold>  CODE HEALTH (Cleanup Score: {(stats.techDebtScore ?? 0).toLocaleString()}{t ? <TrendDelta delta={t.debtDelta} /> : null})</Text>
           <Box marginTop={1} flexDirection="column">
             {stats.highDebtFiles.map((file, i) => {
               const relPath = path.relative(stats.rootDir, file.filePath);

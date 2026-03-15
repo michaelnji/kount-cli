@@ -5,10 +5,10 @@ import type { ProjectStats } from '../plugins/types.js';
 /**
  * Generates CSV content from ProjectStats.
  * Strictly per-file data — no summary row.
- * Columns: Path, Lines, Blank Lines, Comment Lines, Size, Debt Markers
+ * Columns: Path, Lines, Blank Lines, Comment Lines, Size, Fix-It Comments
  */
 export function generateCsvReport(stats: ProjectStats): string {
-  const header = 'Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers,Commits,Debt Score,Imports,Age,Bus Factor,Top Owner,Volatility (Insertions),Volatility (Deletions)';
+  const header = 'Path,Lines,Blank Lines,Comment Lines,Size,Fix-It Comments,Commits,Cleanup Score,Imports,Age,Bus Factor,Top Owner,Volatility (Insertions),Volatility (Deletions)';
   const rows: string[] = [header];
 
   const totalLinesPerFile = stats.pluginResults.get('TotalLines')?.perFile ?? new Map();

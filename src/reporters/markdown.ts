@@ -144,14 +144,16 @@ function generateMarkdownReport(stats: ProjectStats): string {
     }
   }
 
-  // Tech Debt (only when data is available)
+  // Code Health (only when data is available)
   if (stats.highDebtFiles && stats.highDebtFiles.length > 0) {
-    lines.push('### Tech Debt');
+    lines.push('### Code Health');
     lines.push('');
-    lines.push(`**Total Score:** ${(stats.techDebtScore ?? 0).toLocaleString()}`);
+    lines.push(`**Cleanup Score:** ${(stats.techDebtScore ?? 0).toLocaleString()}`);
     lines.push('');
-    lines.push('| # | File | Score |');
-    lines.push('|---|------|-------|');
+    lines.push('> The Cleanup Score estimates how much work each file needs. It combines file size, how often the file changes, and how well it\'s documented. Higher = more attention needed.');
+    lines.push('');
+    lines.push('| # | File | Cleanup Score |');
+    lines.push('|---|------|---------------|');
 
     for (let i = 0; i < stats.highDebtFiles.length; i++) {
       const file = stats.highDebtFiles[i];
@@ -187,7 +189,7 @@ function generateMarkdownReport(stats: ProjectStats): string {
     lines.push(`| Lines | ${fmt(t.linesDelta)} |`);
     lines.push(`| Size | ${fmt(t.sizeDelta)} B |`);
     lines.push(`| Comment Ratio | ${fmt(t.commentRatioDelta)}% |`);
-    lines.push(`| Debt Score | ${fmt(t.debtDelta)} |`);
+    lines.push(`| Cleanup Score | ${fmt(t.debtDelta)} |`);
     lines.push('');
   }
 

@@ -46,7 +46,7 @@ function buildPayload(stats: ProjectStats, metric: string): BadgePayload {
       const score = stats.techDebtScore ?? 0;
       return {
         schemaVersion: 1,
-        label: 'tech debt',
+        label: 'cleanup score',
         message: score.toLocaleString(),
         color: score <= 100 ? 'green' : score <= 500 ? 'yellow' : 'red',
       };

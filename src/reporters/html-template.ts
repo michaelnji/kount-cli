@@ -597,7 +597,7 @@ export function buildHtmlTemplate(jsonData: string): string {
       </button>
       <button type="button" class="sidebar-nav-item" :class="{ active: currentSection === 'debt' }" @click="go('debt')" :aria-current="currentSection === 'debt' ? 'page' : undefined">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Tech Debt
+        Code Health
       </button>
       <button type="button" class="sidebar-nav-item" :class="{ active: currentSection === 'git' }" @click="go('git')" x-show="data.gitInsights" :aria-current="currentSection === 'git' ? 'page' : undefined">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg>
@@ -684,7 +684,7 @@ export function buildHtmlTemplate(jsonData: string): string {
           </div>
         </div>
 
-        <p class="section-tip">A high-level snapshot of your codebase. Use the sidebar to drill into files, languages, technical debt, and git history.</p>
+        <p class="section-tip">A high-level snapshot of your codebase. Use the sidebar to drill into files, languages, code health, and git history.</p>
 
         <div class="stats-grid-5">
           <div class="card">
@@ -718,7 +718,7 @@ export function buildHtmlTemplate(jsonData: string): string {
             </template>
           </div>
           <div class="card">
-            <div class="card-title">Tech Debt Score</div>
+            <div class="card-title">Cleanup Score</div>
             <div class="card-value" x-text="animatedValues.debt"></div>
             <template x-if="data.trends">
               <div class="card-trend" :class="data.trends.debtDelta > 0 ? 'up' : data.trends.debtDelta < 0 ? 'down' : 'neutral'">
@@ -774,7 +774,7 @@ export function buildHtmlTemplate(jsonData: string): string {
         <div class="page-header">
           <h1>Files</h1>
         </div>
-        <p class="section-tip">Detailed metrics for every scanned file. Sort by <strong>Score</strong> to prioritize refactoring efforts. High scores often indicate risky, complex, or undocumented code.</p>
+        <p class="section-tip">Detailed metrics for every scanned file. Sort by <strong>Cleanup Score</strong> to find files that need the most attention. High scores mean the file is large, changes often, or has few comments.</p>
         <div class="card">
           <div class="table-controls">
             <div class="search-wrap">
@@ -823,7 +823,7 @@ export function buildHtmlTemplate(jsonData: string): string {
                   <th scope="col"
                     @click="sortFiles('debtScore')"
                     :class="{ sorted: fileSort === 'debtScore' }"
-                    :aria-sort="fileSort === 'debtScore' ? (fileSortDir === 1 ? 'ascending' : 'descending') : 'none'">Score</th>
+                    :aria-sort="fileSort === 'debtScore' ? (fileSortDir === 1 ? 'ascending' : 'descending') : 'none'">Cleanup Score</th>
                   <th scope="col"
                     @click="sortFiles('complexity')"
                     :class="{ sorted: fileSort === 'complexity' }"
@@ -900,19 +900,19 @@ export function buildHtmlTemplate(jsonData: string): string {
         </div>
       </div>
 
-      <!-- ===== TECH DEBT ===== -->
+      <!-- ===== CODE HEALTH ===== -->
       <div class="section-view" :class="{ active: currentSection === 'debt' }">
         <div class="page-header">
-          <h1>Tech Debt</h1>
+          <h1>Code Health</h1>
         </div>
-        <p class="section-tip">A deeper dive into technical debt. Identifies files with high complexity, low comment ratios, and pinpoints explicit debt markers like TODOs and FIXMEs.</p>
+        <p class="section-tip">Shows which files need the most cleanup work. The <strong>Cleanup Score</strong> is calculated from file size, how often the file changes, and how many comments it has. <strong>Fix-It Comments</strong> are lines marked with <code>TODO</code>, <code>FIXME</code>, or <code>HACK</code> — explicit notes from developers about work that still needs to be done.</p>
         <div class="stats-grid-3">
           <div class="card">
-            <div class="card-title">Debt Score</div>
+            <div class="card-title">Cleanup Score</div>
             <div class="card-value value--accent" x-text="(data.summary.techDebtScore ?? 0).toLocaleString()"></div>
           </div>
           <div class="card">
-            <div class="card-title">Debt Markers</div>
+            <div class="card-title">Fix-It Comments</div>
             <div class="card-value" x-text="(data.summary.debtMarkers ?? 0).toLocaleString()"></div>
           </div>
           <div class="card">
@@ -922,15 +922,15 @@ export function buildHtmlTemplate(jsonData: string): string {
         </div>
         <div class="chart-row-equal">
           <div class="card">
-            <div class="section-title">Highest Debt Files</div>
+            <div class="section-title">Files Needing Most Cleanup</div>
             <div style="position: relative; height: 260px; width: 100%;">
-              <canvas id="debtBarChart" aria-label="Highest debt files bar chart"></canvas>
+              <canvas id="debtBarChart" aria-label="Files needing most cleanup bar chart"></canvas>
             </div>
           </div>
           <div class="card">
-            <div class="section-title">Debt Hotspots (TODO / FIXME / HACK)</div>
-            <table class="data-table" aria-label="Debt hotspots">
-              <thead><tr><th scope="col">#</th><th scope="col">File</th><th scope="col">Markers</th></tr></thead>
+            <div class="section-title">Files With Fix-It Comments (TODO / FIXME / HACK)</div>
+            <table class="data-table" aria-label="Files with fix-it comments">
+              <thead><tr><th scope="col">#</th><th scope="col">File</th><th scope="col">Fix-It Comments</th></tr></thead>
               <tbody>
                 <template x-for="d in data.debtHotspots" :key="d.rank">
                   <tr>
@@ -1073,7 +1073,7 @@ export function buildHtmlTemplate(jsonData: string): string {
         <div class="page-header">
           <h1>Trends</h1>
         </div>
-        <p class="section-tip">Track your project's evolution over time. Visualizes how key metrics like total size and tech debt score are changing across different scans.</p>
+        <p class="section-tip">Track your project's evolution over time. Visualizes how key metrics like total size and cleanup score are changing across different scans.</p>
         <template x-if="data.trends">
           <div>
             <div class="stats-grid-5">
@@ -1095,7 +1095,7 @@ export function buildHtmlTemplate(jsonData: string): string {
             <select id="chartMetricSelector" x-model="trendsMetric" @change="updateTrendsChart" aria-label="Select metric to display" style="background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 13px; cursor: pointer; outline: none; font-family: var(--font-sans);">
               <option value="totalFiles">Total Files</option>
               <option value="totalLines">Total Lines of Code</option>
-              <option value="techDebtScore">Tech Debt Score</option>
+              <option value="techDebtScore">Cleanup Score</option>
               <option value="commentRatio">Comment Ratio (%)</option>
             </select>
           </div>
@@ -1175,7 +1175,7 @@ docs/drafts/*.md</pre>
         <div class="card" style="margin-top:24px">
           <div class="section-title">About KOUNT</div>
           <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:800px">
-            KOUNT is a zero-dependency codebase analyzer built for developers who care about their craft. It scans your project, tracks technical debt, analyzes git history, and helps you make data-driven decisions about code quality.
+            KOUNT is a zero-dependency codebase analyzer built for developers who care about their craft. It scans your project, tracks code health, analyzes git history, and helps you make data-driven decisions about code quality.
           </p>
           <p style="font-size:13px;color:var(--text-muted);margin-top:12px">
             Built by <strong style="color:var(--text-primary)">Michael Nji</strong> &mdash; <a href="https://michaelnji.codes" target="_blank" rel="noopener noreferrer" style="color:var(--neon);text-decoration:none">michaelnji.codes</a>
@@ -1471,7 +1471,7 @@ docs/drafts/*.md</pre>
             mime = 'application/json'; name = 'kount-report.json';
           } else {
             const files = this._allFiles || [];
-            const header = 'Path,Lines,Comments,Blanks,Size,Debt Markers,Commits,Debt Score';
+            const header = 'Path,Lines,Comments,Blanks,Size,Fix-It Comments,Commits,Cleanup Score';
             const rows = files.map(f => [
               // Quote CSV fields that may contain commas
               \`"\${(f.path || '').replace(/"/g, '""')}"\`,
@@ -1639,7 +1639,7 @@ docs/drafts/*.md</pre>
                 data: {
                   labels,
                   datasets: [{
-                    label: 'Debt Score',
+                    label: 'Cleanup Score',
                     data: this.data.highDebtFiles.map(f => f.score),
                     backgroundColor: c.dangerAlpha,
                     borderColor: c.danger,

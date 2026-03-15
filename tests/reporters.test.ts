@@ -157,7 +157,6 @@ describe('HTML Reporter', () => {
     const stats = makeMockStats();
     const html = await generateHtmlDashboard(stats);
 
-    // The JSON data should be present in the script
     expect(html).toContain('"totalLines":500');
     expect(html).toContain('"codeLines":370');
     expect(html).toContain('"TypeScript"');
@@ -167,9 +166,21 @@ describe('HTML Reporter', () => {
     const stats = makeMockStats({ languageDistribution: new Map() });
     const html = await generateHtmlDashboard(stats);
 
-    // Should still render without errors
     expect(html).toContain('<!DOCTYPE html>');
     expect(html).toContain('"languages":[]');
+  });
+
+  it('should use plain-language labels — "Code Health", "Cleanup Score", "Fix-It Comments"', async () => {
+    const stats = makeMockStats();
+    const html = await generateHtmlDashboard(stats);
+
+    expect(html).toContain('Code Health');
+    expect(html).toContain('Cleanup Score');
+    expect(html).toContain('Fix-It Comments');
+    expect(html).not.toContain('Tech Debt Score');
+    expect(html).not.toContain('Debt Markers');
+    expect(html).not.toContain('Debt Hotspots');
+    expect(html).not.toContain('Debt Score');
   });
 });
 
@@ -228,12 +239,14 @@ describe('JSON Reporter', () => {
 });
 
 describe('CSV Reporter', () => {
-  it('should have the correct header row', () => {
+  it('should have the correct header row with plain-language column names', () => {
     const stats = makeMockStats();
     const csv = generateCsvReport(stats);
     const lines = csv.trim().split('\n');
 
-    expect(lines[0]).toBe('Path,Lines,Blank Lines,Comment Lines,Size,Debt Markers,Commits,Debt Score,Imports,Age,Bus Factor,Top Owner,Volatility (Insertions),Volatility (Deletions)');
+    expect(lines[0]).toBe('Path,Lines,Blank Lines,Comment Lines,Size,Fix-It Comments,Commits,Cleanup Score,Imports,Age,Bus Factor,Top Owner,Volatility (Insertions),Volatility (Deletions)');
+    expect(lines[0]).not.toContain('Debt Markers');
+    expect(lines[0]).not.toContain('Debt Score');
   });
 
   it('should have correct number of columns per row', () => {
@@ -388,7 +401,7 @@ describe('JSON Reporter — Tech Debt & Trends', () => {
 });
 
 describe('Markdown Reporter — Tech Debt & Trends', () => {
-  it('should include Tech Debt section when data present', () => {
+  it('should use plain-language "Code Health" section heading instead of "Tech Debt"', () => {
     const stats = makeMockStats({
       techDebtScore: 450,
       highDebtFiles: [
@@ -397,12 +410,14 @@ describe('Markdown Reporter — Tech Debt & Trends', () => {
     });
     const md = generateMarkdownReport(stats);
 
-    expect(md).toContain('### Tech Debt');
-    expect(md).toContain('**Total Score:** 450');
+    expect(md).toContain('### Code Health');
+    expect(md).toContain('**Cleanup Score:** 450');
     expect(md).toContain('`src/legacy.ts`');
+    expect(md).not.toContain('### Tech Debt');
+    expect(md).not.toContain('**Total Score:**');
   });
 
-  it('should include Trends section when trends present', () => {
+  it('should use "Cleanup Score" in the Trends table instead of "Debt Score"', () => {
     const stats = makeMockStats({
       trends: {
         linesDelta: 150,
@@ -415,14 +430,17 @@ describe('Markdown Reporter — Tech Debt & Trends', () => {
     const md = generateMarkdownReport(stats);
 
     expect(md).toContain('### Trends (vs Previous Scan)');
+    expect(md).toContain('| Cleanup Score |');
     expect(md).toContain('+150');
     expect(md).toContain('-20');
+    expect(md).not.toContain('| Debt Score |');
   });
 
-  it('should not include Tech Debt or Trends when absent', () => {
+  it('should not include Code Health or Trends sections when data absent', () => {
     const stats = makeMockStats();
     const md = generateMarkdownReport(stats);
 
+    expect(md).not.toContain('### Code Health');
     expect(md).not.toContain('### Tech Debt');
     expect(md).not.toContain('### Trends');
   });
