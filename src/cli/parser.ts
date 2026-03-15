@@ -1,4 +1,5 @@
 import { Command } from 'commander';
+import { version } from '../../package.json';
 import type { CliFlags } from './config-resolver.js';
 
 /**
@@ -14,7 +15,7 @@ export function createCli(argv: string[]): CliFlags {
   program
     .name('kount')
     .description('Project Intelligence for Codebases — analyze your code with precision.')
-    .version('3.2.0', '-V, --version', 'Print version number')
+    .version(version, '-V, --version', 'Print version number')
     // ── Core ──────────────────────────────────────────────────────────────────
     .option('-d, --root-dir <path>', 'Root directory to scan (default: .)')
     .option(

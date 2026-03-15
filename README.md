@@ -553,7 +553,7 @@ Trends are shown as line charts in the HTML dashboard, delta rows in the termina
 
 1. Fork the repository
 2. Create your feature branch: `git checkout -b feature/amazing-feature`
-3. Write / update tests: `bun test`
+3. Write / update tests: `bun run test`
 4. Commit your changes: `git commit -m 'feat: add amazing feature'`
 5. Push to the branch: `git push origin feature/amazing-feature`
 6. Open a Pull Request
