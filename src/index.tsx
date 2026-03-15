@@ -61,6 +61,12 @@ async function runHeadless(config: KountConfig): Promise<void> {
         const outputPath = await writeCsvReport(stats, config.outputPath);
         process.stdout.write(`CSV report written to ${outputPath}\n`);
     }
+
+    if (config.badge) {
+        const { writeBadge } = await import('./reporters/badge.js');
+        const badgePath = await writeBadge(stats, config.badge, config.outputPath);
+        process.stdout.write(`Badge written to ${badgePath}\n`);
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -125,6 +131,13 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
                 // Persist run for trend tracking
                 saveRun(config.rootDir, result).catch(() => {});
                 setStats(result);
+
+                // Generate badge if requested
+                if (config.badge) {
+                    const { writeBadge } = await import('./reporters/badge.js');
+                    const badgePath = await writeBadge(result, config.badge, config.outputPath);
+                    process.stdout.write(`Badge written to ${badgePath}\n`);
+                }
 
                 // Generate report
                 if (config.outputMode === 'markdown') {
@@ -204,6 +217,13 @@ function App({ config: initialConfig, needsWizard }: AppProps): React.ReactEleme
 // ---------------------------------------------------------------------------
 
 async function main(): Promise<void> {
+    // Intercept `kount init` before any CLI parsing
+    if (process.argv[2] === 'init') {
+        const { runInit } = await import('./cli/init.js');
+        await runInit();
+        process.exit(0);
+    }
+
     const cliFlags = createCli(process.argv);
     const config = await resolveConfig(cliFlags);
 
@@ -243,6 +263,12 @@ async function main(): Promise<void> {
         } else {
             // Non-TTY but terminal/markdown/html mode — fall through to headless
             await runHeadless(config);
+        }
+
+        if (config.badge) {
+            const { writeBadge } = await import('./reporters/badge.js');
+            const badgePath = await writeBadge(stats, config.badge, config.outputPath);
+            process.stdout.write(`Badge written to ${badgePath}\n`);
         }
 
         process.exit(0);

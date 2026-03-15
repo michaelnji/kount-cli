@@ -135,6 +135,10 @@ export interface ProjectStats {
   };
   /** Top external dependencies by import frequency (undefined if no JS/TS files). */
   topDependencies?: Array<{ name: string; count: number }>;
+  /** Top files with highest cyclomatic complexity scores. */
+  highComplexityFiles?: Array<{ filePath: string; score: number }>;
+  /** Circular import cycles detected in JS/TS files (each entry is one cycle as a list of file paths). */
+  circularDeps?: Array<string[]>;
   /** Timestamp of when the scan completed. */
   scannedAt: Date;
 }

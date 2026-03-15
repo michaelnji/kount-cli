@@ -2,18 +2,20 @@ import * as fsp from 'node:fs/promises';
 import path from 'node:path';
 import { batchGetFileChurn, getBusFactor, getChangedFiles, getFileAge, getFileVolatility, getSurvivingOwnership, getTopAuthors, isGitRepo } from '../git/index.js';
 import {
-  AuthorMetricsPlugin,
-  BlankLinesPlugin,
-  CodeChurnPlugin,
-  CommentLinesPlugin,
-  DebtTrackerPlugin,
-  DependencyTrackerPlugin,
-  FileSizePlugin,
-  LanguageDistributionPlugin,
-  LargestFilesPlugin,
-  TechDebtPlugin,
-  TotalFilesPlugin,
-  TotalLinesPlugin,
+    AuthorMetricsPlugin,
+    BlankLinesPlugin,
+    CircularDepsPlugin,
+    CodeChurnPlugin,
+    CommentLinesPlugin,
+    ComplexityPlugin,
+    DebtTrackerPlugin,
+    DependencyTrackerPlugin,
+    FileSizePlugin,
+    LanguageDistributionPlugin,
+    LargestFilesPlugin,
+    TechDebtPlugin,
+    TotalFilesPlugin,
+    TotalLinesPlugin,
 } from '../plugins/index.js';
 import type { AnalyzedFileData, AnalyzerPlugin, PluginResult, ProjectStats, StageCallback } from '../plugins/types.js';
 import type { ScannedFile } from '../scanner/stream-reader.js';
@@ -38,6 +40,8 @@ function getDefaultPlugins(): AnalyzerPlugin[] {
     new AuthorMetricsPlugin(),
     new DependencyTrackerPlugin(),
     new TechDebtPlugin(),
+    new ComplexityPlugin(),
+    new CircularDepsPlugin(),
   ];
 }
 
@@ -194,6 +198,14 @@ export class Aggregator {
       if (techDebtPlugin) {
         techDebtPlugin.setCommentData(commentResult.perFile);
       }
+    }
+
+    // 6.6 Give CircularDepsPlugin its rootDir so it can resolve paths
+    const circularDepsPlugin = this.plugins.find(
+      (p): p is CircularDepsPlugin => p.name === 'CircularDeps'
+    ) as CircularDepsPlugin | undefined;
+    if (circularDepsPlugin) {
+      circularDepsPlugin.setRootDir(this.rootDir);
     }
 
     // 7. Run each plugin against the full analyzed data
@@ -364,6 +376,19 @@ export class Aggregator {
       ? depPlugin.getTopDependencies(10)
       : undefined;
 
+    // 17. Compute high-complexity files
+    const complexityPlugin = this.plugins.find(
+      (p): p is ComplexityPlugin => p.name === 'Complexity'
+    ) as ComplexityPlugin | undefined;
+    const highComplexityFiles = complexityPlugin
+      ? complexityPlugin.getHighComplexityFiles(analyzedFiles)
+      : [];
+
+    // 18. Extract circular dependency cycles
+    const circularDeps = circularDepsPlugin
+      ? circularDepsPlugin.getCycles()
+      : [];
+
     if (onProgress) onProgress('RENDERING');
 
     return {
@@ -378,6 +403,8 @@ export class Aggregator {
       highDebtFiles,
       trends,
       topDependencies,
+      highComplexityFiles,
+      circularDeps,
       scannedAt: new Date(),
     };
   }

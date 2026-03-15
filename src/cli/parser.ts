@@ -31,6 +31,8 @@ export function createCli(argv: string[]): CliFlags {
     .option('--diff <branch>', 'Git Intelligence: Only analyze files changed relative to the specified <branch>')
     .option('--deep-git', 'Git Intelligence: Enable deep analytics (blame, numstat) which can be slow on large repos')
     .option('--stale-threshold <years>', 'Git Intelligence: Define stale file threshold in years (default: 2)', parseFloat)
+    .option('--max-complexity <n>', 'CI/CD Gate: Fail with exit code 1 if any file complexity score exceeds <n>', parseFloat)
+    .option('--badge <metric>', 'Generate a Shields.io badge JSON for the given metric (files, lines, comment-ratio, debt-score, complexity)')
     .parse(argv);
 
   const opts = program.opts<{
@@ -47,6 +49,8 @@ export function createCli(argv: string[]): CliFlags {
     diff?: string;
     deepGit?: boolean;
     staleThreshold?: number;
+    maxComplexity?: number;
+    badge?: string;
   }>();
 
   return {
@@ -63,5 +67,7 @@ export function createCli(argv: string[]): CliFlags {
     diff: opts.diff,
     deepGit: opts.deepGit,
     staleThreshold: opts.staleThreshold,
+    maxComplexity: opts.maxComplexity,
+    badge: opts.badge,
   };
 }

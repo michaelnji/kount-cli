@@ -1,7 +1,9 @@
 export { AuthorMetricsPlugin } from './built-in/author-metrics.js';
 export { BlankLinesPlugin } from './built-in/blank-lines.js';
+export { CircularDepsPlugin } from './built-in/circular-deps.js';
 export { CodeChurnPlugin } from './built-in/code-churn.js';
 export { CommentLinesPlugin } from './built-in/comment-lines.js';
+export { ComplexityPlugin } from './built-in/complexity.js';
 export { DebtTrackerPlugin } from './built-in/debt-tracker.js';
 export { DependencyTrackerPlugin } from './built-in/dependency-tracker.js';
 export { FileSizePlugin } from './built-in/file-size.js';

@@ -18,10 +18,12 @@ export interface KountConfig {
   qualityGates?: {
     failOnSize?: number;
     minCommentRatio?: number;
+    maxComplexity?: number;
   };
   diffBranch?: string;
   deepGit: boolean;
   staleThreshold: number;
+  badge?: string;
 }
 
 /**
@@ -38,6 +40,7 @@ interface ConfigFile {
   };
   failOnSize?: number;
   minCommentRatio?: number;
+  maxComplexity?: number;
   diffBranch?: string;
   deepGit?: boolean;
   staleThreshold?: number;
@@ -60,6 +63,8 @@ export interface CliFlags {
   diff?: string;
   deepGit?: boolean;
   staleThreshold?: number;
+  maxComplexity?: number;
+  badge?: string;
 }
 
 const DEFAULTS: KountConfig = {
@@ -188,6 +193,7 @@ export async function resolveConfig(cliFlags: CliFlags, cwd: string = process.cw
     diffBranch: cliFlags.diff ?? fileConfig.diffBranch,
     deepGit: cliFlags.deepGit ?? fileConfig.deepGit ?? DEFAULTS.deepGit,
     staleThreshold: cliFlags.staleThreshold ?? fileConfig.staleThreshold ?? DEFAULTS.staleThreshold,
+    badge: cliFlags.badge,
   };
 }
 
@@ -197,12 +203,13 @@ function buildQualityGates(
 ): KountConfig['qualityGates'] {
   const failOnSize = cliFlags.failOnSize ?? fileConfig.failOnSize;
   const minCommentRatio = cliFlags.minCommentRatio ?? fileConfig.minCommentRatio;
+  const maxComplexity = cliFlags.maxComplexity ?? fileConfig.maxComplexity;
 
-  if (failOnSize === undefined && minCommentRatio === undefined) {
+  if (failOnSize === undefined && minCommentRatio === undefined && maxComplexity === undefined) {
     return undefined;
   }
 
-  return { failOnSize, minCommentRatio };
+  return { failOnSize, minCommentRatio, maxComplexity };
 }
 
 function validateOutputMode(mode: string): 'terminal' | 'markdown' | 'html' | 'json' | 'csv' {

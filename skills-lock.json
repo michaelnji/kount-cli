@@ -111,6 +111,11 @@
       "sourceType": "github",
       "computedHash": "f5c35268ccb3fd6dd50312bb0bc5dc6c19917ee83b88496d59ff5f2dd5271208"
     },
+    "test-driven-development": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "computedHash": "126f1ebf6ccd414f42544f6e83d8cc5adb089e1108eaffb7c400701e37eecd9f"
+    },
     "typescript-advanced-types": {
       "source": "wshobson/agents",
       "sourceType": "github",

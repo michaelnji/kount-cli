@@ -78,6 +78,7 @@ async function generateHtmlDashboard(stats: ProjectStats): Promise<string> {
   const debtPerFile = stats.pluginResults.get('DebtTracker')?.perFile ?? new Map();
   const churnPerFile = stats.pluginResults.get('CodeChurn')?.perFile ?? new Map();
   const debtScorePerFile = stats.pluginResults.get('TechDebt')?.perFile ?? new Map();
+  const complexityPerFile = stats.pluginResults.get('Complexity')?.perFile ?? new Map();
 
   const filesData: Array<Record<string, unknown>> = [];
   const gitMetricsMap = stats.gitInsights?.fileGitMetrics ?? new Map();
@@ -97,6 +98,7 @@ async function generateHtmlDashboard(stats: ProjectStats): Promise<string> {
       debt: debtPerFile.get(filePath) ?? 0,
       commits: churnPerFile.get(filePath) ?? 0,
       debtScore: debtScorePerFile.get(filePath) ?? 0,
+      complexity: complexityPerFile.get(filePath) ?? 0,
       age: gitMeta?.age ?? null,
       busFactor: gitMeta?.busFactor ?? null,
       topOwner: gitMeta?.topOwner ?? null,
@@ -129,6 +131,14 @@ async function generateHtmlDashboard(stats: ProjectStats): Promise<string> {
       name: dep.name,
       count: dep.count,
     })),
+    highComplexityFiles: (stats.highComplexityFiles ?? []).map((f, i) => ({
+      rank: i + 1,
+      path: path.relative(stats.rootDir, f.filePath),
+      score: f.score,
+    })),
+    circularDeps: (stats.circularDeps ?? []).map(cycle =>
+      cycle.map(fp => path.relative(stats.rootDir, fp))
+    ),
     trends: stats.trends ?? null,
     history,
     scannedAt: stats.scannedAt.toISOString(),

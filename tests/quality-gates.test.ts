@@ -21,6 +21,8 @@ function makeMockConfig(gates?: KountConfig['qualityGates']): KountConfig {
     respectGitignore: true,
     cache: { enabled: true, clearFirst: false },
     force: false,
+    deepGit: false,
+    staleThreshold: 2,
     qualityGates: gates,
   };
 }
@@ -29,12 +31,22 @@ function makeMockStats(overrides?: {
   totalLines?: number;
   commentLines?: number;
   totalBytes?: number;
+  complexityPerFile?: Map<string, number>;
 }): ProjectStats {
   const pluginResults = new Map<string, PluginResult>();
   pluginResults.set('TotalLines', makePluginResult('TotalLines', overrides?.totalLines ?? 1000));
   pluginResults.set('CommentLines', makePluginResult('CommentLines', overrides?.commentLines ?? 100));
   pluginResults.set('FileSize', makePluginResult('FileSize', overrides?.totalBytes ?? 5 * 1024 * 1024));
   pluginResults.set('BlankLines', makePluginResult('BlankLines', 50));
+
+  if (overrides?.complexityPerFile) {
+    const maxScore = [...overrides.complexityPerFile.values()].reduce((a, b) => Math.max(a, b), 0);
+    pluginResults.set('Complexity', {
+      pluginName: 'Complexity',
+      summaryValue: maxScore,
+      perFile: overrides.complexityPerFile,
+    });
+  }
 
   return {
     rootDir: '/project',
@@ -114,5 +126,40 @@ describe('Quality Gates', () => {
     // 0% < 10% so it should fail
     expect(failures.length).toBe(1);
     expect(failures[0]).toContain('below the 10% minimum');
+  });
+
+  it('should pass when max complexity is within limit', () => {
+    const complexityMap = new Map([
+      ['/project/a.ts', 5],
+      ['/project/b.ts', 3],
+    ]);
+    const config = makeMockConfig({ maxComplexity: 10 });
+    const stats = makeMockStats({ complexityPerFile: complexityMap });
+    const failures = checkQualityGates(config, stats);
+
+    expect(failures).toEqual([]);
+  });
+
+  it('should fail when max complexity exceeds limit', () => {
+    const complexityMap = new Map([
+      ['/project/a.ts', 15],
+      ['/project/b.ts', 3],
+    ]);
+    const config = makeMockConfig({ maxComplexity: 10 });
+    const stats = makeMockStats({ complexityPerFile: complexityMap });
+    const failures = checkQualityGates(config, stats);
+
+    expect(failures.length).toBe(1);
+    expect(failures[0]).toContain('15');
+    expect(failures[0]).toContain('10');
+  });
+
+  it('should pass maxComplexity check when no Complexity plugin result is present', () => {
+    // No complexity data → max score = 0, should not fail
+    const config = makeMockConfig({ maxComplexity: 5 });
+    const stats = makeMockStats();
+    const failures = checkQualityGates(config, stats);
+
+    expect(failures).toEqual([]);
   });
 });

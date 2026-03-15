@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { AuthorMetricsPlugin } from '../src/plugins/built-in/author-metrics';
 import { BlankLinesPlugin } from '../src/plugins/built-in/blank-lines';
+import { CircularDepsPlugin } from '../src/plugins/built-in/circular-deps';
 import { CodeChurnPlugin } from '../src/plugins/built-in/code-churn';
 import { CommentLinesPlugin } from '../src/plugins/built-in/comment-lines';
+import { ComplexityPlugin } from '../src/plugins/built-in/complexity';
 import { DebtTrackerPlugin } from '../src/plugins/built-in/debt-tracker';
 import { DependencyTrackerPlugin } from '../src/plugins/built-in/dependency-tracker';
 import { FileSizePlugin } from '../src/plugins/built-in/file-size';
@@ -492,5 +494,190 @@ describe('DependencyTrackerPlugin', () => {
     expect(result.summaryValue).toBe(0);
     expect(result.perFile.size).toBe(0);
     expect(plugin.getTopDependencies()).toEqual([]);
+  });
+});
+
+describe('ComplexityPlugin', () => {
+  it('should assign base complexity of 1 to a file with no branches', () => {
+    const plugin = new ComplexityPlugin();
+    const simple = makeFile('/project/src/simple.ts', '.ts', [
+      'const x = 1;',
+      'export default x;',
+    ]);
+    const result = plugin.analyze([simple]);
+
+    expect(result.pluginName).toBe('Complexity');
+    expect(result.perFile.get(simple.filePath)).toBe(1);
+    expect(result.summaryValue).toBe(1);
+  });
+
+  it('should count if/for/while/catch branches in C-style files', () => {
+    const plugin = new ComplexityPlugin();
+    const branchy = makeFile('/project/src/branchy.ts', '.ts', [
+      'if (a) {',          // +1
+      '  for (let i = 0; i < 10; i++) {', // +1
+      '    while (true) {', // +1
+      '      break;',
+      '    }',
+      '  }',
+      '}',
+      'try {} catch (e) {}', // +1
+    ]);
+    const result = plugin.analyze([branchy]);
+
+    // base(1) + if(1) + for(1) + while(1) + catch(1) = 5
+    expect(result.perFile.get(branchy.filePath)).toBe(5);
+  });
+
+  it('should count logical operators as branches', () => {
+    const plugin = new ComplexityPlugin();
+    const logical = makeFile('/project/src/logical.ts', '.ts', [
+      'const a = x && y || z ?? w;', // && +1, || +1, ?? +1
+    ]);
+    const result = plugin.analyze([logical]);
+
+    // base(1) + &&(1) + ||(1) + ??(1) = 4
+    expect(result.perFile.get(logical.filePath)).toBe(4);
+  });
+
+  it('should not double-count ?? as a ternary ?', () => {
+    const plugin = new ComplexityPlugin();
+    const nullish = makeFile('/project/src/nullish.ts', '.ts', [
+      'const a = b ?? c;', // one ?? only
+    ]);
+    const result = plugin.analyze([nullish]);
+
+    // base(1) + ??(1) = 2; ternary pattern must NOT match here
+    expect(result.perFile.get(nullish.filePath)).toBe(2);
+  });
+
+  it('should use Python patterns for .py files', () => {
+    const plugin = new ComplexityPlugin();
+    const pyScript = makeFile('/project/scripts/algo.py', '.py', [
+      'if x:',         // +1
+      '    pass',
+      'elif y:',       // +1
+      '    pass',
+      'for i in lst:', // +1
+      '    pass',
+    ]);
+    const result = plugin.analyze([pyScript]);
+
+    // base(1) + if(1) + elif(1) + for(1) = 4
+    expect(result.perFile.get(pyScript.filePath)).toBe(4);
+  });
+
+  it('should sum complexity across all files', () => {
+    const plugin = new ComplexityPlugin();
+    const f1 = makeFile('/project/a.ts', '.ts', ['if (x) {}']); // 1+1=2
+    const f2 = makeFile('/project/b.ts', '.ts', ['const y = 1;']); // 1
+    const result = plugin.analyze([f1, f2]);
+
+    expect(result.summaryValue).toBe(3);
+  });
+
+  it('should return highest complexity files via getHighComplexityFiles', () => {
+    const plugin = new ComplexityPlugin();
+    const complex = makeFile('/project/c.ts', '.ts', [
+      'if (a) { for (;;) { while (b) {} } }', // +if +for +while = base+3=4
+    ]);
+    const simple = makeFile('/project/s.ts', '.ts', ['const x = 1;']); // 1
+
+    const top = plugin.getHighComplexityFiles([simple, complex], 1);
+    expect(top).toHaveLength(1);
+    expect(top[0].filePath).toBe(complex.filePath);
+    expect(top[0].score).toBeGreaterThan(top.length > 0 ? 1 : 0);
+  });
+
+  it('should handle empty file list', () => {
+    const plugin = new ComplexityPlugin();
+    const result = plugin.analyze([]);
+
+    expect(result.summaryValue).toBe(0);
+    expect(result.perFile.size).toBe(0);
+  });
+});
+
+describe('CircularDepsPlugin', () => {
+  it('should have name "CircularDeps"', () => {
+    const plugin = new CircularDepsPlugin();
+    expect(plugin.name).toBe('CircularDeps');
+  });
+
+  it('should return empty cycles for an empty file list', () => {
+    const plugin = new CircularDepsPlugin();
+    plugin.setRootDir('/project');
+    const result = plugin.analyze([]);
+
+    expect(result.pluginName).toBe('CircularDeps');
+    expect(result.summaryValue).toBe(0);
+    expect(plugin.getCycles()).toEqual([]);
+  });
+
+  it('should skip non-JS/TS files and return empty perFile for them', () => {
+    const plugin = new CircularDepsPlugin();
+    plugin.setRootDir('/project');
+    const pyFile = makeFile('/project/script.py', '.py', [
+      "import os",
+      "from pathlib import Path",
+    ]);
+    const result = plugin.analyze([pyFile]);
+
+    expect(result.perFile.size).toBe(0);
+    expect(result.summaryValue).toBe(0);
+    expect(plugin.getCycles()).toEqual([]);
+  });
+
+  it('should detect no cycles when all imports are external packages', () => {
+    const plugin = new CircularDepsPlugin();
+    plugin.setRootDir('/project');
+    const file = makeFile('/project/src/app.ts', '.ts', [
+      "import React from 'react';",
+      "import { Box } from 'ink';",
+    ]);
+    const result = plugin.analyze([file]);
+
+    // No relative imports → no edges → no cycles
+    expect(result.summaryValue).toBe(0);
+    expect(plugin.getCycles()).toEqual([]);
+  });
+
+  it('should detect no cycles for unresolvable relative imports', () => {
+    // Files reference each other but the paths don't exist on disk,
+    // so resolveImport returns null and no edges are added.
+    const plugin = new CircularDepsPlugin();
+    plugin.setRootDir('/nonexistent');
+    const a = makeFile('/nonexistent/src/a.ts', '.ts', [
+      "import { b } from './b';",
+    ]);
+    const b = makeFile('/nonexistent/src/b.ts', '.ts', [
+      "import { a } from './a';",
+    ]);
+    const result = plugin.analyze([a, b]);
+
+    // Files don't exist on disk → resolveImport returns null → no graph edges
+    expect(result.summaryValue).toBe(0);
+    expect(plugin.getCycles()).toEqual([]);
+  });
+
+  it('should include JS/TS files in perFile map', () => {
+    const plugin = new CircularDepsPlugin();
+    plugin.setRootDir('/project');
+    const file = makeFile('/project/src/utils.ts', '.ts', ['const x = 1;']);
+    const result = plugin.analyze([file]);
+
+    expect(result.perFile.has(file.filePath)).toBe(true);
+  });
+
+  it('should reset cycles on each analyze() call', () => {
+    const plugin = new CircularDepsPlugin();
+    plugin.setRootDir('/project');
+    const files = [makeFile('/project/src/a.ts', '.ts', ['export const a = 1;'])];
+
+    plugin.analyze(files);
+    plugin.analyze(files); // second run
+
+    // Should not accumulate cycles across runs
+    expect(plugin.getCycles()).toEqual([]);
   });
 });

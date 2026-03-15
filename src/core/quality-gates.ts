@@ -45,5 +45,16 @@ export function checkQualityGates(
     }
   }
 
+  // Check max complexity
+  if (config.qualityGates?.maxComplexity !== undefined) {
+    const complexityPerFile = stats.pluginResults.get('Complexity')?.perFile ?? new Map();
+    const maxScore = [...complexityPerFile.values()].reduce((a, b) => Math.max(a, b), 0);
+    if (maxScore > config.qualityGates.maxComplexity) {
+      failures.push(
+        `Highest file complexity of ${maxScore} exceeds the ${config.qualityGates.maxComplexity} limit.`
+      );
+    }
+  }
+
   return failures;
 }

@@ -686,7 +686,7 @@ export function buildHtmlTemplate(jsonData: string): string {
 
         <p class="section-tip">A high-level snapshot of your codebase. Use the sidebar to drill into files, languages, technical debt, and git history.</p>
 
-        <div class="stats-grid">
+        <div class="stats-grid-5">
           <div class="card">
             <div class="card-title">Total Files</div>
             <div class="card-value" x-text="animatedValues.files"></div>
@@ -726,6 +726,10 @@ export function buildHtmlTemplate(jsonData: string): string {
                 <span x-text="trendText(data.trends.debtDelta)"></span>
               </div>
             </template>
+          </div>
+          <div class="card">
+            <div class="card-title">Avg Complexity</div>
+            <div class="card-value" x-text="avgComplexity"></div>
           </div>
         </div>
 
@@ -820,6 +824,10 @@ export function buildHtmlTemplate(jsonData: string): string {
                     @click="sortFiles('debtScore')"
                     :class="{ sorted: fileSort === 'debtScore' }"
                     :aria-sort="fileSort === 'debtScore' ? (fileSortDir === 1 ? 'ascending' : 'descending') : 'none'">Score</th>
+                  <th scope="col"
+                    @click="sortFiles('complexity')"
+                    :class="{ sorted: fileSort === 'complexity' }"
+                    :aria-sort="fileSort === 'complexity' ? (fileSortDir === 1 ? 'ascending' : 'descending') : 'none'">Complexity</th>
                   <!-- Replaced invalid JSX <> fragments with x-show on each cell -->
                   <th scope="col" x-show="data.gitInsights"
                     @click="sortFiles('topOwner')"
@@ -842,6 +850,7 @@ export function buildHtmlTemplate(jsonData: string): string {
                     <td x-text="f.sizeFormatted || '—'"></td>
                     <td x-text="f.commits ?? '—'"></td>
                     <td class="value--accent" x-text="(f.debtScore ?? 0).toLocaleString()"></td>
+                    <td :class="(f.complexity ?? 0) > 10 ? 'value--danger' : (f.complexity ?? 0) > 5 ? 'value--warning' : 'value--muted'" x-text="(f.complexity ?? 0).toLocaleString()"></td>
                     <!-- x-show on individual cells instead of <> fragments -->
                     <td x-show="data.gitInsights" x-text="f.topOwner || '—'"></td>
                     <td x-show="data.gitInsights" x-text="f.age || '—'"></td>
@@ -1044,9 +1053,22 @@ export function buildHtmlTemplate(jsonData: string): string {
             </table>
           </div>
         </template>
+        <template x-if="data.circularDeps && data.circularDeps.length > 0">
+          <div class="card" style="margin-top:24px">
+            <div class="section-title" style="color:var(--color-danger)">Circular Dependencies (<span x-text="data.circularDeps.length"></span>)</div>
+            <template x-for="(cycle, i) in data.circularDeps" :key="i">
+              <div style="margin-bottom:12px; padding:12px; background:var(--bg-input); border-radius:8px; border-left:3px solid var(--color-danger)">
+                <template x-for="(file, j) in cycle" :key="j">
+                  <div style="display:flex;align-items:center;gap:6px">
+                    <span class="path value--muted" x-text="file"></span>
+                    <span x-show="j < cycle.length - 1" style="color:var(--color-danger)">→</span>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+        </template>
       </div>
-
-      <!-- ===== TRENDS ===== -->
       <div class="section-view" :class="{ active: currentSection === 'trends' }">
         <div class="page-header">
           <h1>Trends</h1>
@@ -1308,6 +1330,7 @@ docs/drafts/*.md</pre>
         fileSortDir: -1,
         filesPerPage: 25,
         animatedValues: { files: '0', codeLines: '0', debt: '0' },
+        avgComplexity: '0',
         chartsInitialized: {},
         trendsMetric: 'totalFiles',
 
@@ -1340,6 +1363,9 @@ docs/drafts/*.md</pre>
           }
 
           this.buildFilesList();
+          this.avgComplexity = raw.files && raw.files.length > 0
+            ? (raw.files.reduce((s, f) => s + (f.complexity || 0), 0) / raw.files.length).toFixed(1)
+            : '0';
           setTimeout(() => { this.renderCharts('overview'); }, 100);
         },
 
