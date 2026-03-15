@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import type { KountConfig } from './cli/config-resolver.js';
 import { resolveConfig } from './cli/config-resolver.js';
 import { createCli } from './cli/parser.js';
+import { validateConfig } from './cli/validate.js';
 import { Aggregator } from './core/aggregator.js';
 import { checkQualityGates } from './core/quality-gates.js';
 import type { ExecutionStage, ProjectStats } from './plugins/types.js';
@@ -226,6 +227,15 @@ async function main(): Promise<void> {
 
     const cliFlags = createCli(process.argv);
     const config = await resolveConfig(cliFlags);
+
+    // Validate all resolved config values before doing any work
+    const validationErrors = await validateConfig(config);
+    if (validationErrors.length > 0) {
+        for (const err of validationErrors) {
+            process.stderr.write(`Error: ${err}\n`);
+        }
+        process.exit(1);
+    }
 
     // Non-TTY Bypass Only:
     // If stdout is not a TTY (piping), bypass Ink entirely.
