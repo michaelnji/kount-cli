@@ -1115,67 +1115,244 @@ export function buildHtmlTemplate(jsonData: string): string {
       <!-- ===== HELP ===== -->
       <div class="section-view" :class="{ active: currentSection === 'help' }">
         <div class="page-header"><h1>Help</h1></div>
-        <p class="section-tip">All available CLI flags and configuration options for KOUNT.</p>
+        <p class="section-tip">Complete reference for all KOUNT commands, CLI flags, configuration options, and features.</p>
 
+        <!-- Commands -->
         <div class="card" style="margin-bottom:24px">
-          <div class="section-title">CLI Commands</div>
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            Commands
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
+            <div style="padding:12px 16px;background:var(--bg-input);border-radius:8px;border-left:3px solid var(--neon)">
+              <code style="font-size:14px;font-weight:600">kount</code>
+              <p style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5">Scan the codebase and output results. Run with no flags to launch the interactive wizard UI.</p>
+            </div>
+            <div style="padding:12px 16px;background:var(--bg-input);border-radius:8px;border-left:3px solid var(--neon)">
+              <code style="font-size:14px;font-weight:600">kount init</code>
+              <p style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5">Interactive setup wizard. Guides you through creating a <code>.kountrc.json</code> config file. Prompts for output format, test inclusion, git analytics, stale threshold, and quality gates. Safe to re-run — warns before overwriting an existing config.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CLI Flags -->
+        <div class="card" style="margin-bottom:24px">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            CLI Flags
+          </div>
           <div style="overflow-x:auto;margin-top:8px">
-            <table class="data-table" aria-label="CLI command reference">
-              <thead><tr><th scope="col">Flag</th><th scope="col">Short</th><th scope="col">Description</th></tr></thead>
+            <table class="data-table" aria-label="CLI flag reference">
+              <thead><tr><th scope="col">Flag</th><th scope="col">Short</th><th scope="col">Default</th><th scope="col">Description</th></tr></thead>
               <tbody>
-                <tr><td class="path value--accent">-d, --root-dir &lt;path&gt;</td><td>-d</td><td>Specify the root directory to scan (default: current dir)</td></tr>
-                <tr><td class="path value--accent">--output-mode &lt;mode&gt;</td><td>-o</td><td>terminal | markdown | html | json | csv</td></tr>
-                <tr><td class="path value--accent">--output &lt;path&gt;</td><td></td><td>Output file path</td></tr>
-                <tr><td class="path value--accent">--include-tests</td><td>-t</td><td>Include test files and directories in the analysis</td></tr>
-                <tr><td class="path value--accent">--no-gitignore</td><td></td><td>Disable parsing of .gitignore and .kountignore rules</td></tr>
-                <tr><td class="path value--accent">--no-cache</td><td></td><td>Disable the incremental high-performance caching engine</td></tr>
-                <tr><td class="path value--accent">--clear-cache</td><td></td><td>Purge the existing cache before running the scan</td></tr>
-                <tr><td class="path value--accent">--force</td><td>-f</td><td>Overwrite existing files</td></tr>
-                <tr><td class="path value--accent">--fail-on-size &lt;mb&gt;</td><td></td><td>Max codebase size in MB (CI quality gate)</td></tr>
-                <tr><td class="path value--accent">--min-comment-ratio &lt;%&gt;</td><td></td><td>Min required comment ratio (CI quality gate)</td></tr>
-                <tr><td class="path value--accent">--diff &lt;branch&gt;</td><td></td><td>Only analyze files changed vs branch</td></tr>
-                <tr><td class="path value--accent">--deep-git</td><td></td><td>Enable advanced Git ownership &amp; risk analytics</td></tr>
-                <tr><td class="path value--accent">--stale-threshold &lt;years&gt;</td><td></td><td>Age threshold to classify code as stale (default: 2)</td></tr>
-                <tr><td class="path value--accent">--version</td><td>-V</td><td>Display version number</td></tr>
-                <tr><td class="path value--accent">--help</td><td>-h</td><td>Display help text</td></tr>
+                <tr><td colspan="4" style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--neon);background:var(--bg-input)">Core</td></tr>
+                <tr><td class="path value--accent">--root-dir &lt;path&gt;</td><td>-d</td><td style="color:var(--text-muted)">.</td><td>Root directory to scan</td></tr>
+                <tr><td class="path value--accent">--output-mode &lt;mode&gt;</td><td>-o</td><td style="color:var(--text-muted)">terminal</td><td>Output format: <code>terminal</code>, <code>html</code>, <code>markdown</code>, <code>json</code>, <code>csv</code></td></tr>
+                <tr><td class="path value--accent">--output &lt;path&gt;</td><td></td><td style="color:var(--text-muted)">auto</td><td>Destination file path for reports</td></tr>
+                <tr><td class="path value--accent">--force</td><td>-f</td><td style="color:var(--text-muted)">false</td><td>Force overwrite of the output file</td></tr>
+                <tr><td class="path value--accent">--include-tests</td><td>-t</td><td style="color:var(--text-muted)">false</td><td>Include test files and directories in the analysis</td></tr>
+                <tr><td class="path value--accent">--version</td><td>-V</td><td></td><td>Print version number</td></tr>
+                <tr><td class="path value--accent">--help</td><td>-h</td><td></td><td>Display help text</td></tr>
+                <tr><td colspan="4" style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--neon);background:var(--bg-input)">Cache &amp; Ignore</td></tr>
+                <tr><td class="path value--accent">--no-cache</td><td></td><td></td><td>Disable the incremental caching engine for this run</td></tr>
+                <tr><td class="path value--accent">--clear-cache</td><td></td><td style="color:var(--text-muted)">false</td><td>Purge the existing cache before scanning</td></tr>
+                <tr><td class="path value--accent">--no-gitignore</td><td></td><td></td><td>Disable parsing of <code>.gitignore</code> and <code>.kountignore</code> rules</td></tr>
+                <tr><td colspan="4" style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--neon);background:var(--bg-input)">Git Intelligence</td></tr>
+                <tr><td class="path value--accent">--diff &lt;branch&gt;</td><td></td><td></td><td>Only analyze files changed relative to <code>&lt;branch&gt;</code></td></tr>
+                <tr><td class="path value--accent">--deep-git</td><td></td><td style="color:var(--text-muted)">false</td><td>Enable deep analytics: <code>git blame</code> + <code>git numstat</code> (slower on large repos)</td></tr>
+                <tr><td class="path value--accent">--stale-threshold &lt;years&gt;</td><td></td><td style="color:var(--text-muted)">2</td><td>Age threshold (years) to classify files as stale</td></tr>
+                <tr><td colspan="4" style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--color-danger);background:var(--bg-input)">Quality Gates (CI/CD)</td></tr>
+                <tr><td class="path value--accent">--fail-on-size &lt;mb&gt;</td><td></td><td></td><td>Exit code 1 if codebase exceeds <code>&lt;mb&gt;</code> MB</td></tr>
+                <tr><td class="path value--accent">--min-comment-ratio &lt;%&gt;</td><td></td><td></td><td>Exit code 1 if comment ratio falls below <code>&lt;%&gt;</code>%</td></tr>
+                <tr><td class="path value--accent">--max-complexity &lt;n&gt;</td><td></td><td></td><td>Exit code 1 if any file's cyclomatic complexity exceeds <code>&lt;n&gt;</code></td></tr>
+                <tr><td colspan="4" style="padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--neon);background:var(--bg-input)">Badge</td></tr>
+                <tr><td class="path value--accent">--badge &lt;metric&gt;</td><td></td><td></td><td>Generate a Shields.io endpoint JSON for <code>files</code>, <code>lines</code>, <code>comment-ratio</code>, <code>debt-score</code>, or <code>complexity</code></td></tr>
               </tbody>
             </table>
           </div>
         </div>
 
+        <!-- Output Modes -->
+        <div class="card" style="margin-bottom:24px">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+            Output Modes
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+            <div style="display:grid;grid-template-columns:100px 1fr;gap:12px;padding:10px 14px;background:var(--bg-input);border-radius:8px;align-items:start">
+              <code style="font-weight:700;color:var(--neon)">terminal</code>
+              <span style="font-size:13px;color:var(--text-secondary);line-height:1.5">Interactive React/Ink UI with live progress. Shows line breakdown, language distribution, code health, git insights, and trends. <strong style="color:var(--text-primary)">Default.</strong></span>
+            </div>
+            <div style="display:grid;grid-template-columns:100px 1fr;gap:12px;padding:10px 14px;background:var(--bg-input);border-radius:8px;align-items:start">
+              <code style="font-weight:700;color:var(--neon)">html</code>
+              <span style="font-size:13px;color:var(--text-secondary);line-height:1.5">Serves this interactive dashboard locally. Sortable file table, charts, dark mode, CSV/JSON export, historical trend charts.</span>
+            </div>
+            <div style="display:grid;grid-template-columns:100px 1fr;gap:12px;padding:10px 14px;background:var(--bg-input);border-radius:8px;align-items:start">
+              <code style="font-weight:700;color:var(--neon)">markdown</code>
+              <span style="font-size:13px;color:var(--text-secondary);line-height:1.5">Injects a stats block into your <code>README.md</code> between <code>&lt;!-- KOUNT:START --&gt;</code> and <code>&lt;!-- KOUNT:END --&gt;</code> markers. Subsequent runs update only that block. Use <code>--force</code> to overwrite the entire file. Default output: <code>README.md</code>.</span>
+            </div>
+            <div style="display:grid;grid-template-columns:100px 1fr;gap:12px;padding:10px 14px;background:var(--bg-input);border-radius:8px;align-items:start">
+              <code style="font-weight:700;color:var(--neon)">json</code>
+              <span style="font-size:13px;color:var(--text-secondary);line-height:1.5">Machine-readable JSON with summary, per-file metrics, language distribution, git insights, circular deps, and trends. Default output: <code>kount-report.json</code>.</span>
+            </div>
+            <div style="display:grid;grid-template-columns:100px 1fr;gap:12px;padding:10px 14px;background:var(--bg-input);border-radius:8px;align-items:start">
+              <code style="font-weight:700;color:var(--neon)">csv</code>
+              <span style="font-size:13px;color:var(--text-secondary);line-height:1.5">Per-file CSV export. Columns: Path, Lines, Blank Lines, Comment Lines, Size, Fix-It Comments, Commits, Cleanup Score, Imports, Age, Bus Factor, Top Owner, Volatility. Default output: <code>kount-report.csv</code>.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quality Gates & Badge -->
+        <div class="chart-row-equal">
+          <div class="card">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Quality Gates
+            </div>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">Enforce code health in CI/CD. Any failed gate exits with code <code>1</code>.</p>
+            <table class="data-table" aria-label="Quality gates reference">
+              <thead><tr><th scope="col">Gate</th><th scope="col">Measures</th><th scope="col">Fails When</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="path value--accent">--fail-on-size &lt;mb&gt;</td>
+                  <td style="font-size:12px;color:var(--text-secondary)">Total codebase size</td>
+                  <td style="font-size:12px;color:var(--color-danger)">Size &gt; limit</td>
+                </tr>
+                <tr>
+                  <td class="path value--accent">--min-comment-ratio &lt;%&gt;</td>
+                  <td style="font-size:12px;color:var(--text-secondary)">(comments / lines) × 100</td>
+                  <td style="font-size:12px;color:var(--color-danger)">Ratio &lt; limit</td>
+                </tr>
+                <tr>
+                  <td class="path value--accent">--max-complexity &lt;n&gt;</td>
+                  <td style="font-size:12px;color:var(--text-secondary)">Highest file complexity</td>
+                  <td style="font-size:12px;color:var(--color-danger)">Max &gt; limit</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:12px;line-height:1.5">All gates can also be configured in <code>.kountrc.json</code> via <code>failOnSize</code>, <code>minCommentRatio</code>, and <code>maxComplexity</code>.</p>
+          </div>
+          <div class="card">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+              Badge Generation
+            </div>
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">
+              Generate <a href="https://shields.io/endpoint" target="_blank" rel="noopener noreferrer" style="color:var(--neon)">Shields.io</a> endpoint JSON to embed live metrics in your README. Output: <code>.kount-badge.json</code> (customizable via <code>--output</code>).
+            </p>
+            <table class="data-table" aria-label="Badge metric reference">
+              <thead><tr><th scope="col">Metric</th><th scope="col">Label</th><th scope="col">Color</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td class="path value--accent">files</td>
+                  <td style="font-size:12px">files</td>
+                  <td style="font-size:12px;color:#60cfd1">blue</td>
+                </tr>
+                <tr>
+                  <td class="path value--accent">lines</td>
+                  <td style="font-size:12px">lines of code</td>
+                  <td style="font-size:12px;color:#60cfd1">blue</td>
+                </tr>
+                <tr>
+                  <td class="path value--accent">comment-ratio</td>
+                  <td style="font-size:12px">comment ratio</td>
+                  <td style="font-size:12px;color:var(--text-secondary)">green ≥20%, yellow ≥10%, red &lt;10%</td>
+                </tr>
+                <tr>
+                  <td class="path value--accent">debt-score</td>
+                  <td style="font-size:12px">cleanup score</td>
+                  <td style="font-size:12px;color:var(--text-secondary)">green ≤100, yellow ≤500, red &gt;500</td>
+                </tr>
+                <tr>
+                  <td class="path value--accent">complexity</td>
+                  <td style="font-size:12px">complexity</td>
+                  <td style="font-size:12px;color:var(--text-secondary)">green ≤5, yellow ≤10, red &gt;10</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Git Intelligence -->
+        <div class="card" style="margin-bottom:24px">
+          <div class="section-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 01-9 9"/></svg>
+            Git Intelligence
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:8px">
+            <div style="padding:12px;background:var(--bg-input);border-radius:8px">
+              <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:6px">Basic (always on)</div>
+              <ul style="font-size:12px;color:var(--text-secondary);line-height:1.7;padding-left:16px">
+                <li>Top contributors by commits</li>
+                <li>High-churn files</li>
+                <li>Per-file commit count</li>
+              </ul>
+            </div>
+            <div style="padding:12px;background:var(--bg-input);border-radius:8px">
+              <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:6px"><code>--diff &lt;branch&gt;</code></div>
+              <ul style="font-size:12px;color:var(--text-secondary);line-height:1.7;padding-left:16px">
+                <li>Limit scan to changed files only</li>
+                <li>Ideal for PR/CI analysis</li>
+              </ul>
+            </div>
+            <div style="padding:12px;background:var(--bg-input);border-radius:8px">
+              <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:6px"><code>--deep-git</code></div>
+              <ul style="font-size:12px;color:var(--text-secondary);line-height:1.7;padding-left:16px">
+                <li>File age (last commit)</li>
+                <li>Bus factor per file</li>
+                <li>Knowledge silos (BF=1)</li>
+                <li>Stale files</li>
+                <li>Line volatility (±)</li>
+                <li>Top owner per file</li>
+                <li>Suggested reviewers</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Configuration + Ignore Files -->
         <div class="chart-row-equal">
           <div class="card">
             <div class="section-title">Configuration (.kountrc.json)</div>
             <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">
-              Define default settings by creating a <code>.kountrc.json</code> file in your project root.
+              Create <code>.kountrc.json</code> in your project root to persist settings. CLI flags always take precedence.
             </p>
             <pre style="background:var(--bg-input);padding:14px;border-radius:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;line-height:1.6;">{
-  "outputMode": "html",
-  "deepGit": true,
+  "rootDir": ".",
+  "outputMode": "terminal",
+  "includeTests": false,
+  "respectGitignore": true,
+  "cache": { "enabled": true, "clearFirst": false },
+  "deepGit": false,
   "staleThreshold": 2,
-  "cache": {
-    "enabled": true
-  }
+  "diffBranch": "main",
+  "failOnSize": 50,
+  "minCommentRatio": 10,
+  "maxComplexity": 25
 }</pre>
           </div>
           <div class="card">
             <div class="section-title">Ignore Files</div>
             <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">
-              KOUNT automatically ignores files excluded by your local <code>.gitignore</code> rules. It strictly ignores files in standard out directories (node_modules, dist, build, .git).
+              KOUNT always ignores <code>node_modules/</code>, <code>dist/</code>, <code>build/</code>, <code>.git/</code>, <code>.next/</code>, <code>.nuxt/</code>, and <code>coverage/</code>. Binary files are automatically skipped.
             </p>
-            <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
-              For KOUNT-specific ignores, create a <code>.kountignore</code> file using standard glob syntax.
+            <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px">
+              Your <code>.gitignore</code> is respected by default (<code>--no-gitignore</code> to disable). For KOUNT-specific ignores, create a <code>.kountignore</code> file using standard glob syntax:
             </p>
-            <pre style="background:var(--bg-input);padding:14px;border-radius:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;margin-top:12px;line-height:1.6;"># .kountignore example
-generated/**/*.ts
-docs/drafts/*.md</pre>
+            <pre style="background:var(--bg-input);padding:14px;border-radius:8px;font-family:var(--font-mono);font-size:12px;color:var(--text-primary);border:1px solid var(--border);overflow-x:auto;line-height:1.6;"># .kountignore
+generated/**/*.d.ts
+docs/drafts/*.md
+vendor/</pre>
+            <p style="font-size:12px;color:var(--text-muted);margin-top:12px;line-height:1.5">
+              The cache file <code>.kountcache.json</code> and history directory <code>.kount/</code> are always excluded and should not be committed.
+            </p>
           </div>
         </div>
 
         <div class="card" style="margin-top:24px">
           <div class="section-title">About KOUNT</div>
           <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:800px">
-            KOUNT is a zero-dependency codebase analyzer built for developers who care about their craft. It scans your project, tracks code health, analyzes git history, and helps you make data-driven decisions about code quality.
+            KOUNT is a zero-dependency codebase analyzer built for developers who care about their craft. It scans your project, tracks code health, measures cyclomatic complexity, detects circular dependencies, analyzes git history, and helps you make data-driven decisions about code quality.
           </p>
           <p style="font-size:13px;color:var(--text-muted);margin-top:12px">
             Built by <strong style="color:var(--text-primary)">Michael Nji</strong> &mdash; <a href="https://michaelnji.codes" target="_blank" rel="noopener noreferrer" style="color:var(--neon);text-decoration:none">michaelnji.codes</a>

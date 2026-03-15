@@ -14,25 +14,30 @@ export function createCli(argv: string[]): CliFlags {
   program
     .name('kount')
     .description('Project Intelligence for Codebases — analyze your code with precision.')
-    .version('1.0.3')
-    .option('-d, --root-dir <path>', 'Specify the root directory to scan (default: current directory)')
+    .version('3.2.0', '-V, --version', 'Print version number')
+    // ── Core ──────────────────────────────────────────────────────────────────
+    .option('-d, --root-dir <path>', 'Root directory to scan (default: .)')
     .option(
       '-o, --output-mode <mode>',
-      'Choose output format: "terminal" (interactive UI), "markdown", "html" (dashboard), "json", or "csv"'
+      'Output format: terminal | html | markdown | json | csv (default: terminal)'
     )
-    .option('-t, --include-tests', 'Include test files and directories in the analysis')
+    .option('--output <path>', 'Destination file path for the report (default: auto)')
+    .option('-f, --force', 'Force overwrite of the output file')
+    .option('-t, --include-tests', 'Include test files and directories in the analysis (default: false)')
+    // ── Cache & Ignore ────────────────────────────────────────────────────────
+    .option('--no-cache', 'Disable the incremental caching engine for this run')
+    .option('--clear-cache', 'Purge the existing cache before scanning (default: false)')
     .option('--no-gitignore', 'Disable parsing of .gitignore and .kountignore rules')
-    .option('--no-cache', 'Disable the incremental high-performance caching engine')
-    .option('--clear-cache', 'Purge the existing cache before running the scan')
-    .option('-f, --force', 'Force overwrite of the output file (Markdown/JSON/CSV modes)')
-    .option('--output <path>', 'Specify the destination file path for reports')
-    .option('--fail-on-size <mb>', 'CI/CD Gate: Fail with exit code 1 if codebase exceeds <mb> MB', parseFloat)
-    .option('--min-comment-ratio <percent>', 'CI/CD Gate: Fail with exit code 1 if comment ratio is below <percent>%', parseFloat)
-    .option('--diff <branch>', 'Git Intelligence: Only analyze files changed relative to the specified <branch>')
-    .option('--deep-git', 'Git Intelligence: Enable deep analytics (blame, numstat) which can be slow on large repos')
-    .option('--stale-threshold <years>', 'Git Intelligence: Define stale file threshold in years (default: 2)', parseFloat)
-    .option('--max-complexity <n>', 'CI/CD Gate: Fail with exit code 1 if any file complexity score exceeds <n>', parseFloat)
-    .option('--badge <metric>', 'Generate a Shields.io badge JSON for the given metric (files, lines, comment-ratio, debt-score, complexity)')
+    // ── Git Intelligence ──────────────────────────────────────────────────────
+    .option('--diff <branch>', 'Only analyze files changed relative to <branch> (e.g. main)')
+    .option('--deep-git', 'Enable deep analytics: git blame + numstat — file age, bus factor, knowledge silos, stale files, volatility (default: false)')
+    .option('--stale-threshold <years>', 'Age threshold in years to classify files as stale (default: 2)', parseFloat)
+    // ── Quality Gates (CI/CD) ─────────────────────────────────────────────────
+    .option('--fail-on-size <mb>', 'Exit code 1 if total codebase size exceeds <mb> MB', parseFloat)
+    .option('--min-comment-ratio <percent>', 'Exit code 1 if comment ratio falls below <percent>%', parseFloat)
+    .option('--max-complexity <n>', 'Exit code 1 if any file\'s cyclomatic complexity exceeds <n>', parseFloat)
+    // ── Badge ─────────────────────────────────────────────────────────────────
+    .option('--badge <metric>', 'Generate a Shields.io endpoint JSON for: files | lines | comment-ratio | debt-score | complexity')
     .parse(argv);
 
   const opts = program.opts<{

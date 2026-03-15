@@ -89,20 +89,20 @@
       }
     },
     "/Users/michaelnji/Projects/kount/tests/reporters.test.ts": {
-      "mtimeMs": 1773562637657,
-      "size": 17229,
+      "mtimeMs": 1773563694321,
+      "size": 19303,
       "metrics": {
-        "TotalLines": 447,
-        "BlankLines": 73,
-        "CommentLines": 9,
-        "FileSize": 17229,
+        "TotalLines": 513,
+        "BlankLines": 86,
+        "CommentLines": 14,
+        "FileSize": 19303,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 17229,
+        "LargestFiles": 19303,
         "DebtTracker": 0,
-        "CodeChurn": 5,
+        "CodeChurn": 6,
         "DependencyTracker": 4,
-        "TechDebt": 247,
+        "TechDebt": 210,
         "Complexity": 4,
         "CircularDeps": 0
       }
@@ -1189,21 +1189,21 @@
       }
     },
     "/Users/michaelnji/Projects/kount/README.md": {
-      "mtimeMs": 1772310064490,
-      "size": 6707,
+      "mtimeMs": 1773563905632,
+      "size": 17017,
       "metrics": {
-        "TotalLines": 183,
-        "BlankLines": 43,
-        "CommentLines": 1,
-        "FileSize": 6707,
+        "TotalLines": 563,
+        "BlankLines": 162,
+        "CommentLines": 2,
+        "FileSize": 17017,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 6707,
+        "LargestFiles": 17017,
         "DebtTracker": 0,
         "CodeChurn": 7,
         "DependencyTracker": 0,
-        "TechDebt": 253,
-        "Complexity": 16
+        "TechDebt": 633,
+        "Complexity": 33
       }
     },
     "/Users/michaelnji/Projects/kount/.gitignore": {
@@ -1595,19 +1595,19 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/cli/parser.ts": {
-      "mtimeMs": 1773561728281,
-      "size": 3220,
+      "mtimeMs": 1773564204702,
+      "size": 4178,
       "metrics": {
-        "TotalLines": 73,
+        "TotalLines": 78,
         "BlankLines": 4,
-        "CommentLines": 7,
-        "FileSize": 3220,
+        "CommentLines": 12,
+        "FileSize": 4178,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
         "DebtTracker": 0,
         "CodeChurn": 5,
         "DependencyTracker": 1,
-        "TechDebt": 13,
+        "TechDebt": 8,
         "Complexity": 16,
         "CircularDeps": 0
       }
@@ -1648,7 +1648,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/markdown.ts": {
-      "mtimeMs": 1773562697581,
+      "mtimeMs": 1773563222442,
       "size": 9006,
       "metrics": {
         "TotalLines": 246,
@@ -1659,9 +1659,9 @@
         "LanguageDistribution": 1,
         "LargestFiles": 9006,
         "DebtTracker": 0,
-        "CodeChurn": 3,
+        "CodeChurn": 4,
         "DependencyTracker": 2,
-        "TechDebt": 30,
+        "TechDebt": 31,
         "Complexity": 45,
         "CircularDeps": 0
       }
@@ -1736,7 +1736,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/terminal/Summary.tsx": {
-      "mtimeMs": 1773562914230,
+      "mtimeMs": 1773563222442,
       "size": 11883,
       "metrics": {
         "TotalLines": 308,
@@ -1747,9 +1747,9 @@
         "LanguageDistribution": 1,
         "LargestFiles": 11883,
         "DebtTracker": 0,
-        "CodeChurn": 4,
+        "CodeChurn": 5,
         "DependencyTracker": 3,
-        "TechDebt": 54,
+        "TechDebt": 55,
         "Complexity": 46,
         "CircularDeps": 0
       }
@@ -1969,7 +1969,7 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/csv.ts": {
-      "mtimeMs": 1773562712878,
+      "mtimeMs": 1773563222440,
       "size": 2830,
       "metrics": {
         "TotalLines": 69,
@@ -1979,9 +1979,9 @@
         "TotalFiles": 1,
         "LanguageDistribution": 1,
         "DebtTracker": 0,
-        "CodeChurn": 3,
+        "CodeChurn": 4,
         "DependencyTracker": 2,
-        "TechDebt": 5,
+        "TechDebt": 6,
         "Complexity": 43,
         "CircularDeps": 0
       }
@@ -2094,20 +2094,20 @@
       }
     },
     "/Users/michaelnji/Projects/kount/src/reporters/html-template.ts": {
-      "mtimeMs": 1773562875254,
-      "size": 84852,
+      "mtimeMs": 1773564074407,
+      "size": 99252,
       "metrics": {
-        "TotalLines": 1756,
-        "BlankLines": 127,
-        "CommentLines": 315,
-        "FileSize": 84852,
+        "TotalLines": 1933,
+        "BlankLines": 131,
+        "CommentLines": 319,
+        "FileSize": 99252,
         "TotalFiles": 1,
         "LanguageDistribution": 1,
-        "LargestFiles": 84852,
+        "LargestFiles": 99252,
         "DebtTracker": 0,
-        "CodeChurn": 11,
+        "CodeChurn": 12,
         "DependencyTracker": 0,
-        "TechDebt": 104,
+        "TechDebt": 124,
         "Complexity": 166,
         "CircularDeps": 0
       }
@@ -2296,9 +2296,9 @@
         "TotalFiles": 1,
         "LanguageDistribution": 1,
         "DebtTracker": 0,
-        "CodeChurn": 1,
+        "CodeChurn": 2,
         "DependencyTracker": 2,
-        "TechDebt": 13,
+        "TechDebt": 14,
         "Complexity": 25,
         "CircularDeps": 0
       }

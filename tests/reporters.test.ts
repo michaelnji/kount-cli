@@ -445,3 +445,69 @@ describe('Markdown Reporter — Tech Debt & Trends', () => {
     expect(md).not.toContain('### Trends');
   });
 });
+
+describe('HTML Help Section — completeness', () => {
+  it('should document all CLI flags including new ones', async () => {
+    const stats = makeMockStats();
+    const html = await generateHtmlDashboard(stats);
+
+    // Core flags
+    expect(html).toContain('--root-dir');
+    expect(html).toContain('--output-mode');
+    expect(html).toContain('--output');
+    expect(html).toContain('--include-tests');
+    expect(html).toContain('--no-gitignore');
+    expect(html).toContain('--no-cache');
+    expect(html).toContain('--clear-cache');
+    expect(html).toContain('--force');
+
+    // Quality gate flags
+    expect(html).toContain('--fail-on-size');
+    expect(html).toContain('--min-comment-ratio');
+    expect(html).toContain('--max-complexity');
+
+    // Git flags
+    expect(html).toContain('--diff');
+    expect(html).toContain('--deep-git');
+    expect(html).toContain('--stale-threshold');
+
+    // Badge flag
+    expect(html).toContain('--badge');
+  });
+
+  it('should document the kount init command', async () => {
+    const stats = makeMockStats();
+    const html = await generateHtmlDashboard(stats);
+
+    expect(html).toContain('kount init');
+  });
+
+  it('should document all output modes', async () => {
+    const stats = makeMockStats();
+    const html = await generateHtmlDashboard(stats);
+
+    expect(html).toContain('terminal');
+    expect(html).toContain('markdown');
+    // html mode
+    expect(html).toContain('json');
+    expect(html).toContain('csv');
+  });
+
+  it('should document badge metrics', async () => {
+    const stats = makeMockStats();
+    const html = await generateHtmlDashboard(stats);
+
+    expect(html).toContain('comment-ratio');
+    expect(html).toContain('debt-score');
+    expect(html).toContain('complexity');
+  });
+
+  it('should document .kountrc.json config keys including new ones', async () => {
+    const stats = makeMockStats();
+    const html = await generateHtmlDashboard(stats);
+
+    expect(html).toContain('maxComplexity');
+    expect(html).toContain('diffBranch');
+    expect(html).toContain('staleThreshold');
+  });
+});
